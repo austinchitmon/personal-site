@@ -1,0 +1,33 @@
+:host {
+    height: 100%;
+    display: block;
+    background-color: rgb(0, 0, 0);
+}
+
+.container {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.wip-message {
+    z-index: 1;
+    color: rgb(153, 40, 104);
+}
+
+.sal-spin {
+    animation: rotate360 1s linear infinite;
+}
+
+/* Keyframes for rotation */
+@keyframes rotate360 {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
