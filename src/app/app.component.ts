@@ -6,7 +6,7 @@ import { RouterOutlet } from '@angular/router';
   imports: [],
   template: `
     <div class="container">
-      <h1 class="wip-message" [style.color]="textColor()">WORK IN PROGRESS!!!! :D :D :D</h1>
+      <h1 class="wip-message" [style.color]="textColor()">WORK IN PROGRESS!!!! :D :D :D :D</h1>
       <img
         class="sal-spin"
         alt="Sal Vulcano Meme Pic He Hates"
