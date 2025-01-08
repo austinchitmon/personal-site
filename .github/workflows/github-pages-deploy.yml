@@ -11,7 +11,7 @@ on:
 
 jobs:
   deploy_personal_site:
-    name: This deploys the personal site repo
+    name: "Prod Build & Deploy"
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
