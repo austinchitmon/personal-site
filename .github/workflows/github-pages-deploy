@@ -1,0 +1,40 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Deploy Angular App to Github Pages
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  deploy_personal_site:
+    name: This deploys the personal site repo
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      # https://github.com/actions/checkout
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      # https://github.com/actions/setup-node
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20.18.1'
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Build Prod
+      run: npm run build:prod
+
+    - name: Deploy
+      if: success()
+      uses: peaceiris/actions-gh-pages@v4
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: dist/personal-site
+        enable_jekyll: true
+
