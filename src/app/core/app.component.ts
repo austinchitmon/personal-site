@@ -1,23 +1,11 @@
-import { Component, OnInit, Signal, signal } from '@angular/core';
+import { Component, Signal, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { NavBarComponent } from './nav-bar/nav-bar.component';
 
 @Component({
   selector: 'app-root',
-  imports: [],
-  template: `
-    <div class="container">
-      <h1 class="wip-message" [style.color]="textColor()">WORK IN PROGRESS!!!! :D :D :D :D :D</h1>
-      <img
-        class="sal-spin"
-        alt="Sal Vulcano Meme Pic He Hates"
-        src="img/sal/Sal.webp"
-      />
-      <div class="subtext-container">
-        <p>all the sals are saling, saling</p>
-        <p class="align-self-end">- le ssalifim</p>
-      </div>
-    </div>
-  `,
+  imports: [RouterOutlet, NavBarComponent],
+  templateUrl: `./app.component.html`,
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
@@ -45,8 +33,8 @@ export class AppComponent {
 
   private startRandomColorInterval(): void {
     setInterval(() => {
-      this._textColor.set(this.getRandomColor(this.BASE_COLORS))
-    }, 500); // Change color every second
+      this._textColor.set(this.getRandomColor(this.BASE_COLORS));
+    }, 500);
   }
 
   private getRandomColor(list: string[]): string {

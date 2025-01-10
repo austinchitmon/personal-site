@@ -1,0 +1,73 @@
+.logo {
+  height: 2rem;
+  width: 2rem;
+}
+
+.site-name {
+  align-self: flex-end;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #b48;
+  color: white;
+  padding: 10px 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.navbar-container {
+  column-gap: 1rem;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.navbar-brand {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: white;
+  text-decoration: none;
+}
+
+.navbar-links {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+  column-gap: 1rem;
+}
+
+.navbar-links a {
+  color: white;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: color 0.3s ease;
+}
+
+.navbar-links a.active,
+.navbar-links a:hover {
+  color: #8dffb2;
+}
+
+.spinner:hover {
+  animation: spin 0.5s linear infinite; /* Infinite spinning */
+}
+
+li {
+  transition: 0.5s ease-in-out;
+}
+li:hover {
+  scale: 1.1;
+}
+
+/* Keyframes for spinning */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
