@@ -1,18 +1,14 @@
 import {
-  AfterViewChecked,
-  AfterViewInit,
   Component,
   OnInit,
 } from '@angular/core';
 import {
-  Engine,
-  Runner,
-  Render,
-  World,
   Bodies,
-  Body,
+  Engine,
   Mouse,
   MouseConstraint,
+  Render,
+  World,
 } from 'matter-js';
 
 @Component({
@@ -22,7 +18,6 @@ import {
   styleUrl: './physics-test.component.scss',
 })
 export class PhysicsTestComponent implements OnInit {
-
   public ngOnInit() {
     const engine = Engine.create();
     const world = engine.world;
@@ -40,8 +35,8 @@ export class PhysicsTestComponent implements OnInit {
     });
 
     const ground = Bodies.rectangle(400, 590, 810, 30, { isStatic: true });
-    const wallLeft = Bodies.rectangle(0, 0, 20, 1200, {isStatic: true});
-    const wallRight = Bodies.rectangle(600, 0, 20, 1200, {isStatic: true});
+    const wallLeft = Bodies.rectangle(0, 0, 20, 1200, { isStatic: true });
+    const wallRight = Bodies.rectangle(600, 0, 20, 1200, { isStatic: true });
     const ball = Bodies.circle(
       300,
       300,
@@ -55,7 +50,7 @@ export class PhysicsTestComponent implements OnInit {
           }
         }
       }
-    )
+    );
 
     // Add bodies to the world
     World.add(world, [ground, wallLeft, wallRight, ball]);
@@ -87,10 +82,10 @@ export class PhysicsTestComponent implements OnInit {
   }
 
 
-  private repeatItem(item: any): any[] {
+  private repeatItem(item: unknown): unknown[] {
     return Array.from({
       length: this.getRandomIntBetween(1, 10)
-    }, () => item)
+    }, () => item);
   }
 
 
