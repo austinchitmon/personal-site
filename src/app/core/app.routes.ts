@@ -9,6 +9,7 @@ export const routes: Routes = [
   },
   {
     path: 'physics',
-    component: PhysicsTestComponent,
+    loadComponent: () => import('../features/physics/physics-test/physics-test.component').then(mod =>
+      mod.PhysicsTestComponent)
   },
 ];
