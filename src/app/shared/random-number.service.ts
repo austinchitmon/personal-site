@@ -9,9 +9,6 @@ export interface WeightedChanceItem<T = string> {
   providedIn: 'root'
 })
 export class RandomNumberService {
-
-  constructor() { }
-
   public getRandomValue<T>(items: WeightedChanceItem<T>[]): T {
     const random = this.getRandomIntBetweenInclusive(0, 99);
     console.log('Random Number: ', random);
