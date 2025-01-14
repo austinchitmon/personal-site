@@ -10,6 +10,8 @@ import {
   Render,
   World,
 } from 'matter-js';
+import { RandomNumberService } from '../../../shared/random-number.service';
+import { POKEBALL_SPRITE_CHANCES } from '../consts/pokeball-chances.const';
 
 @Component({
   selector: 'app-physics-test',
@@ -18,6 +20,10 @@ import {
   styleUrl: './physics-test.component.scss',
 })
 export class PhysicsTestComponent implements OnInit {
+  constructor(
+    private readonly random: RandomNumberService
+  ) {}
+
   public ngOnInit() {
     const engine = Engine.create();
     const world = engine.world;
@@ -40,13 +46,13 @@ export class PhysicsTestComponent implements OnInit {
     const ball = Bodies.circle(
       300,
       300,
-      22,
+      33,
       {
         render: {
           sprite: {
-            texture: 'img/pokeballs/great.png',
-            xScale: 2,
-            yScale: 2
+            texture: this.random.getRandomValue(POKEBALL_SPRITE_CHANCES),
+            xScale: 1.5,
+            yScale: 1.5
           }
         }
       }
@@ -79,17 +85,5 @@ export class PhysicsTestComponent implements OnInit {
     update();
 
     Render.run(render);
-  }
-
-
-  private repeatItem(item: unknown): unknown[] {
-    return Array.from({
-      length: this.getRandomIntBetween(1, 10)
-    }, () => item);
-  }
-
-
-  private getRandomIntBetween(min: number, max: number): number {
-    return Math.floor(Math.random() * max) + min;
   }
 }
