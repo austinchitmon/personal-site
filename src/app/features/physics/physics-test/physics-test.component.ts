@@ -1,8 +1,9 @@
 import {
   Component,
+  HostListener,
   OnInit,
 } from '@angular/core';
-import {
+import Matter, {
   Bodies,
   Engine,
   Mouse,
@@ -24,25 +25,41 @@ export class PhysicsTestComponent implements OnInit {
     private readonly random: RandomNumberService
   ) {}
 
-  public ngOnInit() {
-    const engine = Engine.create();
-    const world = engine.world;
-    const canvas = document.getElementById('demo') as HTMLCanvasElement;
+  private engine!: Engine;
+  private render!: Render;
+  private ground!: Matter.Body;
+  private leftWall!: Matter.Body;
+  private rightWall!: Matter.Body;
+  private topWall!: Matter.Body;
 
-    const render = Render.create({
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event): void {
+    this.handleResize();
+  }
+
+  public ngOnInit() {
+    this.engine = Engine.create();
+    const world = this.engine.world;
+    const canvas = document.getElementById('full-canvas') as HTMLCanvasElement;
+
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    this.render = Render.create({
       canvas: canvas,
-      engine: engine,
+      engine: this.engine,
       options: {
-        width: 600,
-        height: 600,
+        width,
+        height,
         wireframes: false,
         background: 'black'
       }
     });
 
-    const ground = Bodies.rectangle(400, 590, 810, 30, { isStatic: true });
-    const wallLeft = Bodies.rectangle(0, 0, 20, 1200, { isStatic: true });
-    const wallRight = Bodies.rectangle(600, 0, 20, 1200, { isStatic: true });
+    const wallThickness = 50; // Arbitrary thickness for the walls
+    this.ground = Bodies.rectangle(width / 2, height + wallThickness / 2, width, wallThickness, { isStatic: true, label: 'ground' });
+    this.leftWall = Bodies.rectangle(-wallThickness / 2, height / 2, wallThickness, height, { isStatic: true, label: 'leftWall' });
+    this.rightWall = Bodies.rectangle(width + wallThickness / 2, height / 2, wallThickness, height, { isStatic: true, label: 'rightWall' });
+    this.topWall = Bodies.rectangle(width / 2, -wallThickness / 2, width, wallThickness, { isStatic: true, label: 'topWall' });
     const ball = Bodies.circle(
       300,
       300,
@@ -50,7 +67,7 @@ export class PhysicsTestComponent implements OnInit {
       {
         render: {
           sprite: {
-            texture: this.random.getRandomValue(POKEBALL_SPRITE_CHANCES),
+            texture: this.random.getWeightedRandomItem(POKEBALL_SPRITE_CHANCES),
             xScale: 1.5,
             yScale: 1.5
           }
@@ -59,10 +76,10 @@ export class PhysicsTestComponent implements OnInit {
     );
 
     // Add bodies to the world
-    World.add(world, [ground, wallLeft, wallRight, ball]);
+    World.add(world, [this.ground, this.leftWall, this.rightWall, this.topWall, ball]);
 
     const mouse = Mouse.create(canvas);
-    const mouseConstraint = MouseConstraint.create(engine, {
+    const mouseConstraint = MouseConstraint.create(this.engine, {
       mouse: mouse,
       constraint: {
         stiffness: 0.2, // Stiffness of the spring
@@ -76,14 +93,36 @@ export class PhysicsTestComponent implements OnInit {
     World.add(world, mouseConstraint);
 
     // Enable mouse control in the render
-    render.mouse = mouse;
+    this.render.mouse = mouse;
 
     const update = () => {
-      Engine.update(engine, 1000 / 120); // Run the engine at 60 FPS
+      Engine.update(this.engine, 1000 / 120); // Run the engine at 60 FPS
       requestAnimationFrame(update);
     };
     update();
 
-    Render.run(render);
+    Render.run(this.render);
+  }
+
+  private handleResize() {
+    let width = window.innerWidth;
+    let height = window.innerHeight;
+
+    // Update renderer dimensions
+    this.render.options.width = width;
+    this.render.options.height = height;
+    this.render.canvas.width = width;
+    this.render.canvas.height = height;
+
+    World.remove(this.engine.world, [this.ground, this.leftWall, this.rightWall, this.topWall]);
+
+    const wallThickness = 50;
+
+    this.ground = Bodies.rectangle(width / 2, height + wallThickness / 2, width, wallThickness, { isStatic: true, label: 'ground' });
+    this.leftWall = Bodies.rectangle(-wallThickness / 2, height / 2, wallThickness, height, { isStatic: true, label: 'leftWall' });
+    this.rightWall = Bodies.rectangle(width + wallThickness / 2, height / 2, wallThickness, height, { isStatic: true, label: 'rightWall' });
+    this.topWall = Bodies.rectangle(width / 2, -wallThickness / 2, width, wallThickness, { isStatic: true, label: 'topWall' });
+
+    World.add(this.engine.world, [this.ground, this.leftWall, this.rightWall, this.topWall]);
   }
 }

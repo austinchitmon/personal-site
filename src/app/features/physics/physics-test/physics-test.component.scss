@@ -1,5 +1,9 @@
+:host {
+  min-height: 0;
+  flex: 1;
+}
+
 .demo {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  max-height: 100%;
+  width: 100%;
 }
