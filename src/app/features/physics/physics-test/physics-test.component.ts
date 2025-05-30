@@ -33,7 +33,7 @@ export class PhysicsTestComponent implements OnInit {
   private topWall!: Matter.Body;
 
   @HostListener('window:resize', ['$event'])
-  onResize(event: Event): void {
+  onResize(): void {
     this.handleResize();
   }
 
@@ -105,8 +105,8 @@ export class PhysicsTestComponent implements OnInit {
   }
 
   private handleResize() {
-    let width = window.innerWidth;
-    let height = window.innerHeight;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
 
     // Update renderer dimensions
     this.render.options.width = width;
