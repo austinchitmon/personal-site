@@ -15,12 +15,12 @@ import { RandomNumberService } from '../../../shared/random-number.service';
 import { POKEBALL_SPRITE_CHANCES } from '../consts/pokeball-chances.const';
 
 @Component({
-  selector: 'app-physics-test',
+  selector: 'app-chittymon-container',
   imports: [],
-  templateUrl: './physics-test.component.html',
-  styleUrl: './physics-test.component.scss',
+  templateUrl: './chittymon-container.component.html',
+  styleUrl: './chittymon-container.component.scss',
 })
-export class PhysicsTestComponent implements OnInit {
+export class ChittymonContainerComponent implements OnInit {
   constructor(
     private readonly random: RandomNumberService
   ) {}

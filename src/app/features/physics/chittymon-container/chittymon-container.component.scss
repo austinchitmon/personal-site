@@ -1,0 +1,16 @@
+:host {
+  min-height: 0;
+  flex: 1;
+}
+
+.demo {
+  height: 100%;
+  width: 100%;
+}
+
+/* Media query for screens up to a certain width (e.g., 768px for common phone sizes) */
+@media (max-width: 768px) {
+  .demo {
+    height: 90%;
+  }
+}

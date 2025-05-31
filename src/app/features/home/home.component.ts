@@ -1,8 +1,21 @@
-import { Component, Signal, signal } from '@angular/core';
+import { NgOptimizedImage } from '@angular/common';
+import {
+  Component,
+  Signal,
+  signal
+} from '@angular/core';
+import { CatInteractionsService } from './cat.interactions.service';
+import { CatStore } from './cat.store';
 
 @Component({
   selector: 'app-home',
-  imports: [],
+  providers: [
+    CatStore,
+    CatInteractionsService
+  ],
+  imports: [
+    NgOptimizedImage
+  ],
   templateUrl: `./home.component.html`,
   styleUrl: './home.component.scss',
 })
@@ -24,7 +37,9 @@ export class HomeComponent {
   ];
   private _textColor = signal<string>(this.BASE_COLORS[0]);
 
-  constructor() {
+  constructor(
+    public readonly catInteractions: CatInteractionsService
+  ) {
     this.textColor = this._textColor;
     this.startRandomColorInterval();
   }

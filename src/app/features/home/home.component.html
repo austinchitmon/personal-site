@@ -1,14 +1,38 @@
 <div class="container">
-    <h1 class="wip-message" [style.color]="textColor()">
-      WORK IN PROGRESS!!!! :D :D :D :D :D
-    </h1>
-    <img
-      class="sal-spin"
-      alt="Sal Vulcano Meme Pic He Hates"
-      src="img/sal/Sal.webp"
-    />
-    <div class="subtext-container">
-      <p>all the sals are saling, saling</p>
-      <p class="align-self-end">- le ssalifim</p>
-    </div>
+  <h1 class="wip-message"
+      [style.color]="textColor()">
+    WORK IN PROGRESS!!!! :D :D :D :D :D
+  </h1>
+  <img
+    class="sal-spin"
+    alt="Sal Vulcano Meme Pic He Hates"
+    src="img/sal/Sal.webp"
+  />
+  <div [style.padding-top]="'3rem'">
+    <button
+      class="button-1"
+      (click)="catInteractions.updateRandomCatUrl()">Randomize Cat :3
+    </button>
   </div>
+  @if (catInteractions.$randomCatUrl()) {
+    <div class="container"
+         [style.visibility]="catInteractions.$imageLoading() ? 'hidden' : 'visible'">
+      <div [style.width]="'15rem'"
+           [style.height]="'15rem'"
+           [style.position]="'relative'"
+           [style.border-width]="'.5rem'"
+           [style.border-style]="'dotted'"
+           [style.border-color]="textColor()"
+      >
+        <img
+          [style.object-fit]="'contain'"
+          (load)="catInteractions.imageLoaded()"
+          fill
+          alt="Some fuzzy guy"
+          [ngSrc]='catInteractions.$randomCatUrl()'
+        />
+      </div>
+      <p [style.font-size]="'1.5rem'">{{catInteractions.$uwuDescription()}}</p>
+    </div>
+  }
+</div>

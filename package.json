@@ -4,12 +4,13 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "start": "ng serve",
     "build": "ng build",
     "build:prod": "ng build --configuration production --base-href / && cp dist/personal-site/browser/index.html dist/personal-site/browser/404.html",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "supabase:deploy:fn": "node npm-functions/deploy-supabase-fn.js",
+    "supabase:serve:fn": "supabase functions serve --env-file .env.local --no-verify-jwt"
   },
   "private": true,
   "dependencies": {
@@ -40,6 +41,7 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
+    "supabase": "^2.23.4",
     "typescript": "~5.6.2",
     "typescript-eslint": "8.18.0"
   }

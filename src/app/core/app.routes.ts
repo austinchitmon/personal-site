@@ -7,8 +7,8 @@ export const routes: Routes = [
     component: HomeComponent,
   },
   {
-    path: 'physics',
-    loadComponent: () => import('../features/physics/physics-test/physics-test.component').then(mod =>
-      mod.PhysicsTestComponent)
+    path: 'chittymon',
+    loadComponent: () => import('../features/physics/chittymon-container/chittymon-container.component').then(mod =>
+      mod.ChittymonContainerComponent)
   },
 ];
