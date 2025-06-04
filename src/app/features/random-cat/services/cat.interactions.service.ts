@@ -9,7 +9,7 @@ import {
 } from 'rxjs';
 import { CatApiService } from '../../../shared/cat-api.service';
 import { RandomNumberService } from '../../../shared/random-number.service';
-import { CatStore } from './cat.store';
+import { CatStore } from '../cat.store';
 
 @Injectable()
 export class CatInteractionsService {

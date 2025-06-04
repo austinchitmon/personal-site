@@ -17,7 +17,10 @@ import { POKEBALL_SPRITE_CHANCES } from '../consts/pokeball-chances.const';
 @Component({
   selector: 'app-chittymon-container',
   imports: [],
-  templateUrl: './chittymon-container.component.html',
+  template: `
+    <canvas id="full-canvas"
+            class="demo"></canvas>
+  `,
   styleUrl: './chittymon-container.component.scss',
 })
 export class ChittymonContainerComponent implements OnInit {

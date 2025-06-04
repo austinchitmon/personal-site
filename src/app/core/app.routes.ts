@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { HomeComponent } from '../features/home/home.component';
+import { HomeComponent } from './home/home.component';
 
 export const routes: Routes = [
   {
@@ -8,7 +8,12 @@ export const routes: Routes = [
   },
   {
     path: 'chittymon',
-    loadComponent: () => import('../features/physics/chittymon-container/chittymon-container.component').then(mod =>
+    loadComponent: () => import('../features/chittymon/chittymon-container/chittymon-container.component').then(mod =>
       mod.ChittymonContainerComponent)
   },
+  {
+    path: 'chittylog',
+    loadComponent: () => import('../features/chittylog/chittylog-container/chittylog-container.component').then(mod =>
+      mod.ChittylogContainerComponent)
+  }
 ];

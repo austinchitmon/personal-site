@@ -4,6 +4,7 @@ import {
   RouterLink,
   RouterLinkActive
 } from '@angular/router';
+import { DEFAULT_NAV_BAR_ENTRIES } from './nav-bar.const';
 
 @Component({
   selector: 'app-nav-bar',
@@ -26,8 +27,14 @@ import {
           </div>
         </a>
         <ul class="navbar-links">
-          <li><a routerLink="/chittymon"
-                 routerLinkActive="active">Chittymon</a></li>
+          @for (entry of DEFAULT_NAV_BAR_ENTRIES; track $index) {
+            <li>
+              <a [routerLink]="entry.routerLink"
+                 routerLinkActive="active">
+                {{entry.label}}
+              </a>
+            </li>
+          }
         </ul>
       </div>
     </nav>
@@ -36,4 +43,5 @@ import {
   styleUrl: './nav-bar.component.scss',
 })
 export class NavBarComponent {
+  public readonly DEFAULT_NAV_BAR_ENTRIES = DEFAULT_NAV_BAR_ENTRIES;
 }
