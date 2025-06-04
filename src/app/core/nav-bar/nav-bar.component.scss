@@ -24,6 +24,12 @@
   width: 100%;
 }
 
+.logo-container {
+  width: 2rem;
+  height: 2rem;
+  position: relative;
+}
+
 .navbar-brand {
   font-size: 1.5rem;
   font-weight: bold;
@@ -58,6 +64,7 @@
 li {
   transition: 0.5s ease-in-out;
 }
+
 li:hover {
   scale: 1.1;
 }

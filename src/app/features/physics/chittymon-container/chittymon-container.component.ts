@@ -43,7 +43,8 @@ export class ChittymonContainerComponent implements OnInit {
     const canvas = document.getElementById('full-canvas') as HTMLCanvasElement;
 
     const width = window.innerWidth;
-    const height = window.innerHeight;
+
+    const height = window.innerHeight - 200;
     this.render = Render.create({
       canvas: canvas,
       engine: this.engine,
@@ -106,7 +107,7 @@ export class ChittymonContainerComponent implements OnInit {
 
   private handleResize() {
     const width = window.innerWidth;
-    const height = window.innerHeight;
+    const height = window.innerHeight - 200;
 
     // Update renderer dimensions
     this.render.options.width = width;

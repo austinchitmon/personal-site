@@ -2,9 +2,9 @@
 
 body {
   margin: 0;
-  background: linear-gradient(to bottom, #1c1b1b 0%, #1c1b1b 75%, black 100%);
   padding: 0;
-  min-height: 100vh;
+  overflow-x: hidden;
+  background-color: black;
 }
 
 p {
@@ -16,7 +16,16 @@ p {
   height: 100vh;
 }
 
-.flex-container {
+.flex-center {
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.display-flex {
   display: flex;
 }
 

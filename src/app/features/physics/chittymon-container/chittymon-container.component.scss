@@ -1,6 +1,8 @@
 :host {
-  min-height: 0;
-  flex: 1;
+  height: 100%;
+  display: flex;
+  overflow-y: auto;
+  background: linear-gradient(to bottom, #1c1b1b 0%, #1c1b1b 75%, black 100%);
 }
 
 .demo {
@@ -11,6 +13,7 @@
 /* Media query for screens up to a certain width (e.g., 768px for common phone sizes) */
 @media (max-width: 768px) {
   .demo {
-    height: 90%;
+    border-bottom: 1rem solid; /* reserve space for the border */
+    height: 94%;
   }
 }

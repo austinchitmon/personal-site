@@ -5,7 +5,14 @@ import { NavBarComponent } from './nav-bar/nav-bar.component';
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet, NavBarComponent],
-  templateUrl: `./app.component.html`,
+  template: `
+    <div class="display-flex flex-col height-100vh">
+      <app-nav-bar/>
+      <div class="flex-1">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  `,
   styleUrl: './app.component.scss',
 })
 export class AppComponent {

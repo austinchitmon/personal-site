@@ -7,8 +7,8 @@ import {
   switchMap,
   tap
 } from 'rxjs';
-import { CatApiService } from '../../shared/cat-api.service';
-import { RandomNumberService } from '../../shared/random-number.service';
+import { CatApiService } from '../../../shared/cat-api.service';
+import { RandomNumberService } from '../../../shared/random-number.service';
 import { CatStore } from './cat.store';
 
 @Injectable()
@@ -19,7 +19,7 @@ export class CatInteractionsService {
     // update along with random image
     this.store.randomCatUrl();
     return this.store.UWU_DESCRIPTIONS[
-      this.randomService.getRandomIntBetweenInclusive(0, this.store.UWU_DESCRIPTIONS.length)
+      this.randomService.getRandomIntBetweenInclusive(0, this.store.UWU_DESCRIPTIONS.length - 1)
       ];
   });
 
