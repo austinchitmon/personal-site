@@ -4,11 +4,12 @@ import {
   RouterLink,
   RouterLinkActive
 } from '@angular/router';
+import { BurgerMenuComponent } from './burger-menu/burger-menu.component';
 import { DEFAULT_NAV_BAR_ENTRIES } from './nav-bar.const';
 
 @Component({
   selector: 'app-nav-bar',
-  imports: [RouterLink, RouterLinkActive, NgOptimizedImage],
+  imports: [RouterLink, RouterLinkActive, NgOptimizedImage, BurgerMenuComponent],
   template: `
     <nav class="navbar">
       <div class="navbar-container">
@@ -23,10 +24,11 @@ import { DEFAULT_NAV_BAR_ENTRIES } from './nav-bar.const';
                    [style.object-fit]="'contain'"
               >
             </div>
-            <span class="site-name">itmon.com</span>
+            <span class="site-name hide-sm">itmon.com</span>
           </div>
         </a>
-        <ul class="navbar-links">
+        <app-burger-menu class="show-sm hide-lg"/>
+        <ul class="navbar-links hide-sm">
           @for (entry of DEFAULT_NAV_BAR_ENTRIES; track $index) {
             <li>
               <a [routerLink]="entry.routerLink"

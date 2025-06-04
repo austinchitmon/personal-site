@@ -69,6 +69,21 @@ li:hover {
   scale: 1.1;
 }
 
+.hide-lg {
+  display: none;
+}
+
+/* Media query for screens up to a certain width (e.g., 768px for common phone sizes) */
+@media (max-width: 768px) {
+  .hide-sm {
+    display: none;
+  }
+
+  .show-sm {
+    display: block !important;
+  }
+}
+
 /* Keyframes for spinning */
 @keyframes spin {
   from {

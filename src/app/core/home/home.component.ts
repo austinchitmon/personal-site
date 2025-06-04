@@ -12,12 +12,12 @@ import { HomeStore } from './home.store';
   ],
   template: `
     <div class="page-container">
-      <h1 class="wip-message"
+      <h1 class="wip-message text-align-center"
           [style.color]="homeStore.textColor()">
-        ⚠️ WORK IN PROGRESS! ⚠️
+        ⚠️WORK IN PROGRESS!⚠️
       </h1>
-      <h2>Welcome to Austin Chitmon's Personal Website 🚀</h2>
-      <p>Not much to do yet... but feel free to take a cat photo 😸</p>
+      <h2 class="text-align-center">Welcome to Austin Chitmon's Personal Website 🚀</h2>
+      <p class="text-align-center">Not much to do yet... but feel free to take a cat photo 😸</p>
       <app-random-cat [textColor]="homeStore.textColor()"/>
     </div>
 
