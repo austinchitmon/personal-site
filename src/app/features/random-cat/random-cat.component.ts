@@ -3,13 +3,15 @@ import {
   Component,
   input
 } from '@angular/core';
+import { ButtonDirective } from 'primeng/button';
 import { CatStore } from './cat.store';
 import { CatInteractionsService } from './services/cat.interactions.service';
 
 @Component({
   selector: 'app-random-cat',
   imports: [
-    NgOptimizedImage
+    NgOptimizedImage,
+    ButtonDirective
   ],
   providers: [
     CatStore,
@@ -19,6 +21,7 @@ import { CatInteractionsService } from './services/cat.interactions.service';
     <div class="display-flex flex-col row-gap flex-center vertical-padding">
       <div>
         <button
+          pButton
           class="button-primary"
           (click)="catInteractions.updateRandomCatUrl()">Generate Cat 🐈‍⬛
         </button>
