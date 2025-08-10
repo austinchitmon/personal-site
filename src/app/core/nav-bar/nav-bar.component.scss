@@ -7,21 +7,17 @@
   align-self: flex-end;
 }
 
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+:host ::ng-deep .p-toolbar.navbar {
   background-color: #b48;
   color: white;
   padding: 10px 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
 
-.navbar-container {
-  column-gap: 1rem;
-  display: flex;
-  align-items: center;
-  width: 100%;
+  .p-toolbar-group-start, .p-toolbar-group-end {
+    column-gap: 1rem;
+    display: flex;
+    align-items: center;
+  }
 }
 
 .logo-container {
@@ -43,6 +39,7 @@
   margin: 0;
   padding: 0;
   column-gap: 1rem;
+  align-items: center;
 }
 
 .navbar-links a {

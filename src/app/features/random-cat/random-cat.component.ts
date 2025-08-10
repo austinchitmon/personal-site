@@ -51,7 +51,7 @@ import { CatInteractionsService } from './services/cat.interactions.service';
   styleUrl: './random-cat.component.scss'
 })
 export class RandomCatComponent {
-  textColor = input.required<string>();
+  textColor = input<string>('#3B82F6'); // Default to a blue color if not provided
 
   constructor(public readonly catInteractions: CatInteractionsService
   ) {
