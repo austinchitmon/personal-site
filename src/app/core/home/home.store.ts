@@ -1,43 +1,38 @@
 import {
   Injectable,
-  Signal,
-  signal
+  signal,
+  WritableSignal
 } from '@angular/core';
+
+export interface HomeState {
+  textColor: WritableSignal<string>;
+  colors: WritableSignal<string[]>;
+}
 
 @Injectable()
 export class HomeStore {
-  public textColor: Signal<string>;
+  #state: HomeState = {
+    textColor: signal(''),
+    colors: signal([
+      '#B48',
+      '#B4B',
+      '#84B',
+      '#44B',
+      '#48B',
+      '#4BB',
+      '#4B8',
+      '#4B4',
+      '#8B4',
+      '#BB4',
+      '#B84',
+      '#B44',
+    ])
+  };
 
-  private readonly BASE_COLORS: string[] = [
-    '#B48',
-    '#B4B',
-    '#84B',
-    '#44B',
-    '#48B',
-    '#4BB',
-    '#4B8',
-    '#4B4',
-    '#8B4',
-    '#BB4',
-    '#B84',
-    '#B44',
-  ];
-  private _textColor = signal<string>(this.BASE_COLORS[0]);
+  public textColor = this.#state.textColor.asReadonly();
+  public colors = this.#state.colors.asReadonly();
 
-  constructor() {
-    this.textColor = this._textColor;
-    this.startRandomColorInterval();
-  }
-
-  private startRandomColorInterval(): void {
-    setInterval(() => {
-      this._textColor.set(this.getRandomColor(this.BASE_COLORS));
-    }, 500);
-  }
-
-
-  private getRandomColor(list: string[]): string {
-    const randomIndex = Math.floor(Math.random() * list.length);
-    return list[randomIndex];
+  public setTextColor(color: string): void {
+    this.#state.textColor.set(color);
   }
 }

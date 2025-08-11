@@ -34,9 +34,38 @@
 }
 
 .greeting {
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
+  font-size: 1.75rem;
   font-weight: 500;
+}
+
+.roles {
+  color: #cacaca;
+  font-style: italic;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: lighter;
+  font-size: .9rem;
+  margin: 0.25rem 0 1rem;
+  line-height: 1.5;
+
+  ::after {
+    content: attr(data-text);
+    display: none;
+  }
+
+  span.separator {
+    display: inline-block;
+    width: 1px;
+    height: 1.2em;
+    background: linear-gradient(to bottom, #4BB 0%, #B48 100%);
+  }
+
+  @media (max-width: 768px) {
+    justify-content: center;
+    gap: 0.3rem;
+  }
 }
 
 .title {
@@ -52,6 +81,18 @@
   }
 }
 
+
+.vertical-line {
+  width: 2px;
+  height: 100%;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.3));
+  margin: 0 1rem;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
+}
+
 .subtitle {
   font-size: 1.2rem;
   font-weight: 400;
@@ -61,6 +102,34 @@
 
   @media (max-width: 768px) {
     font-size: 1rem;
+  }
+}
+
+.gradient-underline {
+  position: relative;
+  display: inline-block;
+
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(to right, #4BB 0%, #B48 100%);
+  }
+}
+
+.gradient-aqua-pink {
+  &::after {
+    background: linear-gradient(to right, #4BB 0%, #B48 100%);
+  }
+}
+
+.gradient-yellow-black {
+  &::after {
+    background: linear-gradient(to right, #FF0, #353330);
   }
 }
 

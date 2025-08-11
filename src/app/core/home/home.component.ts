@@ -5,6 +5,7 @@ import {
   inject
 } from '@angular/core';
 import { ButtonDirective } from 'primeng/button';
+import { HomeFacade } from './home-facade';
 import { HomeStore } from './home.store';
 
 @Component({
@@ -12,18 +13,35 @@ import { HomeStore } from './home.store';
   standalone: true,
   imports: [NgOptimizedImage, ButtonDirective],
   providers: [
-    HomeStore
+    HomeStore,
+    HomeFacade
   ],
   template: `
     <div class="page-container">
       <div class="content-section">
         <div class="text-content">
-          <h3 class="greeting">
-            <span [style.color]="homeStore.textColor()">Hi There! 👋</span> I'm Austin Chitmon
-          </h3>
-          <h1 class="title">Welcome to my Personal Website</h1>
-          <h2 class="subtitle">I am a Software Engineer with a focus on UI Development and Angular Expertise. This website serves as a catalog for any and all
-            of my personal projects.</h2>
+          <h1 class="greeting">
+            <span [style.color]="facade.textColor()">Hi There! 👋</span> I'm Austin
+          </h1>
+          <span class="roles">
+            Software Engineer
+            <span class="separator"></span>
+            UI Developer
+            <span class="separator"></span>
+          Angular
+            <span class="separator"></span>
+          RxJS
+            <span class="separator"></span>
+            Component Architecture Instructor
+          </span>
+          <h2 class="title">Welcome to my Personal Website</h2>
+          <h2 class="subtitle">I am a Software Engineer at <span class="gradient-underline gradient-yellow-black">J.B. Hunt</span> where I have spent the past
+            <span class="gradient-underline">6 years</span> building
+            enterprise applications serving over <span class="gradient-underline">500
+            Transportation Managers</span> and <span class="gradient-underline">20,000 drivers</span>. I am the
+            <span class="gradient-underline">UI Tech Lead</span> for a 10 person squad. I help grow our junior developer talent as the
+            <span class="gradient-underline">instructor</span> for the Angular Component Architecture training course. In my downtime, I make stuff on here! 🚀
+          </h2>
         </div>
         <div class="image-container">
           <img
@@ -83,7 +101,7 @@ import { HomeStore } from './home.store';
         <h3 class="resume-title">Want the details?</h3>
         <div class="divider"></div>
         <button pButton
-                (click)="downloadResume()"
+                (click)="facade.downloadResume()"
                 class="resume-button">
           📄 Download My Resume
         </button>
@@ -94,12 +112,10 @@ import { HomeStore } from './home.store';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class HomeComponent {
-  protected readonly homeStore = inject(HomeStore);
+  protected facade = inject(HomeFacade);
 
-  downloadResume() {
-    const link = document.createElement('a');
-    link.href = '/assets/resume.pdf';
-    link.download = 'Austin_Chitmon_Resume.pdf';
-    link.click();
+  constructor() {
+    this.facade.startRandomColorInterval();
   }
+
 }

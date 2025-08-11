@@ -6,7 +6,12 @@ import {
   Observable,
   take
 } from 'rxjs';
-import { ApiService } from './api.service';
+import {
+  BASE_FUNCTIONS,
+  BASE_SUPABASE_URL,
+  FUNCTIONS
+} from '../../../shared/api/api.config';
+import { ApiService } from '../../../shared/api/api.service';
 
 @Injectable({ providedIn: 'root' })
 export class CatApiService {
@@ -15,7 +20,7 @@ export class CatApiService {
   ) {}
 
   public getRandomCatImageURL(): Observable<string> {
-    return this.apiService.get<{ imageUrl: string }>(`https://hjdkrtgkjoiwjikbpvje.supabase.co/functions/v1/random-cat-img`, {
+    return this.apiService.get<{ imageUrl: string }>(`${BASE_SUPABASE_URL}${BASE_FUNCTIONS}${FUNCTIONS.RANDOM_CAT}`, {
       headers: {
         "Content-Type": "application/json",
       }
@@ -29,3 +34,5 @@ export class CatApiService {
     );
   }
 }
+
+// https://hjdkrtgkjoiwjikbpvje.supabase.co/storage/v1/object/public/public-personal-site/resume.pdf

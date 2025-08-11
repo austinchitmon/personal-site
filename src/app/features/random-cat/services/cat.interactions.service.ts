@@ -7,9 +7,9 @@ import {
   switchMap,
   tap
 } from 'rxjs';
-import { CatApiService } from '../../../shared/cat-api.service';
 import { RandomNumberService } from '../../../shared/random-number.service';
 import { CatStore } from '../cat.store';
+import { CatApiService } from './cat-api.service';
 
 @Injectable()
 export class CatInteractionsService {
