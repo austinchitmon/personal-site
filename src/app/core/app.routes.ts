@@ -12,13 +12,12 @@ export const routes: Routes = [
       mod.ChittymonContainerComponent)
   },
   {
-    path: 'chittylog',
-    loadComponent: () => import('../features/chittylog/chittylog-container/chittylog-container.component').then(mod =>
-      mod.ChittylogContainerComponent)
+    path: 'chittyblog',
+    loadChildren: () => import('../features/chittylog/chittylog.routes').then(mod => mod.CHITTYLOG_ROUTES),
   },
   {
     path: 'cat',
     loadComponent: () => import('../features/random-cat/random-cat.component').then(mod =>
       mod.RandomCatComponent)
-  }
+  },
 ];

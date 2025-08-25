@@ -9,6 +9,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint",
+    "blog:update-manifest": "node npm-functions/generate-blog-manifest.js",
     "supabase:deploy:fn": "node npm-functions/deploy-supabase-fn.js",
     "supabase:serve:fn": "supabase functions serve --env-file .env.local --no-verify-jwt"
   },
@@ -23,8 +24,12 @@
     "@angular/platform-browser-dynamic": "^20.0.6",
     "@angular/router": "^20.0.6",
     "@primeuix/themes": "^1.2.1",
+    "emoji-toolkit": "^9.0.0",
+    "marked": "^15.0.0",
     "matter-js": "^0.20.0",
+    "ngx-markdown": "^20.0.0",
     "primeng": "^20.0.0-rc.2",
+    "prismjs": "^1.30.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"

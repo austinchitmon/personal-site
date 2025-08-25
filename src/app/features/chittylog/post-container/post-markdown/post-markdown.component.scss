@@ -1,0 +1,26 @@
+::ng-deep {
+  .markdown {
+
+    p:not(li > p) {
+      text-indent: 1rem;
+    }
+
+    p {
+      margin: 1.25rem 0;
+
+      code {
+        font-family: 'Fira Mono', 'Consolas', 'Monaco', 'Courier New', monospace;
+        background: #2e2e2e;
+        color: #b48;
+        padding: 0.1em 0.2em;
+        border-radius: 4px;
+        font-size: 0.90em;
+        word-break: break-word;
+      }
+    }
+
+    li {
+      padding-left: .5rem;
+    }
+  }
+}

@@ -5,13 +5,14 @@ import {
   inject
 } from '@angular/core';
 import { ButtonDirective } from 'primeng/button';
+import { SectionBreakComponent } from '../../shared/section-break/section-break.component';
 import { HomeFacade } from './home-facade';
 import { HomeStore } from './home.store';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [NgOptimizedImage, ButtonDirective],
+  imports: [NgOptimizedImage, ButtonDirective, SectionBreakComponent],
   providers: [
     HomeStore,
     HomeFacade
@@ -55,7 +56,7 @@ import { HomeStore } from './home.store';
         </div>
       </div>
 
-      <div class="section-break"></div>
+      <app-section-break/>
 
       <div class="about-section">
         <h2 class="section-title">About Me</h2>

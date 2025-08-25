@@ -1,4 +1,7 @@
-import { provideHttpClient } from '@angular/common/http';
+import {
+  HttpClient,
+  provideHttpClient
+} from '@angular/common/http';
 import {
   ApplicationConfig,
   provideZoneChangeDetection
@@ -6,6 +9,7 @@ import {
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideRouter } from '@angular/router';
 import Aura from '@primeuix/themes/aura';
+import { provideMarkdown } from 'ngx-markdown';
 import { providePrimeNG } from 'primeng/config';
 import { routes } from './app.routes';
 
@@ -20,6 +24,7 @@ export const appConfig: ApplicationConfig = {
       theme: {
         preset: Aura
       }
-    })
+    }),
+    provideMarkdown({ loader: HttpClient })
   ]
 };
