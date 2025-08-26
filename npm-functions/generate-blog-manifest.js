@@ -15,6 +15,11 @@ fs.readdir(blogPath, (err, files) => {
   const markdownFiles = files
     .filter(file => file.endsWith('.md'))
     .map(file => `${file}`);
+
+  if (markdownFiles?.length === 0) {
+    return console.error('No markdown files found in the blog directory.');
+  }
+
   const manifest = { files: markdownFiles };
   fs.writeFileSync(manifestPath, JSON.stringify(manifest, null, 2));
   console.log('Manifest file generated successfully!');

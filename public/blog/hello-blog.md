@@ -12,6 +12,19 @@ This should allow me to write posts using Obsidian, save as a static file in thi
 ***
 
 1. Create a .md file under the `public/blog` directory.
+2. Set up front-matter data in `.md` file for parsing by [gray-matter](https://github.com/jonschlinkert/gray-matter)
+
+    ```yaml
+    ---
+    title: My Blog
+    subtitle: My first blog post
+    date: 2024-12-25
+    tags:
+      - tech
+      - pizza
+    ---
+    ```
+
 1. (Optional) If you want to use **Obsidian**, open `public/blog` as a vault to generate a `.obsidian` folder. This file is ignored in `.gitignore` by default.
 1. Once created, run:
 
