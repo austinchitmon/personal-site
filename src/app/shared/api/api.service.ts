@@ -6,6 +6,16 @@ import {
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
+interface HttpOptions {
+  headers?: HttpHeaders | Record<string, string | string[]>;
+  params?: HttpParams | Record<string, string | number | boolean | readonly (string | number | boolean)[]>;
+  reportProgress?: boolean;
+  responseType?: 'arraybuffer' | 'blob' | 'json' | 'text';
+  transferCache?: {
+    includeHeaders?: string[];
+  } | boolean;
+}
+
 @Injectable({ providedIn: 'root' })
 export class ApiService {
   constructor(
@@ -18,15 +28,8 @@ export class ApiService {
    * @param options Optional request options like headers, params.
    * @returns An Observable of the response type.
    */
-  public get<T>(url: string, options?: {
-    headers?: HttpHeaders | Record<string, string | string[]>
-    params?: HttpParams | Record<string, string | number | boolean | readonly (string | number | boolean)[]>
-    reportProgress?: boolean;
-    responseType?: any;
-    transferCache?: {
-      includeHeaders?: string[];
-    } | boolean;
-  }): Observable<T> {
+  public get<T>(url: string, options?: HttpOptions): Observable<T> {
+    // @ts-expect-error type issue with responseType
     return this.http.get<T>(url, options);
   }
 
