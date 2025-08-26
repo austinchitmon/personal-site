@@ -51,7 +51,7 @@ interface Article extends BlogConfig {
               <div class="box">
                 <img alt="Card"
                      class="img-fill"
-                     ngSrc="https://primefaces.org/cdn/primeng/images/card-ng.jpg"
+                     [ngSrc]="'blog/' + article.routerLink + '.png'"
                      fill/>
               </div>
             </ng-template>
