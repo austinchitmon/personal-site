@@ -1,9 +1,75 @@
 .page-container {
   flex: 1;
-  padding: 1rem;
+  padding: 2rem;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
   margin: 0 auto;
   max-width: 1200px;
+  justify-content: center;
+  align-items: center;
+  row-gap: 1rem;
 }
+
+.multiline-ellipsis {
+  display: -webkit-box; /* Enables the flexible box model */
+  -webkit-box-orient: vertical; /* Arranges content vertically within the box */
+  -webkit-line-clamp: 3; /* Specifies the number of lines to display before truncation */
+  overflow: hidden; /* Hides any content exceeding the defined number of lines */
+  text-overflow: ellipsis; /* Adds an ellipsis (...) to the truncated text */
+}
+
+.gradient {
+  background: linear-gradient(90deg, #4BB 0%, #B48 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+
+.box {
+  position: relative;
+  height: 16rem;
+}
+
+.img-fill {
+  border-radius: 10px 10px 0 0;
+  object-fit: cover;
+}
+
+.title {
+  font-weight: 800;
+  font-size: 3rem;
+  text-align: center;
+  @media (max-width: 768px) {
+    font-size: 2rem;
+  }
+}
+
+.white {
+  color: #cfcbc6;
+}
+
+.subtitle {
+  font-weight: 100;
+  font-size: 1rem;
+  color: #cacaca;
+  text-align: center;
+}
+
+.card-container {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.card {
+  width: 22rem;
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+

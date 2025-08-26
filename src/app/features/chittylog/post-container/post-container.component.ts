@@ -13,7 +13,7 @@ import { PostMarkdownComponent } from './post-markdown/post-markdown.component';
     PostMarkdownComponent
   ],
   template: `
-    <div class="display-flex flex-col container">
+    <div class="page-container">
       <app-post-markdown [articleRoute]="article()"/>
     </div>
   `,

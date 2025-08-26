@@ -1,3 +1,4 @@
+import { NgOptimizedImage } from '@angular/common';
 import {
   Component,
   inject,
@@ -5,9 +6,9 @@ import {
 } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
+import { Card } from 'primeng/card';
 import { map } from 'rxjs';
 import { ApiService } from '../../../shared/api/api.service';
-import { SectionBreakComponent } from '../../../shared/section-break/section-break.component';
 
 type Markdown = `${string}.md`;
 
@@ -23,19 +24,35 @@ interface Article {
 @Component({
   selector: 'app-chittylog-container',
   imports: [
-    SectionBreakComponent,
+    Card,
+    NgOptimizedImage,
     RouterLink
   ],
   template: `
     <div class="page-container">
-      <h1>ChittyBlog</h1>
-      <p>Running list of all my thoughts and ramblings.</p>
-      <app-section-break/>
-      <ul>
+      <h1><span class="title white">Chitty</span><span class="title gradient">blog</span></h1>
+      <h3 class="subtitle">Guides, updates, and random thoughts directly from me</h3>
+      <div class="card-container">
         @for (article of articles(); track $index) {
-          <li><a [routerLink]="article.routerLink">{{article.title}} </a></li>
+          <p-card class="card"
+                  [routerLink]="article.routerLink">
+            <ng-template #header>
+              <div class="box">
+                <img alt="Card"
+                     class="img-fill"
+                     ngSrc="https://primefaces.org/cdn/primeng/images/card-ng.jpg"
+                     fill/>
+              </div>
+            </ng-template>
+            <ng-template #title>{{article.title || 'Blank'}}</ng-template>
+            <ng-template #subtitle>10/07/2025</ng-template>
+            <p class="multiline-ellipsis">
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt
+              quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!
+            </p>
+          </p-card>
         }
-      </ul>
+      </div>
     </div>
   `,
   styleUrl: './chittylog-container.component.scss'
@@ -44,8 +61,10 @@ export class ChittylogContainerComponent {
   api = inject(ApiService);
   articles: Signal<Article[]> = toSignal(
     this.api.get<Manifest>('blog/manifest.json').pipe(
-      map((manifest: Manifest) => {
-        return manifest.files.map(fileName => this.formatFile(fileName));
+      map((manifest: Manifest): Article[] => {
+        return [
+          ...manifest.files.map(fileName => this.formatFile(fileName)),
+        ];
       })
     ),
     { initialValue: [] }
