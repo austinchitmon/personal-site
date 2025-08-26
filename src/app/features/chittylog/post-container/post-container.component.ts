@@ -2,9 +2,17 @@ import {
   ChangeDetectionStrategy,
   Component,
   inject,
-  signal
+  Signal
 } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
+import {
+  catchError,
+  map,
+  switchMap,
+  throwError
+} from 'rxjs';
+import { ApiService } from '../../../shared/api/api.service';
 import { PostMarkdownComponent } from './post-markdown/post-markdown.component';
 
 @Component({
@@ -14,7 +22,7 @@ import { PostMarkdownComponent } from './post-markdown/post-markdown.component';
   ],
   template: `
     <div class="page-container">
-      <app-post-markdown [articleRoute]="article()"/>
+      <app-post-markdown [articleContent]="article() || ''"/>
     </div>
   `,
   styleUrl: './post-container.component.scss',
@@ -22,5 +30,17 @@ import { PostMarkdownComponent } from './post-markdown/post-markdown.component';
 })
 export class PostContainerComponent {
   route = inject(ActivatedRoute);
-  public article = signal<string>(this.route.snapshot.paramMap.get('postName') || '');
+  api = inject(ApiService);
+  public article: Signal<string | undefined> = toSignal(
+    this.route.paramMap.pipe(
+      map((params): string => params.get('postName') || ''),
+      switchMap(name => name ?
+        this.api.get<string>(`blog/${name}.md`, { responseType: 'text' })
+        : throwError(() => 'No route param')),
+      catchError((err) => {
+        console.error(err);
+        return '';
+      })
+    )
+  );
 }

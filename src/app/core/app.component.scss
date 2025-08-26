@@ -5,3 +5,15 @@
   overflow-x: hidden;
   background: linear-gradient(to bottom, #1c1b1b 0%, #1c1b1b 50%, black 100%);
 }
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Ensures the container takes at least the full viewport height */
+}
+
+.content {
+  min-height: 100vh;
+  flex: 1; /* This will push the footer down */
+  padding-bottom: 2rem; /* Add some space between content and footer */
+}

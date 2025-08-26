@@ -7,17 +7,28 @@ import {
 import { toSignal } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
 import { Card } from 'primeng/card';
-import { map } from 'rxjs';
+import {
+  map,
+  tap
+} from 'rxjs';
 import { ApiService } from '../../../shared/api/api.service';
+
+
+interface BlogConfig {
+  fileName: Markdown;
+  title: string;
+  subtitle: string;
+  date: string;
+  tags: string[];
+}
 
 type Markdown = `${string}.md`;
 
 export interface Manifest {
-  files: Markdown[];
+  files: BlogConfig[];
 }
 
-interface Article {
-  title: string;
+interface Article extends BlogConfig {
   routerLink: string;
 }
 
@@ -45,11 +56,8 @@ interface Article {
               </div>
             </ng-template>
             <ng-template #title>{{article.title || 'Blank'}}</ng-template>
-            <ng-template #subtitle>10/07/2025</ng-template>
-            <p class="multiline-ellipsis">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error repudiandae numquam deserunt
-              quisquam repellat libero asperiores earum nam nobis, culpa ratione quam perferendis esse, cupiditate neque quas!
-            </p>
+            <ng-template #subtitle>{{article.date}}</ng-template>
+            <p class="multiline-ellipsis">{{article.subtitle}}</p>
           </p-card>
         }
       </div>
@@ -63,24 +71,19 @@ export class ChittylogContainerComponent {
     this.api.get<Manifest>('blog/manifest.json').pipe(
       map((manifest: Manifest): Article[] => {
         return [
-          ...manifest.files.map(fileName => this.formatFile(fileName)),
+          ...manifest.files.map(fileConfig => this.formatFile(fileConfig)),
         ];
-      })
+      }),
+      tap(files => console.log(files))
     ),
     { initialValue: [] }
   );
 
-  private formatFile(fileName: Markdown): Article {
-    console.log(fileName);
-    const fileWithoutExtension = fileName.replace('.md', '');
+  private formatFile(file: BlogConfig): Article {
     return {
-      title: fileWithoutExtension
-        .split('-')
-        .map(word => {
-          return word.charAt(0).toUpperCase() + word.slice(1);
-        })
-        .join(' '),
-      routerLink: fileWithoutExtension
+      ...file,
+      date: new Date(file.date).toDateString(),
+      routerLink: file.fileName.replace('.md', '')
     };
 
   }

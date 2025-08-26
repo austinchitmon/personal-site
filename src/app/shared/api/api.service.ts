@@ -22,6 +22,7 @@ export class ApiService {
     headers?: HttpHeaders | Record<string, string | string[]>
     params?: HttpParams | Record<string, string | number | boolean | readonly (string | number | boolean)[]>
     reportProgress?: boolean;
+    responseType?: any;
     transferCache?: {
       includeHeaders?: string[];
     } | boolean;

@@ -14,16 +14,21 @@ import { MarkdownComponent } from 'ngx-markdown';
     <markdown
       emoji
       class="markdown"
-      [src]="articleRoute()">
+      [data]="articleContent()">
     </markdown>
   `,
   styleUrl: './post-markdown.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PostMarkdownComponent {
-  articleRoute = input.required<string, string>({
+  articleContent = input.required<string, string>({
     transform: (value: string) => {
-      return `blog/${value}.md`;
+      return this.stripFrontMatter(value);
     }
   });
+
+  private stripFrontMatter(markdown: string): string {
+    const frontMatterRegex = /^---\s*[\s\S]*?\s*---/;
+    return markdown.replace(frontMatterRegex, '').trim();
+  }
 }
