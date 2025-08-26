@@ -1,1 +1,0 @@
-import"./chunk-EQDQRRRY.js";var t=[{path:"",loadComponent:()=>import("./chunk-F62TA7BA.js").then(o=>o.ChittylogContainerComponent)},{path:":postName",loadComponent:()=>import("./chunk-QQPIMLF6.js").then(o=>o.PostContainerComponent)}];export{t as CHITTYLOG_ROUTES};

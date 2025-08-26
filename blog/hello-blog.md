@@ -1,3 +1,14 @@
+---
+title: Hello Blog
+subtitle: Testing blog post, please ignore. Explains how populating this blog works.
+date: 2025-08-26T00:00:00-05:00
+tags:
+  - markdown
+  - angular
+  - obsidian
+  - node
+---
+
 # Hello Blog :wave:
 
 ***
@@ -6,6 +17,10 @@
 Verifying integration with an Obsidian vault inside the `public` folder of this website's repo.
 
 This should allow me to write posts using Obsidian, save as a static file in this website's repo, integrating it into the git workflow, then serving it in Chittyblog using `ngx-markdown`.
+
+**Update 08/26/2026**
+
+I figured out how to use the `gray-matter` package to allow for my node script to read front-matter content. The "How it works" section has been updated with this info!
 
 ## How it works :page_facing_up:
 
@@ -37,12 +52,23 @@ This should allow me to write posts using Obsidian, save as a static file in thi
     ```json
     {
       "files": [
-        "blog/hello-blog.md"
+        {
+          "fileName": "hello-blog.md",
+          "title": "Hello Blog",
+          "subtitle": "Testing blog post, please ignore. Explains how populating this blog works.",
+          "date": "2025-08-26T05:00:00.000Z",
+          "tags": [
+            "markdown",
+            "angular",
+            "obsidian",
+            "node"
+          ]
+        }
       ]
     }
     ```
 
 1. Navigate to `/chittyblog`
-2. A service in the `ChittylogContainerComponent` will iterate through the `manifest.json` filename list, generating links for each of the markdown files.
+2. A service in the `ChittylogContainerComponent` will iterate through the `manifest.json` filename list, generating `p-card` elements for each of the Markdown files. It will display the title, subtitle, date posted, and other content all in the card!
 1. Click one of the links in the list to open the Markdown file.
 1. :white_check_mark: Success!

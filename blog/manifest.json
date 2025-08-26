@@ -1,5 +1,16 @@
 {
   "files": [
-    "hello-blog.md"
+    {
+      "fileName": "hello-blog.md",
+      "title": "Hello Blog",
+      "subtitle": "Testing blog post, please ignore. Explains how populating this blog works.",
+      "date": "2025-08-26T05:00:00.000Z",
+      "tags": [
+        "markdown",
+        "angular",
+        "obsidian",
+        "node"
+      ]
+    }
   ]
 }
