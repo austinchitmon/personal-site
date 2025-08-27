@@ -22,6 +22,15 @@ This should allow me to write posts using Obsidian, save as a static file in thi
 
 I figured out how to use the `gray-matter` package to allow for my node script to read front-matter content. The "How it works" section has been updated with this info!
 
+**Update 08/27/2026**
+
+Fixed several loading issues to make page feel more responsive.
+
+- Instead of generating a `manifest.json` file, I now generate a `.ts` within the `shared` directory with a single const that can easily be imported into consuming components at build time. This eliminates the need to leverage `HttpClient` for fetching the manifest.json
+- The route within `chittylog.routes.ts` are no longer lazy loaded. This caused a second delay when opening each article because it loaded the `.js` in at run-time. Chose to take the minor optimization hit on initial load, because I'd expect users to read at least one article if they're hitting the base article page.
+
+Instructions will be updated with this new flow!
+
 ## How it works :page_facing_up:
 
 ***
@@ -47,10 +56,10 @@ I figured out how to use the `gray-matter` package to allow for my node script t
     npm run blog:update-manifest
     ```
 
-1. This creates a `manifest.json` file in the `public/blog` directory with a list of navigable `.md` files for display. This command also gets ran on the `gh-pages.yml` deploy script for production builds.
+1. This creates a `blog-manifest.ts` file in the `src/app/shared/data` directory with a list of navigable `.md` files for display. This command is setup with `prebuild` and `prebuild:prod` to ensure it always stays up to date.
 
-    ```json
-    {
+    ```typescript
+    export const BLOG_MANIFEST = {
       "files": [
         {
           "fileName": "hello-blog.md",
@@ -65,10 +74,10 @@ I figured out how to use the `gray-matter` package to allow for my node script t
           ]
         }
       ]
-    }
+    } as const;
     ```
 
 1. Navigate to `/chittyblog`
-2. A service in the `ChittylogContainerComponent` will iterate through the `manifest.json` filename list, generating `p-card` elements for each of the Markdown files. It will display the title, subtitle, date posted, and other content all in the card!
-1. Click one of the links in the list to open the Markdown file.
+2. A service in the `ChittylogContainerComponent` will import the `BLOG-MANIFEST` and generate `p-card` elements for each of the Markdown files. It will display the title, subtitle, date posted, and other content all in the card!
+1. Click one of the links in the list to open the full article.
 1. :white_check_mark: Success!
