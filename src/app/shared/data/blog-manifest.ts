@@ -6,6 +6,7 @@ export const BLOG_MANIFEST = {
     {
       "fileName": "hello-blog.md",
       "title": "Hello Blog",
+      "cover": "hello-blog.png",
       "subtitle": "Testing blog post, please ignore. Explains how populating this blog works.",
       "date": "2025-08-26T05:00:00.000Z",
       "tags": [

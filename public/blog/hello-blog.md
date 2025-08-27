@@ -1,5 +1,6 @@
 ---
 title: Hello Blog
+cover: hello-blog.png
 subtitle: Testing blog post, please ignore. Explains how populating this blog works.
 date: 2025-08-26T00:00:00-05:00
 tags:

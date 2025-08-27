@@ -10,6 +10,7 @@ import { BLOG_MANIFEST } from '../../../shared/data/blog-manifest';
 
 interface BlogConfig {
   fileName: Markdown;
+  cover: Image;
   title: string;
   subtitle: string;
   date: string;
@@ -17,10 +18,7 @@ interface BlogConfig {
 }
 
 type Markdown = `${string}.md`;
-
-export interface Manifest {
-  files: BlogConfig[];
-}
+type Image = `${string}.png` | `${string}.jpg` | `${string}.jpeg` | `${string}.gif`;
 
 interface Article extends BlogConfig {
   routerLink: string;
@@ -47,12 +45,12 @@ interface Article extends BlogConfig {
                 <img
                   alt="{{article.title}}"
                   class="img-fill"
-                  [ngSrc]="'blog/' + article.routerLink + '.png'"
+                  [ngSrc]="'blog/' + article.cover"
                   fill
                 />
               </div>
             </ng-template>
-            <ng-template #title>{{article.title || 'Blank'}}</ng-template>
+            <ng-template #title>{{article.title || 'Article'}}</ng-template>
             <ng-template #subtitle>{{article.date}}</ng-template>
             <p class="multiline-ellipsis">{{article.subtitle}}</p>
           </p-card>
