@@ -14,6 +14,7 @@ yarn-error.log
 # IDEs and editors
 .idea/
 .junie/
+.qoder/
 .project
 .classpath
 .c9/

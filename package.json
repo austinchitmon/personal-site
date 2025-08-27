@@ -4,12 +4,14 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "prebuild": "npm run blog:update-manifest",
     "build": "ng build",
+    "prebuild:prod": "npm run blog:update-manifest",
     "build:prod": "ng build --configuration production --base-href / && cp dist/personal-site/browser/index.html dist/personal-site/browser/404.html",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint",
-    "blog:update-manifest": "node npm-functions/generate-blog-manifest.js",
+    "blog:update-manifest": "node npm-functions/generate-blog-manifest-ts.js",
     "supabase:deploy:fn": "node npm-functions/deploy-supabase-fn.js",
     "supabase:serve:fn": "supabase functions serve --env-file .env.local --no-verify-jwt"
   },
@@ -30,6 +32,7 @@
     "marked": "^15.0.0",
     "matter-js": "^0.20.0",
     "ngx-markdown": "^20.0.0",
+    "primeicons": "^7.0.0",
     "primeng": "^20.0.0-rc.2",
     "prismjs": "^1.30.0",
     "rxjs": "~7.8.0",
