@@ -35,6 +35,20 @@ fs.readdir(blogPath, (err, files) => {
         fileName: file,
         ...data
       };
+    }).sort((a, b) => {
+      // Sort articles by date in descending order (newest first)
+      const dateA = new Date(a.date);
+      const dateB = new Date(b.date);
+
+      // Handle invalid dates gracefully - fall back to filename sorting
+      if (isNaN(dateA.getTime()) && isNaN(dateB.getTime())) {
+        return a.fileName.localeCompare(b.fileName);
+      }
+      if (isNaN(dateA.getTime())) return 1; // Invalid dates go to end
+      if (isNaN(dateB.getTime())) return -1; // Valid dates come first
+
+      // Descending order: newer dates first
+      return dateB.getTime() - dateA.getTime();
     })
   };
 

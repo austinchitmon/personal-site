@@ -4,6 +4,16 @@
 export const BLOG_MANIFEST = {
   "files": [
     {
+      "fileName": "networking-1-lessons-learned.md",
+      "title": "Networking 1 - Lessons Learned",
+      "cover": "networking-1-lessons-learned.jpg",
+      "subtitle": "Problems I faced while setting up IP Passthrough for my local network and how I solved them.",
+      "date": "2025-08-27T05:00:00.000Z",
+      "tags": [
+        "networking"
+      ]
+    },
+    {
       "fileName": "hello-blog.md",
       "title": "Hello Blog",
       "cover": "hello-blog.png",

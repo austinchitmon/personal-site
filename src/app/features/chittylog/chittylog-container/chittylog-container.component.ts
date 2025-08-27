@@ -34,7 +34,7 @@ interface Article extends BlogConfig {
         ><span class="title gradient">blog</span>
       </h1>
       <h3 class="subtitle">
-        Guides, updates, and random thoughts directly from me
+        Guides, updates, and random thoughts directly from me 🌌
       </h3>
       <div class="card-container">
         @for (article of articles(); track $index) {
