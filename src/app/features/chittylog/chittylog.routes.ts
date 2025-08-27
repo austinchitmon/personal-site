@@ -1,14 +1,14 @@
 import { Routes } from '@angular/router';
+import { ChittylogContainerComponent } from './chittylog-container/chittylog-container.component';
+import { PostContainerComponent } from './post-container/post-container.component';
 
 export const CHITTYLOG_ROUTES: Routes = [
   {
     path: '',
-    loadComponent: () => import('./chittylog-container/chittylog-container.component').then(mod =>
-      mod.ChittylogContainerComponent),
+    component: ChittylogContainerComponent,
   },
   {
     path: ':postName',
-    loadComponent: () => import('./post-container/post-container.component').then(mod =>
-      mod.PostContainerComponent),
-  }
+    component: PostContainerComponent,
+  },
 ];

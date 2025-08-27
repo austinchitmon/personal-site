@@ -1,5 +1,9 @@
 import { NgOptimizedImage } from '@angular/common';
-import { Component, signal, Signal } from '@angular/core';
+import {
+  Component,
+  signal,
+  Signal
+} from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Card } from 'primeng/card';
 import { BLOG_MANIFEST } from '../../../shared/data/blog-manifest';
@@ -36,21 +40,22 @@ interface Article extends BlogConfig {
       </h3>
       <div class="card-container">
         @for (article of articles(); track $index) {
-        <p-card class="card" [routerLink]="article.routerLink">
-          <ng-template #header>
-            <div class="box">
-              <img
-                alt="Card"
-                class="img-fill"
-                [ngSrc]="'blog/' + article.routerLink + '.png'"
-                fill
-              />
-            </div>
-          </ng-template>
-          <ng-template #title>{{ article.title || 'Blank' }}</ng-template>
-          <ng-template #subtitle>{{ article.date }}</ng-template>
-          <p class="multiline-ellipsis">{{ article.subtitle }}</p>
-        </p-card>
+          <p-card class="card"
+                  [routerLink]="article.routerLink">
+            <ng-template #header>
+              <div class="box">
+                <img
+                  alt="{{article.title}}"
+                  class="img-fill"
+                  [ngSrc]="'blog/' + article.routerLink + '.png'"
+                  fill
+                />
+              </div>
+            </ng-template>
+            <ng-template #title>{{article.title || 'Blank'}}</ng-template>
+            <ng-template #subtitle>{{article.date}}</ng-template>
+            <p class="multiline-ellipsis">{{article.subtitle}}</p>
+          </p-card>
         }
       </div>
     </div>

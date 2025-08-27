@@ -5,10 +5,10 @@
       text-indent: 1rem;
     }
 
-    p {
+    p, li {
       margin: 1.25rem 0;
 
-      code {
+      code:not(pre > code) {
         font-family: 'Fira Mono', 'Consolas', 'Monaco', 'Courier New', monospace;
         background: #2e2e2e;
         color: #b48;

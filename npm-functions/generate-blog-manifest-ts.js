@@ -17,7 +17,7 @@ fs.readdir(blogPath, (err, files) => {
   if (err) {
     return console.error('Error reading blog directory:', err);
   }
-  
+
   const markdownFiles = files
     .filter(file => file.endsWith('.md'))
     .map(file => `${file}`);
@@ -48,9 +48,4 @@ export const BLOG_MANIFEST = ${JSON.stringify(manifest, null, 2)} as const;
   // Write the TypeScript file
   fs.writeFileSync(outputPath, tsContent);
   console.log('TypeScript blog manifest generated successfully at:', outputPath);
-  
-  // Also write the JSON manifest for backward compatibility
-  const manifestPath = path.join(blogPath, 'manifest.json');
-  fs.writeFileSync(manifestPath, JSON.stringify(manifest, null, 2));
-  console.log('JSON manifest updated for backward compatibility.');
 });

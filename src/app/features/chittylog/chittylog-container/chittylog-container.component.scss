@@ -19,12 +19,11 @@
 }
 
 .gradient {
-  background: linear-gradient(90deg, #4BB 0%, #B48 100%);
+  background: linear-gradient(90deg, #4bb 0%, #b48 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
-
 
 .box {
   position: relative;
@@ -67,9 +66,38 @@
 
 .card {
   width: 22rem;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.5s ease;
 
   &:hover {
     cursor: pointer;
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(187, 68, 136, 0.5);
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+      0deg,
+      transparent,
+      transparent 30%,
+      rgba(187, 68, 136, 0.3)
+    );
+    transform: rotate(-45deg);
+    transition: all 0.5s ease;
+    opacity: 0;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  &:hover::before {
+    opacity: 1;
+    transform: rotate(-45deg) translateY(100%);
   }
 }
-
