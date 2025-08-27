@@ -22,13 +22,10 @@ jobs:
         # https://github.com/actions/setup-node
         uses: actions/setup-node@v4
         with:
-          node-version: '20.19.2'
+          node-version: "20.19.2"
 
       - name: Install dependencies
         run: npm install
-
-      - name: Generate Blog Post Manifest
-        run: npm run blog:update-manifest
 
       - name: Lint Application
         run: npm run lint

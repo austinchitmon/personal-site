@@ -1,15 +1,21 @@
 /* You can add global styles to this file, and also import other style files */
-@import '@fontsource/inter/400.css';
+@import "@fontsource/inter/400.css";
+@import "primeicons/primeicons.css";
 
 body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
   background-color: black;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   margin: 0;
   color: #cfcbc6;
 }
@@ -60,4 +66,3 @@ p {
 .text-align-center {
   text-align: center;
 }
-
