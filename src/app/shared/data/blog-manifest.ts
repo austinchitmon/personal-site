@@ -4,6 +4,18 @@
 export const BLOG_MANIFEST = {
   "files": [
     {
+      "fileName": "angular-coding-standard.md",
+      "title": "Typescript / Angular 20+ Coding Standards",
+      "cover": "angular-coding-standard.png",
+      "subtitle": "Collection of standards for building robust, responsive Angular applications using PrimeNG.",
+      "date": "2025-08-27T05:01:00.000Z",
+      "tags": [
+        "typescript",
+        "angular",
+        "PrimeNG"
+      ]
+    },
+    {
       "fileName": "networking-1-lessons-learned.md",
       "title": "Networking 1 - Lessons Learned",
       "cover": "networking-1-lessons-learned.jpg",

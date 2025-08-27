@@ -9,6 +9,8 @@ tags:
 
 # Breaking the Network :satellite:
 
+---
+
 I've been getting interested in setting up a homelab. The first thing I had to do is set up my own personal router since I have the unfortunate burden of the all-in-one AT&T Gateway.
 
 Since the gateway gives you little control over configuration, I purchased my own [UniFi Dream Router 7](https://store.ui.com/us/en/products/udr7). The UDR7 is a great all-in-one switch, firewall, and router for beginner setups like I am going for.
@@ -25,6 +27,8 @@ After some more troubleshooting, research, and banging my head against the wall,
 
 ## Problem Setup
 
+---
+
 - Made DHCP Range on AT&T Gateway `192.168.10.1 - 192.168.10.2`
 - Made Gateway Lan IP `192.168.10.254`
 - Tried to connect to gateway through ethernet connection on laptop
@@ -33,12 +37,16 @@ After some more troubleshooting, research, and banging my head against the wall,
 
 ## Diagnosis
 
+---
+
 - Other devices on LAN had already taken the two possible IPs assigned by DHCP.
 - This caused my laptop to receive an APIPA.
 - Internet still worked, but couldn't connect to gateway, because laptop had a completely different network at this point (`169.254.x.x` vs `192.168.10.x`)
 - Because of the different subnets, gateway did not allow navigation to the configuration panel.
 
 ## Solution
+
+---
 
 - Assign laptop a **static IP** for within gateway's network IP range (`192.168.10.x`) **BUT NOT** in the DHCP range.
 - Because these static IPs have the same network IP, they are able to access the gateway, even if they weren't assigned out by DHCP.
