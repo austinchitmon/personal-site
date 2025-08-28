@@ -1,13 +1,9 @@
 import { NgOptimizedImage } from '@angular/common';
 import {
   Component,
-  computed,
-  signal,
-  Signal
+  inject
 } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
 import {
-  FormControl,
   FormsModule,
   ReactiveFormsModule
 } from '@angular/forms';
@@ -17,35 +13,15 @@ import { FloatLabel } from 'primeng/floatlabel';
 import { IconField } from 'primeng/iconfield';
 import { InputIcon } from 'primeng/inputicon';
 import { InputText } from 'primeng/inputtext';
-import {
-  debounceTime,
-  distinctUntilChanged,
-  map
-} from 'rxjs';
-import { BLOG_MANIFEST } from '../../../shared/data/blog-manifest';
-
-interface BlogConfig {
-  fileName: Markdown;
-  cover: Image;
-  title: string;
-  subtitle: string;
-  date: string;
-  tags: readonly string[];
-}
-
-type Markdown = `${string}.md`;
-type Image =
-  | `${string}.png`
-  | `${string}.jpg`
-  | `${string}.jpeg`
-  | `${string}.gif`;
-
-interface Article extends BlogConfig {
-  routerLink: string;
-}
+import { ChittylogContainerFacade } from './chittylog-container.facade';
+import { ChittylogContainerStore } from './chittylog-container.store';
 
 @Component({
   selector: 'app-chittylog-container',
+  providers: [
+    ChittylogContainerStore,
+    ChittylogContainerFacade
+  ],
   imports: [
     Card,
     NgOptimizedImage,
@@ -74,7 +50,7 @@ interface Article extends BlogConfig {
             <input
               pInputText
               id="search_articles"
-              [formControl]="searchControl"
+              [formControl]="facade.control()"
               class="search-input"
             />
           </p-iconfield>
@@ -83,7 +59,7 @@ interface Article extends BlogConfig {
       </div>
 
       <div class="card-container">
-        @for (article of filteredArticles(); track $index) {
+        @for (article of facade.filteredArticles(); track $index) {
           <p-card class="card"
                   [routerLink]="article.routerLink">
             <ng-template #header>
@@ -107,37 +83,5 @@ interface Article extends BlogConfig {
   styleUrl: './chittylog-container.component.scss',
 })
 export class ChittylogContainerComponent {
-  searchControl = new FormControl('');
-  articles: Signal<Article[]> = signal(
-    BLOG_MANIFEST.files.map((fileConfig) => this.formatFile(fileConfig))
-  );
-  searchValue = toSignal(
-    this.searchControl.valueChanges.pipe(
-      debounceTime(300),
-      distinctUntilChanged(),
-      map(value => value?.toLowerCase()?.trim())
-    )
-  );
-
-  filteredArticles: Signal<Article[]> = computed(() => {
-    const searchValue = this.searchValue();
-    if (!searchValue) {
-      return this.articles();
-    }
-
-    return this.articles().filter(
-      (article) =>
-        article.title.toLowerCase().includes(searchValue) ||
-        article.subtitle.toLowerCase().includes(searchValue) ||
-        article.tags.some((tag) => tag.toLowerCase().includes(searchValue))
-    );
-  });
-
-  private formatFile(file: BlogConfig): Article {
-    return {
-      ...file,
-      date: new Date(file.date).toDateString(),
-      routerLink: file.fileName.replace('.md', ''),
-    };
-  }
+  facade = inject(ChittylogContainerFacade);
 }
