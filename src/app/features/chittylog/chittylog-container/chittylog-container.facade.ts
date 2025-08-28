@@ -25,6 +25,15 @@ export class ChittylogContainerFacade {
   articles: Signal<Article[]> = computed(() =>
     this.#store.articleSource().map(file => this.formatFile(file))
   );
+  filterList = computed(() => {
+    return [
+      ...this.searchValue() ? [`"${this.searchValue()}"`] : [],
+      ...this.selectedTags()?.length ? this.selectedTags() : []
+    ];
+  });
+  selectedTags: Signal<string[]> = computed(() => {
+    return [...this.#store.selectedTags()];
+  });
   searchValue = toSignal(
     this.control().valueChanges.pipe(
       debounceTime(300),
@@ -34,17 +43,21 @@ export class ChittylogContainerFacade {
   );
   filteredArticles: Signal<Article[]> = computed(() => {
     const searchValue = this.searchValue();
-    if (!searchValue) {
-      return this.articles();
-    }
+    const selectedTags = this.selectedTags();
 
     return this.articles().filter(
       (article) =>
-        article.title.toLowerCase().includes(searchValue) ||
-        article.subtitle.toLowerCase().includes(searchValue) ||
-        article.tags.some((tag) => tag.toLowerCase().includes(searchValue))
+        this.includesSearchValue(article, searchValue) &&
+        this.includesTag(article.tags, selectedTags)
     );
   });
+  allTags: Signal<string[]> = computed(() => {
+    return [...new Set(this.articles().flatMap(article => article.tags))];
+  });
+
+  public toggleTagSelection(tag: string) {
+    this.#store.toggleTagSelection(tag);
+  }
 
   private formatFile(file: BlogConfig): Article {
     return {
@@ -52,5 +65,19 @@ export class ChittylogContainerFacade {
       date: new Date(file.date).toDateString(),
       routerLink: file.fileName.replace('.md', ''),
     };
+  }
+
+  private includesSearchValue(article: Article, searchValue: string | undefined): boolean {
+    return searchValue ?
+      article.title.toLowerCase().includes(searchValue) ||
+      article.subtitle.toLowerCase().includes(searchValue) ||
+      article.tags.some((tag) => tag.toLowerCase().includes(searchValue))
+      : true;
+  }
+
+  private includesTag(articleTags: readonly string[], selectedTags: string[]): boolean {
+    return selectedTags?.length ? selectedTags.some(tag =>
+      articleTags.map(t => t.toLowerCase()).includes(tag.toLowerCase())
+    ) : true;
   }
 }

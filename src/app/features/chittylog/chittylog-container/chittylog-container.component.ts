@@ -13,6 +13,8 @@ import { FloatLabel } from 'primeng/floatlabel';
 import { IconField } from 'primeng/iconfield';
 import { InputIcon } from 'primeng/inputicon';
 import { InputText } from 'primeng/inputtext';
+import { JoinPipe } from '../../../shared/pipes/join.pipe';
+import { ArticleTagComponent } from './article-tag/article-tag.component';
 import { ChittylogContainerFacade } from './chittylog-container.facade';
 import { ChittylogContainerStore } from './chittylog-container.store';
 
@@ -32,6 +34,8 @@ import { ChittylogContainerStore } from './chittylog-container.store';
     InputText,
     FormsModule,
     ReactiveFormsModule,
+    ArticleTagComponent,
+    JoinPipe,
   ],
   template: `
     <div class="page-container">
@@ -58,6 +62,24 @@ import { ChittylogContainerStore } from './chittylog-container.store';
         </p-floatlabel>
       </div>
 
+      <div class="tag-search-container">
+        <div><p>Search by tag:</p></div>
+        <div class="tag-container">
+          @for (tag of facade.allTags(); track $index) {
+            <app-article-tag
+              [value]="tag"
+              (onClick)="facade.toggleTagSelection($event)"
+              class="clickable"
+            />
+          }
+        </div>
+      </div>
+
+      @if (facade.filterList()?.length) {
+        <div>
+          <span class="text-sm">Filter by: {{facade.filterList() | join}}</span>
+        </div>
+      }
       <div class="card-container">
         @for (article of facade.filteredArticles(); track $index) {
           <p-card class="card"
@@ -73,7 +95,20 @@ import { ChittylogContainerStore } from './chittylog-container.store';
               </div>
             </ng-template>
             <ng-template #title>{{article.title || 'Article'}}</ng-template>
-            <ng-template #subtitle>{{article.date}}</ng-template>
+            <ng-template #subtitle>
+              <div class="display-flex flex-col row-gap-2">
+                <div class="display-flex flex-row col-gap-2">
+                  @for (tag of article.tags; track $index) {
+                    <app-article-tag
+                      (onClick)="facade.toggleTagSelection($event)"
+                      class="clickable"
+                      [value]="tag"
+                    />
+                  }
+                </div>
+                <div>{{article.date}}</div>
+              </div>
+            </ng-template>
             <p class="multiline-ellipsis">{{article.subtitle}}</p>
           </p-card>
         }

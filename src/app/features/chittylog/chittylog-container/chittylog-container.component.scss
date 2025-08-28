@@ -55,10 +55,25 @@
   text-align: center;
 }
 
+.tag-search-container {
+  row-gap: .25rem;
+  display: flex;
+  flex-direction: column;
+  max-width: 900px;
+  width: 100%;
+}
+
+.tag-container {
+  gap: .5rem;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
 .search-container {
   width: 100%;
   max-width: 600px;
-  margin: 1rem 0 2rem 0;
+  margin: 2rem 0 1rem 0;
   display: flex;
   justify-content: center;
 
