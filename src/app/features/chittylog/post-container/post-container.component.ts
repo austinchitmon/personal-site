@@ -1,8 +1,10 @@
 import {
   ChangeDetectionStrategy,
   Component,
+  computed,
   inject,
   Signal,
+  signal,
 } from '@angular/core';
 import {
   toObservable,
@@ -40,6 +42,26 @@ const ReadingTimeService = () => import('../../../shared/services/reading-time.s
           [text]="true"
         >
         </p-button>
+
+        <div class="action-buttons">
+          <p-button
+            [label]="shareButtonLabel()"
+            icon="pi pi-share-alt"
+            (click)="handleShareClick()"
+            severity="secondary"
+            [text]="true"
+          >
+          </p-button>
+
+          <p-button
+            label="Download"
+            icon="pi pi-download"
+            (click)="downloadMarkdown()"
+            severity="secondary"
+            [text]="true"
+          >
+          </p-button>
+        </div>
       </div>
       <div class="reading-time-container">
         <i class="pi pi-clock reading-time-icon"></i>
@@ -60,6 +82,14 @@ export class PostContainerComponent {
   route = inject(ActivatedRoute);
   api = inject(ApiService);
   timeEstimate = lazyService(ReadingTimeService);
+
+  // Signal for share button state
+  shareButtonCopied = signal(false);
+
+  // Computed signal for dynamic button label
+  shareButtonLabel = computed(() =>
+    this.shareButtonCopied() ? 'Copied!' : 'Share'
+  );
   public article: Signal<string | undefined> = toSignal(
     this.route.paramMap.pipe(
       map((params): string => params.get('postName') || ''),
@@ -84,4 +114,39 @@ export class PostContainerComponent {
       })
     )
   );
+
+  downloadMarkdown() {
+    if (this.article()) {
+      const article = this.article() as string;
+      const blob = new Blob([article], { type: 'text/markdown' });
+
+      // Create a temporary link element
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = 'my-file.md'; // Name of the file to download
+      a.click();
+
+      // Optional: release the URL after download
+      URL.revokeObjectURL(a.href);
+    }
+  }
+
+  copyCurrentUrl() {
+    navigator.clipboard.writeText(window.location.href)
+      .then(() => {
+        // handle
+      })
+      .catch(err => {
+        console.error('Failed to copy URL: ', err);
+      });
+  }
+
+  handleShareClick() {
+    this.copyCurrentUrl();
+    this.shareButtonCopied.set(true);
+
+    setTimeout(() => {
+      this.shareButtonCopied.set(false);
+    }, 2000); // Reset after 2 seconds
+  }
 }
