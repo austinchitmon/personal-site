@@ -75,7 +75,7 @@ import { ChittylogContainerStore } from './chittylog-container.store';
         </div>
       </div>
 
-      @if (facade.filterList()?.length) {
+      @if (facade.filterList().length) {
         <div>
           <span class="text-sm">Filter by: {{facade.filterList() | join}}</span>
         </div>

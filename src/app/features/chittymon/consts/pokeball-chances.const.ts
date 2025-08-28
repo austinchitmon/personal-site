@@ -1,4 +1,4 @@
-import { WeightedChanceItem } from '../../../shared/random-number.service';
+import { WeightedChanceItem } from '../../../shared/services/random-number.service';
 
 export const POKEBALL_SPRITE_CHANCES: WeightedChanceItem[] = [
   {

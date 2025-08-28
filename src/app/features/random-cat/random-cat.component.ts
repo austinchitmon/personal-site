@@ -18,7 +18,7 @@ import { CatInteractionsService } from './services/cat.interactions.service';
     CatInteractionsService
   ],
   template: `
-    <div class="display-flex flex-col row-gap flex-center vertical-padding">
+    <div class="display-flex flex-col row-gap-4 flex-center vertical-padding">
       <div>
         <button
           pButton
@@ -27,7 +27,7 @@ import { CatInteractionsService } from './services/cat.interactions.service';
         </button>
       </div>
       @if (catInteractions.$randomCatUrl()) {
-        <div class="flex-center flex-col display-flex row-gap"
+        <div class="flex-center flex-col display-flex row-gap-4"
              [style.visibility]="catInteractions.$imageLoading() ? 'hidden' : 'visible'">
           <div [style.width]="'20rem'"
                [style.height]="'20rem'"

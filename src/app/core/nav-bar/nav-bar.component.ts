@@ -1,5 +1,8 @@
 import { NgOptimizedImage } from '@angular/common';
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component
+} from '@angular/core';
 import {
   RouterLink,
   RouterLinkActive
@@ -15,7 +18,7 @@ import { DEFAULT_NAV_BAR_ENTRIES } from './nav-bar.const';
   template: `
     <p-toolbar class="navbar">
       <ng-template pTemplate="start">
-        <div class="display-flex flex-row col-gap">
+        <div class="display-flex flex-row col-gap-4">
           <a routerLink="/"
              class="navbar-brand">
             <div class="display-flex flex-row">

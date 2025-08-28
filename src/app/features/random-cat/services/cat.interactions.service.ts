@@ -7,7 +7,7 @@ import {
   switchMap,
   tap
 } from 'rxjs';
-import { RandomNumberService } from '../../../shared/random-number.service';
+import { RandomNumberService } from '../../../shared/services/random-number.service';
 import { CatStore } from '../cat.store';
 import { CatApiService } from './cat-api.service';
 

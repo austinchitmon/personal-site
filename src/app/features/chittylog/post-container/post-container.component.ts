@@ -4,12 +4,27 @@ import {
   inject,
   Signal,
 } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import {
+  toObservable,
+  toSignal
+} from '@angular/core/rxjs-interop';
+import {
+  ActivatedRoute,
+  RouterLink
+} from '@angular/router';
 import { ButtonModule } from 'primeng/button';
-import { catchError, map, switchMap, throwError } from 'rxjs';
+import {
+  catchError,
+  combineLatest,
+  map,
+  switchMap,
+  throwError
+} from 'rxjs';
 import { ApiService } from '../../../shared/api/api.service';
+import { lazyService } from '../../../shared/functions/lazy-service';
 import { PostMarkdownComponent } from './post-markdown/post-markdown.component';
+
+const ReadingTimeService = () => import('../../../shared/services/reading-time.service').then((m) => m.ReadingTimeService);
 
 @Component({
   selector: 'app-post-container',
@@ -26,9 +41,15 @@ import { PostMarkdownComponent } from './post-markdown/post-markdown.component';
         >
         </p-button>
       </div>
+      <div class="reading-time-container">
+        <i class="pi pi-clock reading-time-icon"></i>
+        <p class="text-sm">{{timeToReadInMinutes()}} min. read</p>
+      </div>
 
       <div class="content-area">
-        <app-post-markdown [articleContent]="article() || ''" />
+        <app-post-markdown
+          [articleContent]="article() || ''"
+        />
       </div>
     </div>
   `,
@@ -38,6 +59,7 @@ import { PostMarkdownComponent } from './post-markdown/post-markdown.component';
 export class PostContainerComponent {
   route = inject(ActivatedRoute);
   api = inject(ApiService);
+  timeEstimate = lazyService(ReadingTimeService);
   public article: Signal<string | undefined> = toSignal(
     this.route.paramMap.pipe(
       map((params): string => params.get('postName') || ''),
@@ -49,6 +71,16 @@ export class PostContainerComponent {
       catchError((err) => {
         console.error(err);
         return '';
+      })
+    )
+  );
+  public timeToReadInMinutes = toSignal(
+    combineLatest([
+      toObservable(this.article),
+      this.timeEstimate
+    ]).pipe(
+      switchMap(([article, timeEstimate]) => {
+        return timeEstimate.getReadingTimeInMinutes(article || '');
       })
     )
   );

@@ -23,3 +23,14 @@
   display: flex;
   flex-direction: column;
 }
+
+.reading-time-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem; // 8px spacing between icon and text
+}
+
+.reading-time-icon {
+  font-size: 0.875rem; // Match text-sm size
+  color: #cfcbc6; // Match existing text color
+}

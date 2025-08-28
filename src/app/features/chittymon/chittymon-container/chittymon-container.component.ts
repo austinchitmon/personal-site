@@ -11,7 +11,7 @@ import Matter, {
   Render,
   World,
 } from 'matter-js';
-import { RandomNumberService } from '../../../shared/random-number.service';
+import { RandomNumberService } from '../../../shared/services/random-number.service';
 import { POKEBALL_SPRITE_CHANCES } from '../consts/pokeball-chances.const';
 
 @Component({
