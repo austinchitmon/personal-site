@@ -76,7 +76,7 @@ export class ChittylogContainerFacade {
   }
 
   private includesTag(articleTags: readonly string[], selectedTags: string[]): boolean {
-    return selectedTags?.length ? selectedTags.some(tag =>
+    return selectedTags?.length ? selectedTags.every(tag =>
       articleTags.map(t => t.toLowerCase()).includes(tag.toLowerCase())
     ) : true;
   }

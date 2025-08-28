@@ -68,7 +68,7 @@ import { ChittylogContainerStore } from './chittylog-container.store';
           @for (tag of facade.allTags(); track $index) {
             <app-article-tag
               [value]="tag"
-              (onClick)="facade.toggleTagSelection($event)"
+              (tagClick)="facade.toggleTagSelection($event)"
               class="clickable"
             />
           }
@@ -100,7 +100,7 @@ import { ChittylogContainerStore } from './chittylog-container.store';
                 <div class="display-flex flex-row col-gap-2">
                   @for (tag of article.tags; track $index) {
                     <app-article-tag
-                      (onClick)="facade.toggleTagSelection($event)"
+                      (tagClick)="facade.toggleTagSelection($event)"
                       class="clickable"
                       [value]="tag"
                     />

@@ -19,7 +19,7 @@ interface TagConfig {
   ],
   template: `
     <p-tag severity="info"
-           (click)="onClick.emit(value())"
+           (click)="tagClick.emit(value())"
            [style.border-radius]="'20px'"
            [style.font-weight]="'500'"
            [style.background-color]="currentConfig().background"
@@ -42,5 +42,5 @@ export class ArticleTagComponent {
   currentConfig = computed(() =>
     this.TAG_CONFIG[this.value().toLowerCase()] ?? { background: 'rgba(51,51,51,0.88)', textColor: '#FFFFFF' }
   );
-  onClick = output<string>();
+  tagClick = output<string>();
 }

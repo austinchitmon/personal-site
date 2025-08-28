@@ -33,6 +33,12 @@ module.exports = tseslint.config(
     },
   },
   {
+    files: ["**/*.spec.ts"],   // ✅ applies only to spec files
+    rules: {
+      "@typescript-eslint/no-explicit-any": "off",
+    },
+  },
+  {
     files: ["**/*.html"],
     extends: [
       ...angular.configs.templateRecommended,
