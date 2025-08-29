@@ -91,7 +91,7 @@ export class PostContainerComponent implements AfterViewInit {
   route = inject(ActivatedRoute);
   api = inject(ApiService);
   timeEstimate = lazyService(ReadingTimeService);
-  viewReady: Subject<void> = new Subject();
+  viewReady: Subject<void> = new Subject<void>();
 
   // Signal for share button state
   shareButtonCopied = signal(false);
