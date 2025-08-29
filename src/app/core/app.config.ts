@@ -7,7 +7,10 @@ import {
   provideZoneChangeDetection
 } from '@angular/core';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { provideRouter } from '@angular/router';
+import {
+  provideRouter,
+  withInMemoryScrolling
+} from '@angular/router';
 import Aura from '@primeuix/themes/aura';
 import { provideMarkdown } from 'ngx-markdown';
 import { providePrimeNG } from 'primeng/config';
@@ -16,7 +19,13 @@ import { routes } from './app.routes';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouter(routes),
+    provideRouter(
+      routes,
+      withInMemoryScrolling({
+        scrollPositionRestoration: 'top', // always go to top
+        anchorScrolling: 'enabled',       // support #anchors
+      }),
+    ),
     provideHttpClient(),
     provideAnimationsAsync(),
     providePrimeNG({
