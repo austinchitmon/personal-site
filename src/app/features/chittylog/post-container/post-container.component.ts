@@ -1,10 +1,12 @@
 import {
+  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   computed,
   inject,
   Signal,
   signal,
+  viewChild,
 } from '@angular/core';
 import {
   toObservable,
@@ -18,70 +20,78 @@ import { ButtonModule } from 'primeng/button';
 import {
   catchError,
   combineLatest,
+  delay,
   map,
+  Subject,
   switchMap,
+  tap,
   throwError
 } from 'rxjs';
 import { ApiService } from '../../../shared/api/api.service';
 import { lazyService } from '../../../shared/functions/lazy-service';
+import { LoadingSpinnerComponent } from '../../../shared/loading-spinner/loading-spinner.component';
 import { PostMarkdownComponent } from './post-markdown/post-markdown.component';
 
 const ReadingTimeService = () => import('../../../shared/services/reading-time.service').then((m) => m.ReadingTimeService);
 
 @Component({
   selector: 'app-post-container',
-  imports: [PostMarkdownComponent, ButtonModule, RouterLink],
+  imports: [PostMarkdownComponent, ButtonModule, RouterLink, LoadingSpinnerComponent],
   template: `
     <div class="page-container">
-      <div class="navigation-header">
-        <p-button
-          label="Back to Blog"
-          icon="pi pi-chevron-left"
-          [routerLink]="['../']"
-          severity="secondary"
-          [text]="true"
-        >
-        </p-button>
-
-        <div class="action-buttons">
+      <app-loading-spinner #spinner>
+        <div class="navigation-header">
           <p-button
-            [label]="shareButtonLabel()"
-            icon="pi pi-share-alt"
-            (click)="handleShareClick()"
+            label="Back to Blog"
+            icon="pi pi-chevron-left"
+            [routerLink]="['../']"
             severity="secondary"
             [text]="true"
           >
           </p-button>
 
-          <p-button
-            label="Download"
-            icon="pi pi-download"
-            (click)="downloadMarkdown()"
-            severity="secondary"
-            [text]="true"
-          >
-          </p-button>
+          <div class="action-buttons">
+            <p-button
+              [label]="shareButtonLabel()"
+              icon="pi pi-share-alt"
+              (click)="handleShareClick()"
+              severity="secondary"
+              [text]="true"
+            >
+            </p-button>
+
+            <p-button
+              label="Download"
+              icon="pi pi-download"
+              (click)="downloadMarkdown()"
+              severity="secondary"
+              [text]="true"
+            >
+            </p-button>
+          </div>
         </div>
-      </div>
-      <div class="reading-time-container">
-        <i class="pi pi-clock reading-time-icon"></i>
-        <p class="text-sm">{{timeToReadInMinutes()}} min. read</p>
-      </div>
+        <div class="reading-time-container">
+          <i class="pi pi-clock reading-time-icon"></i>
+          <p class="text-sm">{{timeToReadInMinutes()}} min. read</p>
+        </div>
 
-      <div class="content-area">
-        <app-post-markdown
-          [articleContent]="article() || ''"
-        />
-      </div>
+        <div class="content-area">
+          <app-post-markdown
+            [articleContent]="article() || ''"
+          />
+        </div>
+      </app-loading-spinner>
     </div>
   `,
   styleUrl: './post-container.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PostContainerComponent {
+export class PostContainerComponent implements AfterViewInit {
+  spinner = viewChild.required<LoadingSpinnerComponent>('spinner');
   route = inject(ActivatedRoute);
   api = inject(ApiService);
   timeEstimate = lazyService(ReadingTimeService);
+  viewReady: Subject<void> = new Subject();
 
   // Signal for share button state
   shareButtonCopied = signal(false);
@@ -91,17 +101,21 @@ export class PostContainerComponent {
     this.shareButtonCopied() ? 'Copied!' : 'Share'
   );
   public article: Signal<string | undefined> = toSignal(
-    this.route.paramMap.pipe(
-      map((params): string => params.get('postName') || ''),
-      switchMap((name) =>
-        name
-          ? this.api.get<string>(`blog/${name}.md`, { responseType: 'text' })
-          : throwError(() => 'No route param')
-      ),
-      catchError((err) => {
-        console.error(err);
-        return '';
-      })
+    this.viewReady.pipe(
+      switchMap(() => this.route.paramMap.pipe(
+        tap(() => this.spinner().show()),
+        map((params): string => params.get('postName') || ''),
+        switchMap((name) =>
+          name
+            ? this.api.get<string>(`blog/${name}.md`, { responseType: 'text' }).pipe(delay(2000))
+            : throwError(() => 'No route param')
+        ),
+        catchError((err) => {
+          console.error(err);
+          return '';
+        }),
+        tap(() => this.spinner().hide()),
+      ))
     )
   );
   public timeToReadInMinutes = toSignal(
@@ -114,6 +128,11 @@ export class PostContainerComponent {
       })
     )
   );
+
+  ngAfterViewInit() {
+    console.log(this.spinner());
+    this.viewReady.next();
+  }
 
   downloadMarkdown() {
     if (this.article()) {

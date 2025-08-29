@@ -1,0 +1,39 @@
+:host {
+  display: flex;
+  flex-flow: row nowrap;
+  height: 100%;
+  flex: 1;
+  min-height: 0;
+}
+
+.overlay {
+  box-sizing: border-box;
+  flex: none;
+  width: 101%;
+  margin-left: -100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  z-index: 500;
+  backdrop-filter: blur(3px);
+}
+
+.spinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+
+  p-progress-spinner {
+    flex: 1;
+    min-height: 0;
+  }
+}
+
+.content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
