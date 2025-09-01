@@ -1,12 +1,10 @@
 import {
-  AfterViewInit,
   ChangeDetectionStrategy,
   Component,
   computed,
   inject,
   Signal,
   signal,
-  viewChild,
 } from '@angular/core';
 import {
   toObservable,
@@ -22,9 +20,7 @@ import {
   combineLatest,
   delay,
   map,
-  Subject,
   switchMap,
-  tap,
   throwError
 } from 'rxjs';
 import { ApiService } from '../../../shared/api/api.service';
@@ -39,7 +35,8 @@ const ReadingTimeService = () => import('../../../shared/services/reading-time.s
   imports: [PostMarkdownComponent, ButtonModule, RouterLink, LoadingSpinnerComponent],
   template: `
     <div class="page-container">
-      <app-loading-spinner #spinner>
+      <app-loading-spinner #spinner
+                           [spinWhileUndefined]="this.article()">
         <div class="navigation-header">
           <p-button
             label="Back to Blog"
@@ -86,12 +83,10 @@ const ReadingTimeService = () => import('../../../shared/services/reading-time.s
   styleUrl: './post-container.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PostContainerComponent implements AfterViewInit {
-  spinner = viewChild.required<LoadingSpinnerComponent>('spinner');
+export class PostContainerComponent {
   route = inject(ActivatedRoute);
   api = inject(ApiService);
   timeEstimate = lazyService(ReadingTimeService);
-  viewReady: Subject<void> = new Subject<void>();
 
   // Signal for share button state
   shareButtonCopied = signal(false);
@@ -100,24 +95,23 @@ export class PostContainerComponent implements AfterViewInit {
   shareButtonLabel = computed(() =>
     this.shareButtonCopied() ? 'Copied!' : 'Share'
   );
+
   public article: Signal<string | undefined> = toSignal(
-    this.viewReady.pipe(
-      switchMap(() => this.route.paramMap.pipe(
-        tap(() => this.spinner().show()),
-        map((params): string => params.get('postName') || ''),
-        switchMap((name) =>
-          name
-            ? this.api.get<string>(`blog/${name}.md`, { responseType: 'text' }).pipe(delay(2000))
-            : throwError(() => 'No route param')
-        ),
-        catchError((err) => {
-          console.error(err);
-          return '';
-        }),
-        tap(() => this.spinner().hide()),
-      ))
+    this.route.paramMap.pipe(
+      // Access the spinner signal directly here
+      map((params): string => params.get('postName') || ''),
+      switchMap((name) =>
+        name
+          ? this.api.get<string>(`blog/${name}.md`, { responseType: 'text' }).pipe(delay(2000))
+          : throwError(() => 'No route param')
+      ),
+      catchError((err) => {
+        console.error(err);
+        return '';
+      }),
     )
   );
+
   public timeToReadInMinutes = toSignal(
     combineLatest([
       toObservable(this.article),
@@ -128,11 +122,6 @@ export class PostContainerComponent implements AfterViewInit {
       })
     )
   );
-
-  ngAfterViewInit() {
-    console.log(this.spinner());
-    this.viewReady.next();
-  }
 
   downloadMarkdown() {
     if (this.article()) {

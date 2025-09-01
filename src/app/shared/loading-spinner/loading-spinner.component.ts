@@ -1,7 +1,9 @@
 import { AsyncPipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
-  Component
+  Component,
+  effect,
+  input
 } from '@angular/core';
 import { ProgressSpinner } from 'primeng/progressspinner';
 import { BehaviorSubject } from 'rxjs';
@@ -30,6 +32,14 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class LoadingSpinnerComponent {
   public showSpinner = new BehaviorSubject(false);
+  public spinWhileUndefined = input<unknown | undefined>();
+  spinListener = effect(() => {
+    if (!this.spinWhileUndefined()) {
+      this.show();
+    } else {
+      this.hide();
+    }
+  });
 
   public show() {
     this.showSpinner.next(true);
