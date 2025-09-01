@@ -37,7 +37,6 @@ export class ChittylogContainerStore {
   public articleSource = computed(() => this.#state().articleSource);
   public searchControl = computed(() => this.#state().searchControl);
   public selectedTags = computed(() => {
-    console.log('selectedTags store ran');
     return this.#state().selectedTags;
   });
 

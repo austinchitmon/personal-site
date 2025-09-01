@@ -13,6 +13,7 @@ import { FloatLabel } from 'primeng/floatlabel';
 import { IconField } from 'primeng/iconfield';
 import { InputIcon } from 'primeng/inputicon';
 import { InputText } from 'primeng/inputtext';
+import { Tag } from 'primeng/tag';
 import { JoinPipe } from '../../../shared/pipes/join.pipe';
 import { ArticleTagComponent } from './article-tag/article-tag.component';
 import { ChittylogContainerFacade } from './chittylog-container.facade';
@@ -36,6 +37,7 @@ import { ChittylogContainerStore } from './chittylog-container.store';
     ReactiveFormsModule,
     ArticleTagComponent,
     JoinPipe,
+    Tag,
   ],
   template: `
     <div class="page-container">
@@ -46,6 +48,40 @@ import { ChittylogContainerStore } from './chittylog-container.store';
       <h3 class="subtitle">
         Guides, updates, and random thoughts directly from me 🌌
       </h3>
+      <div class="w-95">
+        <p-card class="card featured"
+                [routerLink]="this.facade.featured().routerLink">
+          <ng-template #header>
+            <div class="box featured">
+              <img
+                alt="{{ this.facade.featured().title }}"
+                class="img-fill"
+                [ngSrc]="'blog/' + this.facade.featured().cover"
+                fill
+              />
+              <p-tag class="featured-tag-overlay">✨ Featured</p-tag>
+            </div>
+          </ng-template>
+          <ng-template #title>
+            {{this.facade.featured().title || 'Article'}}
+          </ng-template>
+          <ng-template #subtitle>
+            <div class="display-flex flex-col row-gap-2">
+              <div class="display-flex flex-row col-gap-2">
+                @for (tag of this.facade.featured().tags; track $index) {
+                  <app-article-tag
+                    (tagClick)="facade.toggleTagSelection($event)"
+                    class="clickable"
+                    [value]="tag"
+                  />
+                }
+              </div>
+              <div>{{this.facade.featured().date}}</div>
+            </div>
+          </ng-template>
+          <p class="multiline-ellipsis">{{this.facade.featured().subtitle}}</p>
+        </p-card>
+      </div>
 
       <div class="search-container">
         <p-floatlabel variant="in">

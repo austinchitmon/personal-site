@@ -22,6 +22,8 @@ import {
 export class ChittylogContainerFacade {
   #store = inject(ChittylogContainerStore);
   control = this.#store.searchControl;
+  featured = computed(() => this.articles().find(article => article.tags.includes('featured')) || this.articles()[0]);
+  others = computed(() => this.articles().filter((article) => article.title !== this.featured().title));
   articles: Signal<Article[]> = computed(() =>
     this.#store.articleSource().map(file => this.formatFile(file))
   );
@@ -45,7 +47,7 @@ export class ChittylogContainerFacade {
     const searchValue = this.searchValue();
     const selectedTags = this.selectedTags();
 
-    return this.articles().filter(
+    return this.others().filter(
       (article) =>
         this.includesSearchValue(article, searchValue) &&
         this.includesTag(article.tags, selectedTags)

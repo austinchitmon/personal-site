@@ -26,8 +26,36 @@
 }
 
 .box {
+  &.featured {
+    height: 22rem;
+    position: relative; // Ensure relative positioning for absolute child
+  }
+
   position: relative;
   height: 16rem;
+}
+
+.featured-tag-overlay {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 10;
+  background: linear-gradient(135deg, #8e44ad 0%, #3498db 100%);
+  color: white;
+  border-radius: 20px;
+  padding: 0.5rem 1rem;
+  font-weight: 700;
+  font-size: 1.05em; // 5% larger than base font size
+  border: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+
+  // Responsive adjustments
+  @media (max-width: 768px) {
+    top: 0.75rem;
+    left: 0.75rem;
+    font-size: 1.03em;
+    padding: 0.4rem 0.8rem;
+  }
 }
 
 .img-fill {
@@ -106,6 +134,23 @@
 }
 
 .card {
+  &.featured {
+    &:hover {
+      box-shadow: 0 0 20px rgba(44, 234, 221, 0.7);
+    }
+
+    &::before {
+      background: linear-gradient(
+          0deg,
+          transparent,
+          transparent 30%,
+          rgba(44, 234, 221, 0.3)
+      );
+    }
+
+    width: unset;
+  }
+
   width: 22rem;
   position: relative;
   overflow: hidden;
