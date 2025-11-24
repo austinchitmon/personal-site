@@ -4,23 +4,20 @@ import {
   Injectable
 } from '@angular/core';
 import {
-  BASE_STORAGE,
-  BASE_SUPABASE_URL,
-  BUCKETS,
-  FILES
-} from '../../shared/api/api.config';
+  SUPABASE_API_CONFIG,
+  SupabaseApiService
+} from '../../shared/api/supabase/supabase-api.service';
 import { HomeStore } from './home.store';
 
 @Injectable()
 export class HomeFacade {
   store = inject(HomeStore);
+  supaApi = inject(SupabaseApiService);
   public textColor = computed(() => this.store.textColor());
 
 
   public downloadResume(): void {
-    window.open(
-      `${BASE_SUPABASE_URL}${BASE_STORAGE}${BUCKETS.PUBLIC_PERSONAL}${FILES.RESUME}`
-    );
+    this.supaApi.openFile(`${SUPABASE_API_CONFIG.storage.base}${SUPABASE_API_CONFIG.storage.files.resume}`);
   }
 
   public startRandomColorInterval(): void {

@@ -18,7 +18,6 @@ import { ButtonModule } from 'primeng/button';
 import {
   catchError,
   combineLatest,
-  delay,
   map,
   switchMap,
   throwError
@@ -102,7 +101,7 @@ export class PostContainerComponent {
       map((params): string => params.get('postName') || ''),
       switchMap((name) =>
         name
-          ? this.api.get<string>(`blog/${name}.md`, { responseType: 'text' }).pipe(delay(2000))
+          ? this.api.get<string>(`blog/${name}.md`, { responseType: 'text' })
           : throwError(() => 'No route param')
       ),
       catchError((err) => {

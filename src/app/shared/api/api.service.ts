@@ -6,7 +6,7 @@ import {
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-interface HttpOptions {
+export interface HttpOptions {
   headers?: HttpHeaders | Record<string, string | string[]>;
   params?: HttpParams | Record<string, string | number | boolean | readonly (string | number | boolean)[]>;
   reportProgress?: boolean;

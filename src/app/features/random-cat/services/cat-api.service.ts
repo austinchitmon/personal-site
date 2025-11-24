@@ -7,24 +7,23 @@ import {
   take
 } from 'rxjs';
 import {
-  BASE_FUNCTIONS,
-  BASE_SUPABASE_URL,
-  FUNCTIONS
-} from '../../../shared/api/api.config';
-import { ApiService } from '../../../shared/api/api.service';
+  SUPABASE_API_CONFIG,
+  SupabaseApiService
+} from '../../../shared/api/supabase/supabase-api.service';
 
 @Injectable({ providedIn: 'root' })
 export class CatApiService {
   constructor(
-    private readonly apiService: ApiService
+    private readonly supaApi: SupabaseApiService
   ) {}
 
   public getRandomCatImageURL(): Observable<string> {
-    return this.apiService.get<{ imageUrl: string }>(`${BASE_SUPABASE_URL}${BASE_FUNCTIONS}${FUNCTIONS.RANDOM_CAT}`, {
-      headers: {
-        "Content-Type": "application/json",
-      }
-    }).pipe(
+    return this.supaApi.get<{ imageUrl: string }>(
+      `${SUPABASE_API_CONFIG.functions.base}${SUPABASE_API_CONFIG.functions.routes.cats}`, {
+        headers: {
+          "Content-Type": "application/json",
+        }
+      }).pipe(
       take(1),
       map((url) => url.imageUrl),
       catchError(err => {
@@ -34,5 +33,3 @@ export class CatApiService {
     );
   }
 }
-
-// https://hjdkrtgkjoiwjikbpvje.supabase.co/storage/v1/object/public/public-personal-site/resume.pdf
