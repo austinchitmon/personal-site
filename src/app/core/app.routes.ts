@@ -8,8 +8,8 @@ export const routes: Routes = [
   },
   {
     path: 'chittymon',
-    loadComponent: () => import('../features/chittymon/chittymon-container/chittymon-container.component').then(mod =>
-      mod.ChittymonContainerComponent)
+    loadChildren: () => import('../features/chittymon/chittymon.routes').then(mod =>
+      mod.CHITTYMON_ROUTES)
   },
   {
     path: 'chittyblog',
