@@ -1,8 +1,4 @@
-import {
-  Component,
-  HostListener,
-  OnInit,
-} from '@angular/core';
+import { Component, HostListener, OnInit, inject } from '@angular/core';
 import Matter, {
   Bodies,
   Engine,
@@ -24,9 +20,8 @@ import { POKEBALL_SPRITE_CHANCES } from '../consts/pokeball-chances.const';
   styleUrl: './chittymon-container.component.scss',
 })
 export class ChittymonContainerComponent implements OnInit {
-  constructor(
-    private readonly random: RandomNumberService
-  ) {}
+  private readonly random = inject(RandomNumberService);
+
 
   private engine!: Engine;
   private render!: Render;
@@ -35,7 +30,7 @@ export class ChittymonContainerComponent implements OnInit {
   private rightWall!: Matter.Body;
   private topWall!: Matter.Body;
 
-  @HostListener('window:resize', ['$event'])
+  @HostListener('window:resize')
   onResize(): void {
     this.handleResize();
   }

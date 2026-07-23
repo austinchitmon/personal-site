@@ -13,6 +13,7 @@ describe('ArticleTagComponent', () => {
     .compileComponents();
 
     fixture = TestBed.createComponent(ArticleTagComponent);
+    fixture.componentRef.setInput('value', 'angular');
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -1,8 +1,5 @@
 import { NgOptimizedImage } from '@angular/common';
-import {
-  Component,
-  input
-} from '@angular/core';
+import { Component, input, inject } from '@angular/core';
 import { ButtonDirective } from 'primeng/button';
 import { CatStore } from './cat.store';
 import { CatInteractionsService } from './services/cat.interactions.service';
@@ -51,11 +48,9 @@ import { CatInteractionsService } from './services/cat.interactions.service';
   styleUrl: './random-cat.component.scss'
 })
 export class RandomCatComponent {
-  textColor = input<string>('#3B82F6'); // Default to a blue color if not provided
+  readonly catInteractions = inject(CatInteractionsService);
 
-  constructor(public readonly catInteractions: CatInteractionsService
-  ) {
-  }
+  textColor = input<string>('#3B82F6');
 
 
 }

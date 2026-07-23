@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideMarkdown } from 'ngx-markdown';
 
 import { PostMarkdownComponent } from './post-markdown.component';
 
@@ -8,11 +9,13 @@ describe('PostMarkdownComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PostMarkdownComponent]
+      imports: [PostMarkdownComponent],
+      providers: [provideMarkdown()]
     })
     .compileComponents();
 
     fixture = TestBed.createComponent(PostMarkdownComponent);
+    fixture.componentRef.setInput('articleContent', '# Title');
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
