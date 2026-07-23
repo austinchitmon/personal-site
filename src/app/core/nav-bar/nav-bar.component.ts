@@ -7,7 +7,7 @@ import {
   RouterLink,
   RouterLinkActive
 } from '@angular/router';
-import { ToolbarModule } from 'primeng/toolbar';
+import { ToolbarModule } from '@openng/optimus-ui/toolbar';
 import { BurgerMenuComponent } from './burger-menu/burger-menu.component';
 import { DEFAULT_NAV_BAR_ENTRIES } from './nav-bar.const';
 

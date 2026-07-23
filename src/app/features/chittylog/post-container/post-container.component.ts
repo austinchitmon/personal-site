@@ -14,7 +14,7 @@ import {
   ActivatedRoute,
   RouterLink
 } from '@angular/router';
-import { ButtonModule } from 'primeng/button';
+import { ButtonModule } from '@openng/optimus-ui/button';
 import {
   catchError,
   combineLatest,
