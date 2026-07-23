@@ -7,7 +7,7 @@ export const BLOG_MANIFEST = {
       "fileName": "angular-coding-standard.md",
       "title": "Typescript / Angular 20+ Coding Standards",
       "cover": "angular-coding-standard.png",
-      "subtitle": "Collection of standards for building robust, responsive Angular applications using PrimeNG.",
+      "subtitle": "My personal collection of standards for building robust, responsive Angular applications using PrimeNG.",
       "date": "2025-08-27T05:01:00.000Z",
       "tags": [
         "typescript",

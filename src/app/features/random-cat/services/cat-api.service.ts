@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {
   catchError,
   EMPTY,
@@ -13,9 +13,8 @@ import {
 
 @Injectable({ providedIn: 'root' })
 export class CatApiService {
-  constructor(
-    private readonly supaApi: SupabaseApiService
-  ) {}
+  private readonly supaApi = inject(SupabaseApiService);
+
 
   public getRandomCatImageURL(): Observable<string> {
     return this.supaApi.get<{ imageUrl: string }>(

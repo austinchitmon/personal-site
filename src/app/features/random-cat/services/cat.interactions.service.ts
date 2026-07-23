@@ -1,7 +1,4 @@
-import {
-  computed,
-  Injectable
-} from '@angular/core';
+import { computed, Injectable, inject } from '@angular/core';
 import {
   of,
   switchMap,
@@ -13,6 +10,10 @@ import { CatApiService } from './cat-api.service';
 
 @Injectable()
 export class CatInteractionsService {
+  private readonly store = inject(CatStore);
+  private readonly api = inject(CatApiService);
+  private readonly randomService = inject(RandomNumberService);
+
   public $randomCatUrl = computed(() => this.store.randomCatUrl());
   public $imageLoading = computed(() => this.store.imageLoading());
   public $uwuDescription = computed(() => {
@@ -22,12 +23,6 @@ export class CatInteractionsService {
       this.randomService.getRandomIntBetweenInclusive(0, this.store.UWU_DESCRIPTIONS.length - 1)
       ];
   });
-
-  constructor(
-    private readonly store: CatStore,
-    private readonly api: CatApiService,
-    private readonly randomService: RandomNumberService
-  ) {}
 
 
   public updateRandomCatUrl() {

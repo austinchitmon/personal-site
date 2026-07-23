@@ -3,7 +3,7 @@ import {
   HttpHeaders,
   HttpParams
 } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 
 export interface HttpOptions {
@@ -18,9 +18,8 @@ export interface HttpOptions {
 
 @Injectable({ providedIn: 'root' })
 export class ApiService {
-  constructor(
-    private readonly http: HttpClient
-  ) {}
+  private readonly http = inject(HttpClient);
+
 
   /**
    * Performs an HTTP GET request.
