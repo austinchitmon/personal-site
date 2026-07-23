@@ -11,9 +11,9 @@ import {
   provideRouter,
   withInMemoryScrolling
 } from '@angular/router';
-import Aura from '@primeuix/themes/aura';
+import Aura from '@openng/optimus-ui-themes/aura';
 import { provideMarkdown } from 'ngx-markdown';
-import { providePrimeNG } from 'primeng/config';
+import { provideOptimus } from '@openng/optimus-ui/config';
 import { routes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {
@@ -28,7 +28,7 @@ export const appConfig: ApplicationConfig = {
     ),
     provideHttpClient(),
     provideAnimationsAsync(),
-    providePrimeNG({
+    provideOptimus({
       ripple: true,
       theme: {
         preset: Aura

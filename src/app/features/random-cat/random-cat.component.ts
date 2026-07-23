@@ -1,6 +1,6 @@
 import { NgOptimizedImage } from '@angular/common';
 import { Component, input, inject } from '@angular/core';
-import { ButtonDirective } from 'primeng/button';
+import { ButtonDirective } from '@openng/optimus-ui/button';
 import { CatStore } from './cat.store';
 import { CatInteractionsService } from './services/cat.interactions.service';
 

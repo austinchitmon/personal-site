@@ -8,12 +8,12 @@ import {
   ReactiveFormsModule
 } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { Card } from 'primeng/card';
-import { FloatLabel } from 'primeng/floatlabel';
-import { IconField } from 'primeng/iconfield';
-import { InputIcon } from 'primeng/inputicon';
-import { InputText } from 'primeng/inputtext';
-import { Tag } from 'primeng/tag';
+import { Card } from '@openng/optimus-ui/card';
+import { FloatLabel } from '@openng/optimus-ui/floatlabel';
+import { IconField } from '@openng/optimus-ui/iconfield';
+import { InputIcon } from '@openng/optimus-ui/inputicon';
+import { InputText } from '@openng/optimus-ui/inputtext';
+import { Tag } from '@openng/optimus-ui/tag';
 import { JoinPipe } from '../../../shared/pipes/join.pipe';
 import { ArticleTagComponent } from './article-tag/article-tag.component';
 import { ChittylogContainerFacade } from './chittylog-container.facade';
