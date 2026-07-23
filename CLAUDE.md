@@ -12,7 +12,7 @@ Angular 20 personal site (chitmon.com), deployed to GitHub Pages. Standalone com
 npm start                    # ng serve, http://localhost:4200
 npm run build                # dev build (also regenerates blog manifest via prebuild)
 npm run build:prod           # production build; copies index.html to 404.html for GH Pages SPA routing
-npm test                     # ng test (Karma/Jasmine)
+npm test                     # ng test (Vitest)
 npm run lint                 # ng lint (angular-eslint)
 npm run blog:update-manifest # regenerate src/app/shared/data/blog-manifest.ts from public/blog/*.md
 npm run supabase:serve:fn    # serve supabase edge functions locally (--env-file .env.local)
