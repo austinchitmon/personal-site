@@ -5,7 +5,7 @@ import {
   signal
 } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
-import { Button } from 'primeng/button';
+import { Button } from '@openng/optimus-ui/button';
 import { of } from 'rxjs';
 import { PokeapiApiService } from '../../../../shared/api/pokeapi-service/pokeapi-api.service';
 

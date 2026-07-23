@@ -5,7 +5,7 @@ import {
   effect,
   input
 } from '@angular/core';
-import { ProgressSpinner } from 'primeng/progressspinner';
+import { ProgressSpinner } from '@openng/optimus-ui/progressspinner';
 import { BehaviorSubject } from 'rxjs';
 
 @Component({

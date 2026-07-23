@@ -5,7 +5,7 @@ import {
   input,
   output
 } from '@angular/core';
-import { Tag } from 'primeng/tag';
+import { Tag } from '@openng/optimus-ui/tag';
 
 interface TagConfig {
   background: string;

@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project overview
 
-Angular 20 personal site (chitmon.com), deployed to GitHub Pages. Standalone components only, signals-based state, PrimeNG (Aura theme) for UI, ngx-markdown/marked + Prism for blog rendering.
+Angular 20 personal site (chitmon.com), deployed to GitHub Pages. Standalone components only, signals-based state, Optimus UI (Aura theme, `@openng/optimus-ui` — a PrimeNG v21 fork) for UI, ngx-markdown/marked + Prism for blog rendering.
 
 ## Commands
 

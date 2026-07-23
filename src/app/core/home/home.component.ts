@@ -4,7 +4,7 @@ import {
   Component,
   inject
 } from '@angular/core';
-import { ButtonDirective } from 'primeng/button';
+import { ButtonDirective } from '@openng/optimus-ui/button';
 import { SectionBreakComponent } from '../../shared/section-break/section-break.component';
 import { HomeFacade } from './home-facade';
 import { HomeStore } from './home.store';
