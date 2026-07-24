@@ -1,1 +1,0 @@
-import{P as o,j as i,o as n}from"./chunk-SVNPKW3C.js";import"./chunk-IFGU66OU.js";var a=class e{getReadingTimeInMinutes(t){return i(import("./chunk-XUFJPPCQ.js")).pipe(n(r=>r.readingTime(t).minutes))}static \u0275fac=function(r){return new(r||e)};static \u0275prov=o({token:e,factory:e.\u0275fac,providedIn:"root"})};export{a as ReadingTimeService};
