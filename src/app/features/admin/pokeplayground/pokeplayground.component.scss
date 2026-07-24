@@ -1,0 +1,28 @@
+.page-container {
+  flex: 1;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  max-width: 1200px;
+  align-items: center;
+  row-gap: 1.5rem;
+}
+
+.chittymon-window {
+  width: 32rem;
+  height: 24rem;
+  max-width: 100%;
+  overflow: hidden;
+  border: 2px solid #444;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 0.75rem rgba(0, 0, 0, 0.4);
+}
+
+.debug-panel {
+  width: 32rem;
+  max-width: 100%;
+  min-height: 6rem;
+  border: 1px dashed #444;
+  border-radius: 0.5rem;
+}

@@ -5,10 +5,6 @@ export interface NavBarEntry {
 
 export const DEFAULT_NAV_BAR_ENTRIES: NavBarEntry[] = [
   {
-    routerLink: '/chittymon',
-    label: 'Chittymon'
-  },
-  {
     routerLink: '/chittyblog',
     label: 'Chittyblog'
   },
