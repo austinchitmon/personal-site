@@ -1,0 +1,60 @@
+.page-container {
+  flex: 1;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  max-width: 1200px;
+  justify-content: center;
+  align-items: center;
+  row-gap: 1rem;
+}
+
+.subtitle {
+  font-weight: 100;
+  font-size: 1rem;
+  color: #cacaca;
+  text-align: center;
+}
+
+.card-container {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.card {
+  width: 22rem;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.5s ease;
+
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(187, 68, 136, 0.5);
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(0deg, transparent, transparent 30%, rgba(187, 68, 136, 0.3));
+    transform: rotate(-45deg);
+    transition: all 0.5s ease;
+    opacity: 0;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  &:hover::before {
+    opacity: 1;
+    transform: rotate(-45deg) translateY(100%);
+  }
+}
