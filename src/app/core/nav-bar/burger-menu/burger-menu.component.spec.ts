@@ -1,3 +1,4 @@
+import { provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { BurgerMenuComponent } from './burger-menu.component';
@@ -8,7 +9,8 @@ describe('BurgerMenuComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [BurgerMenuComponent]
+      imports: [BurgerMenuComponent],
+      providers: [provideZonelessChangeDetection()]
     })
     .compileComponents();
 

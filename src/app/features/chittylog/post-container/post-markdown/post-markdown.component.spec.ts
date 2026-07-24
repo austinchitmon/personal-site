@@ -1,3 +1,4 @@
+import { provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { provideMarkdown } from 'ngx-markdown';
 
@@ -10,7 +11,7 @@ describe('PostMarkdownComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [PostMarkdownComponent],
-      providers: [provideMarkdown()]
+      providers: [provideMarkdown(), provideZonelessChangeDetection()]
     })
     .compileComponents();
 

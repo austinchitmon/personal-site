@@ -1,8 +1,9 @@
 import {
+  ChangeDetectionStrategy,
   Component,
-  HostListener,
   computed,
-  inject
+  inject,
+  signal
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AuthFacade } from '../../../shared/auth/auth.facade';
@@ -16,6 +17,10 @@ import {
   imports: [
     RouterLink
   ],
+  host: {
+    '(document:click)': 'onClickOutside($event)'
+  },
+  changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
     <div class="burger-container">
       <button (click)="toggleMenu()"
@@ -23,7 +28,7 @@ import {
         <span class="burger-icon">☰</span>
       </button>
 
-      @if (menuOpen) {
+      @if (menuOpen()) {
         <div class="menu">
           @for (entry of navEntries(); track $index) {
             <a
@@ -41,21 +46,20 @@ import {
 export class BurgerMenuComponent {
   private readonly authFacade = inject(AuthFacade);
 
-  menuOpen = false;
+  protected readonly menuOpen = signal(false);
   protected readonly navEntries = computed(() =>
     this.authFacade.isAdmin() ? [...DEFAULT_NAV_BAR_ENTRIES, ADMIN_NAV_ENTRY] : DEFAULT_NAV_BAR_ENTRIES
   );
 
 
   toggleMenu() {
-    this.menuOpen = !this.menuOpen;
+    this.menuOpen.update(open => !open);
   }
 
   closeMenu() {
-    this.menuOpen = false;
+    this.menuOpen.set(false);
   }
 
-  @HostListener('document:click', ['$event'])
   onClickOutside(event: MouseEvent) {
     const target = event.target as HTMLElement;
     if (!target.closest('.burger-container')) {

@@ -1,5 +1,6 @@
 import { NgOptimizedImage } from '@angular/common';
 import {
+  ChangeDetectionStrategy,
   Component,
   inject
 } from '@angular/core';
@@ -152,6 +153,7 @@ import { ChittylogContainerStore } from './chittylog-container.store';
     </div>
   `,
   styleUrl: './chittylog-container.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ChittylogContainerComponent {
   facade = inject(ChittylogContainerFacade);

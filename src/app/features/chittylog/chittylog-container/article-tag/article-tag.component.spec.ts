@@ -1,3 +1,4 @@
+import { provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ArticleTagComponent } from './article-tag.component';
@@ -8,7 +9,8 @@ describe('ArticleTagComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ArticleTagComponent]
+      imports: [ArticleTagComponent],
+      providers: [provideZonelessChangeDetection()]
     })
     .compileComponents();
 

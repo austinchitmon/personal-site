@@ -1,3 +1,4 @@
+import { provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { RandomCatComponent } from './random-cat.component';
@@ -8,7 +9,8 @@ describe('RandomCatComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RandomCatComponent]
+      imports: [RandomCatComponent],
+      providers: [provideZonelessChangeDetection()]
     })
     .compileComponents();
 
