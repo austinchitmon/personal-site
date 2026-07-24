@@ -1,3 +1,4 @@
+import { provideZonelessChangeDetection } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
 import { ReadingTimeService } from './reading-time.service';
@@ -6,7 +7,7 @@ describe('ReadingTimeService', () => {
   let service: ReadingTimeService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({ providers: [provideZonelessChangeDetection()] });
     service = TestBed.inject(ReadingTimeService);
   });
 

@@ -1,5 +1,5 @@
 import { NgOptimizedImage } from '@angular/common';
-import { Component, input, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, inject } from '@angular/core';
 import { ButtonDirective } from '@openng/optimus-ui/button';
 import { CatStore } from './cat.store';
 import { CatInteractionsService } from './services/cat.interactions.service';
@@ -45,7 +45,10 @@ import { CatInteractionsService } from './services/cat.interactions.service';
     </div>
 
   `,
-  styleUrl: './random-cat.component.scss'
+  styleUrl: './random-cat.component.scss',
+  // TODO: This component has been partially migrated to be zoneless-compatible.
+  // After testing, this should be updated to ChangeDetectionStrategy.OnPush.
+  changeDetection: ChangeDetectionStrategy.Default,
 })
 export class RandomCatComponent {
   readonly catInteractions = inject(CatInteractionsService);

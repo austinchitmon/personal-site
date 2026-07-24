@@ -1,3 +1,4 @@
+import { provideZonelessChangeDetection } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { ChittymonQuizComponent } from './chittymon-quiz.component';
@@ -8,7 +9,8 @@ describe('ChittymonQuizComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ChittymonQuizComponent]
+      imports: [ChittymonQuizComponent],
+      providers: [provideZonelessChangeDetection()]
     })
     .compileComponents();
 

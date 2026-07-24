@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, inject } from '@angular/core';
 import Matter, {
   Bodies,
   Engine,
@@ -18,6 +18,12 @@ import { POKEBALL_SPRITE_CHANCES } from '../consts/pokeball-chances.const';
             class="demo"></canvas>
   `,
   styleUrl: './chittymon-container.component.scss',
+  host: {
+    '(window:resize)': 'onResize()'
+  },
+  // TODO: This component has been partially migrated to be zoneless-compatible.
+  // After testing, this should be updated to ChangeDetectionStrategy.OnPush.
+  changeDetection: ChangeDetectionStrategy.Default,
 })
 export class ChittymonContainerComponent implements OnInit {
   private readonly random = inject(RandomNumberService);
@@ -30,7 +36,6 @@ export class ChittymonContainerComponent implements OnInit {
   private rightWall!: Matter.Body;
   private topWall!: Matter.Body;
 
-  @HostListener('window:resize')
   onResize(): void {
     this.handleResize();
   }
