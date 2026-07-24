@@ -15,6 +15,7 @@ yarn-error.log
 .idea/
 .junie/
 .qoder/
+.claude/
 .project
 .classpath
 .c9/
