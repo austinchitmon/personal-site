@@ -1,4 +1,6 @@
 export const environment = {
   production: false,
-  apiBase: 'http://localhost:8080'
+  apiBase: 'http://localhost:8080',
+  supabaseUrl: 'https://hjdkrtgkjoiwjikbpvje.supabase.co',
+  supabaseAnonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhqZGtydGdram9pd2ppa2JwdmplIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDg2NjY2OTEsImV4cCI6MjA2NDI0MjY5MX0.By51yDW57COrDLG7F1RldTaefrNmxtVjaE1L_ceAHJU'
 };

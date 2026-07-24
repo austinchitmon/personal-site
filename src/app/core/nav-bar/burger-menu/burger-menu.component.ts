@@ -1,9 +1,15 @@
 import {
   Component,
-  HostListener
+  HostListener,
+  computed,
+  inject
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { DEFAULT_NAV_BAR_ENTRIES } from '../nav-bar.const';
+import { AuthFacade } from '../../../shared/auth/auth.facade';
+import {
+  ADMIN_NAV_ENTRY,
+  DEFAULT_NAV_BAR_ENTRIES
+} from '../nav-bar.const';
 
 @Component({
   selector: 'app-burger-menu',
@@ -19,7 +25,7 @@ import { DEFAULT_NAV_BAR_ENTRIES } from '../nav-bar.const';
 
       @if (menuOpen) {
         <div class="menu">
-          @for (entry of DEFAULT_NAV_BAR_ENTRIES; track $index) {
+          @for (entry of navEntries(); track $index) {
             <a
               [routerLink]="entry.routerLink"
               (click)="closeMenu()">
@@ -33,8 +39,12 @@ import { DEFAULT_NAV_BAR_ENTRIES } from '../nav-bar.const';
   styleUrl: './burger-menu.component.scss'
 })
 export class BurgerMenuComponent {
+  private readonly authFacade = inject(AuthFacade);
+
   menuOpen = false;
-  public readonly DEFAULT_NAV_BAR_ENTRIES = DEFAULT_NAV_BAR_ENTRIES;
+  protected readonly navEntries = computed(() =>
+    this.authFacade.isAdmin() ? [...DEFAULT_NAV_BAR_ENTRIES, ADMIN_NAV_ENTRY] : DEFAULT_NAV_BAR_ENTRIES
+  );
 
 
   toggleMenu() {

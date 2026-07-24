@@ -17,3 +17,8 @@ export const DEFAULT_NAV_BAR_ENTRIES: NavBarEntry[] = [
     label: 'Cat 🐈'
   }
 ];
+
+export const ADMIN_NAV_ENTRY: NavBarEntry = {
+  routerLink: '/admin',
+  label: 'Admin'
+};
