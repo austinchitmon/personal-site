@@ -14,11 +14,6 @@ export const routes: Routes = [
       mod.ADMIN_ROUTES)
   },
   {
-    path: 'chittymon',
-    loadChildren: () => import('../features/chittymon/chittymon.routes').then(mod =>
-      mod.CHITTYMON_ROUTES)
-  },
-  {
     path: 'chittyblog',
     loadChildren: () => import('../features/chittylog/chittylog.routes').then(mod => mod.CHITTYLOG_ROUTES),
   },
