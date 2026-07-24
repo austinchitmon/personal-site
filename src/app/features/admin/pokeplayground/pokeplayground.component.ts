@@ -1,9 +1,14 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ButtonDirective } from '@openng/optimus-ui/button';
 import { ChittymonContainerComponent } from './chittymon-container/chittymon-container.component';
+import { PokemonCardComponent } from './pokemon-card/pokemon-card.component';
+import { PokeplaygroundFacade } from './pokeplayground.facade';
+import { PokeplaygroundStore } from './pokeplayground.store';
 
 @Component({
   selector: 'app-pokeplayground',
-  imports: [ChittymonContainerComponent],
+  imports: [ChittymonContainerComponent, PokemonCardComponent, ButtonDirective],
+  providers: [PokeplaygroundStore, PokeplaygroundFacade],
   template: `
     <div class="page-container">
       <h1>Pokeplayground</h1>
@@ -11,9 +16,19 @@ import { ChittymonContainerComponent } from './chittymon-container/chittymon-con
         <app-chittymon-container />
       </div>
       <div class="debug-panel"></div>
+      <button pButton
+              class="button-primary"
+              (click)="facade.generateRandomPokemon()">
+        Generate Random Pokémon
+      </button>
+      @if (facade.pokemon(); as pokemon) {
+        <app-pokemon-card [pokemon]="pokemon" />
+      }
     </div>
   `,
   styleUrl: './pokeplayground.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class PokeplaygroundComponent {}
+export class PokeplaygroundComponent {
+  protected readonly facade = inject(PokeplaygroundFacade);
+}
