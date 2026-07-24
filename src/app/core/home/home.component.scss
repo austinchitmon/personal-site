@@ -127,6 +127,12 @@
   }
 }
 
+.gradient-navy-white {
+  &::after {
+    background: linear-gradient(to right, #1f3254, #e8e8e8);
+  }
+}
+
 .gradient-yellow-black {
   &::after {
     background: linear-gradient(to right, #FF0, #353330);

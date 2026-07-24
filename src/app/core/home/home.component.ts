@@ -36,17 +36,17 @@ import { HomeStore } from './home.store';
             Component Architecture Instructor
           </span>
           <h2 class="title">Welcome to my Personal Website</h2>
-          <h2 class="subtitle">I am a Software Engineer at <span class="gradient-underline gradient-yellow-black">J.B. Hunt</span> where I have spent the past
-            <span class="gradient-underline">6 years</span> building
+          <h2 class="subtitle">I am a Software Engineer at <span class="gradient-underline gradient-navy-white">Lockheed Martin</span>, formerly at <span class="gradient-underline gradient-yellow-black">J.B. Hunt</span> where I have spent the past
+            <span class="gradient-underline">7 years</span> building
             enterprise applications serving over <span class="gradient-underline">500
-            Transportation Managers</span> and <span class="gradient-underline">20,000 drivers</span>. I am the
+            Transportation Managers</span> and <span class="gradient-underline">20,000 drivers</span>. At J.B. Hunt, I was the
             <span class="gradient-underline">UI Tech Lead</span> for a 10 person squad. I help grow our junior developer talent as the
             <span class="gradient-underline">instructor</span> for the Angular Component Architecture training course. In my downtime, I make stuff on here! 🚀
           </h2>
         </div>
         <div class="image-container">
           <img
-            ngSrc="/img/headshot.png"
+            ngSrc="/img/headshot.jpg"
             alt="Austin Chitmon headshot"
             width="300"
             height="300"
