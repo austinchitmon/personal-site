@@ -1,0 +1,43 @@
+.card {
+  width: 20rem;
+  max-width: 100%;
+}
+
+.sprite-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 12rem;
+  background: #1c1b1b;
+}
+
+.sprite {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.name {
+  text-transform: capitalize;
+}
+
+.stats {
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.5rem;
+  padding-top: 0.5rem;
+}
+
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+}
+
+.stat-label {
+  color: #cacaca;
+}
+
+.stat-value {
+  font-weight: 600;
+}

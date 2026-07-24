@@ -5,17 +5,14 @@ import {
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { ApiService } from '../api.service';
+import { Pokemon } from './pokemon.model';
 
 @Injectable({ providedIn: 'root' })
 export class PokeapiApiService {
   api = inject(ApiService);
   readonly base = environment.apiBase;
 
-  constructor() {
-    console.log('ENV:', environment);
-  }
-
-  getHello(): Observable<string> {
-    return this.api.get(`${this.base}/pokemon`);
+  getRandomPokemon(): Observable<Pokemon> {
+    return this.api.get<Pokemon>(`${this.base}/pokemon/random`);
   }
 }
