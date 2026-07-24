@@ -46,9 +46,7 @@ import { CatInteractionsService } from './services/cat.interactions.service';
 
   `,
   styleUrl: './random-cat.component.scss',
-  // TODO: This component has been partially migrated to be zoneless-compatible.
-  // After testing, this should be updated to ChangeDetectionStrategy.OnPush.
-  changeDetection: ChangeDetectionStrategy.Default,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RandomCatComponent {
   readonly catInteractions = inject(CatInteractionsService);
