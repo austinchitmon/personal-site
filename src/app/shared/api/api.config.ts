@@ -1,2 +1,2 @@
-export const API_URL = 'https://chitmon.com/api';
+export const API_URL = 'https://api.chitmon.com';
 
