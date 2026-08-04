@@ -1,6 +1,7 @@
 import {
   HttpClient,
-  provideHttpClient
+  provideHttpClient,
+  withInterceptors
 } from '@angular/common/http';
 import {
   ApplicationConfig,
@@ -14,6 +15,7 @@ import {
 import Aura from '@openng/optimus-ui-themes/aura';
 import { provideMarkdown } from 'ngx-markdown';
 import { provideOptimus } from '@openng/optimus-ui/config';
+import { authInterceptor } from '../shared/auth/auth.interceptor';
 import { routes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {
@@ -26,7 +28,7 @@ export const appConfig: ApplicationConfig = {
         anchorScrolling: 'enabled',       // support #anchors
       }),
     ),
-    provideHttpClient(),
+    provideHttpClient(withInterceptors([authInterceptor])),
     provideAnimationsAsync(),
     provideOptimus({
       ripple: true,
