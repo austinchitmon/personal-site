@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  apiBase: 'https://chitmon.com/api',
+  apiBase: 'https://api.chitmon.com',
   supabaseUrl: 'https://hjdkrtgkjoiwjikbpvje.supabase.co',
   supabaseAnonKey: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhqZGtydGdram9pd2ppa2JwdmplIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDg2NjY2OTEsImV4cCI6MjA2NDI0MjY5MX0.By51yDW57COrDLG7F1RldTaefrNmxtVjaE1L_ceAHJU'
 };
