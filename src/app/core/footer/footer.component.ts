@@ -17,7 +17,7 @@ import {
           <a href="https://www.linkedin.com/in/austinchitmon/"
              target="_blank"
              rel="noopener noreferrer">LinkedIn</a>
-          <a href="mailto:austinchitmon@gmail.com">Contact</a>
+          <a href="mailto:austin@chitmon.com">Contact</a>
         </div>
       </div>
     </footer>
