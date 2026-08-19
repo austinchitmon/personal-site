@@ -1,7 +1,8 @@
 import {
   HttpClient,
   provideHttpClient,
-  withInterceptors
+  withInterceptors,
+  withXhr
 } from '@angular/common/http';
 import {
   ApplicationConfig,
@@ -28,7 +29,7 @@ export const appConfig: ApplicationConfig = {
         anchorScrolling: 'enabled',       // support #anchors
       }),
     ),
-    provideHttpClient(withInterceptors([authInterceptor])),
+    provideHttpClient(withXhr(), withInterceptors([authInterceptor])),
     provideAnimationsAsync(),
     provideOptimus({
       ripple: true,
