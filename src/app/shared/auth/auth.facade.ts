@@ -12,6 +12,10 @@ export class AuthFacade {
   public isAuthenticated = computed(() => !!this.store.session());
   public isAdmin = computed(() => this.store.session()?.user?.app_metadata?.['role'] === 'admin');
 
+  public whenReady(): Promise<void> {
+    return this.store.whenReady();
+  }
+
   public login(): void {
     this.store.signInWithGoogle();
   }

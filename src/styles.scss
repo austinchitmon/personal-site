@@ -87,3 +87,20 @@ li {
 .w-95 {
   width: 95%
 }
+
+// Signal Forms' [formField] marks a field invalid as soon as it fails a validator, even
+// before the user has touched it - Optimus UI's p-invalid styling isn't touched-gated.
+// PendingValidationDirective (shared/forms/) toggles this class until a [formField] is
+// touched; neutralize the invalid look while it's present. Global because every form
+// using [formField] hits this, not just one component.
+.pending-validation.p-invalid {
+  border-color: inherit !important;
+  box-shadow: none !important;
+
+  // Native inputs render placeholder text via ::placeholder; p-select instead renders
+  // its placeholder as literal text in a .p-placeholder span.
+  &::placeholder,
+  .p-placeholder {
+    color: var(--p-inputtext-placeholder-color) !important;
+  }
+}

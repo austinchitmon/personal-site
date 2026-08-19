@@ -3,28 +3,37 @@ import {
   Component,
   effect,
   input,
-  output
+  output,
+  signal,
+  untracked
 } from '@angular/core';
 import {
-  FormControl,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators
-} from '@angular/forms';
+  form,
+  FormField,
+  required
+} from '@angular/forms/signals';
 import { ButtonModule } from '@openng/optimus-ui/button';
 import { InputText } from '@openng/optimus-ui/inputtext';
 import { Message } from '@openng/optimus-ui/message';
 import { Select } from '@openng/optimus-ui/select';
 import { Carrier } from '../../../../shared/api/shipment-tracker/shipment.model';
+import { PendingValidationDirective } from '../../../../shared/forms/pending-validation.directive';
 
 export interface CreateShipmentRequest {
   trackingNumber: string;
   carrierId: number;
 }
 
+interface CreateShipmentFormModel {
+  trackingNumber: string;
+  carrierId: number | null;
+}
+
+const EMPTY_FORM_MODEL: CreateShipmentFormModel = { trackingNumber: '', carrierId: null };
+
 @Component({
   selector: 'app-create-shipment-form',
-  imports: [ReactiveFormsModule, InputText, Select, ButtonModule, Message],
+  imports: [FormField, PendingValidationDirective, InputText, Select, ButtonModule, Message],
   templateUrl: './create-shipment-form.component.html',
   styleUrl: './create-shipment-form.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -36,26 +45,32 @@ export class CreateShipmentFormComponent {
 
   public create = output<CreateShipmentRequest>();
 
-  protected readonly form = new FormGroup({
-    trackingNumber: new FormControl('', { nonNullable: true, validators: [Validators.required] }),
-    carrierId: new FormControl<number | null>(null, { validators: [Validators.required] }),
+  protected readonly model = signal<CreateShipmentFormModel>({ ...EMPTY_FORM_MODEL });
+  protected readonly shipmentForm = form(this.model, (path) => {
+    required(path.trackingNumber, { message: 'Tracking number is required.' });
+    required(path.carrierId, { message: 'Select a carrier.' });
   });
 
   constructor() {
     // Reset the form once a submit finishes without leaving an error behind (i.e. it succeeded).
+    // `dirty` is read untracked so typing doesn't itself retrigger this effect.
     effect(() => {
-      if (!this.submitting() && !this.errorMessage() && this.form.dirty) {
-        this.form.reset({ trackingNumber: '', carrierId: null });
+      const submitting = this.submitting();
+      const errorMessage = this.errorMessage();
+      if (!submitting && !errorMessage && untracked(() => this.shipmentForm().dirty())) {
+        this.shipmentForm().reset({ ...EMPTY_FORM_MODEL });
       }
     });
   }
 
-  protected onSubmit(): void {
-    if (this.form.invalid || this.submitting()) {
+  protected onSubmit(event: Event): void {
+    event.preventDefault();
+
+    if (this.shipmentForm().invalid() || this.submitting()) {
       return;
     }
 
-    const { trackingNumber, carrierId } = this.form.getRawValue();
+    const { trackingNumber, carrierId } = this.model();
     this.create.emit({ trackingNumber: trackingNumber.trim(), carrierId: carrierId as number });
   }
 }

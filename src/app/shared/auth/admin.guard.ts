@@ -5,9 +5,10 @@ import {
 } from '@angular/router';
 import { AuthFacade } from './auth.facade';
 
-export const adminGuard: CanMatchFn = () => {
+export const adminGuard: CanMatchFn = async () => {
   const authFacade = inject(AuthFacade);
   const router = inject(Router);
 
+  await authFacade.whenReady();
   return authFacade.isAdmin() || router.createUrlTree(['/']);
 };
