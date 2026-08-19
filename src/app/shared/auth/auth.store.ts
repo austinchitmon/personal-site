@@ -17,12 +17,22 @@ export class AuthStore {
 
   public session = this.#session.asReadonly();
 
+  // Resolves once the initial session lookup completes, so route guards can wait
+  // for it instead of reading `session` while it's still the pre-load `null` default.
+  private readonly ready: Promise<void>;
+
   constructor() {
-    supabase.auth.getSession().then(({ data }) => this.setSession(data.session));
+    this.ready = supabase.auth.getSession().then(({ data }) => {
+      this.setSession(data.session);
+    });
 
     supabase.auth.onAuthStateChange((_event, session) => {
       this.setSession(session);
     });
+  }
+
+  public whenReady(): Promise<void> {
+    return this.ready;
   }
 
   public signInWithGoogle(): void {

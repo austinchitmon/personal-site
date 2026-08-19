@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project overview
 
-Angular 20 personal site (chitmon.com), deployed to GitHub Pages. Standalone components only, signals-based state, Optimus UI (Aura theme, `@openng/optimus-ui` — a PrimeNG v21 fork) for UI, ngx-markdown/marked + Prism for blog rendering.
+Angular 21 personal site (chitmon.com), deployed to GitHub Pages. Standalone components only, signals-based state, Optimus UI (Aura theme, `@openng/optimus-ui` — a PrimeNG v21 fork) for UI, ngx-markdown/marked + Prism for blog rendering.
 
 ## Commands
 
@@ -52,6 +52,13 @@ Blog posts are markdown files with frontmatter in `public/blog/*.md` (cover imag
 - `SupabaseApiService` builds on `ApiService`/`API_URL` with a `/supabase` prefix and exposes Supabase storage/edge-function subroutes (resume download, random-cat image function) via `SUPABASE_API_CONFIG`. Actual Supabase edge functions live in `supabase/functions/` (Deno) and are deployed independently via the `supabase:deploy:fn` script.
 - `lazyService()` (`shared/functions/lazy-service.ts`) wraps a dynamic `import()` of a service in an Observable via `Injector.get`, used to lazy-load rarely-needed services (e.g. `ReadingTimeService`) without pulling them into the main bundle.
 
+### Forms (Signal Forms)
+
+Use Signal Forms (`@angular/forms/signals` — `form()`, `[formField]`, `required()`/`email()`/etc., `submit()`) for all new forms, not Reactive Forms. Reference implementation: `features/shipment-tracker/shipment-tracker-container/create-shipment-form/`. Two Optimus UI-specific gotchas found converting that form, both stemming from Optimus components implementing the classic `ControlValueAccessor` interop path rather than Signal Forms' newer `FormValueControl` contract:
+
+- Binding `[formField]` directly to an Optimus component like `p-select` fails type-checking (`TS2322`, a confusing unrelated-looking error) even though it works correctly at runtime via `NG_VALUE_ACCESSOR` interop. Wrap the binding in `$any(...)` to bypass the compile-time check: `[formField]="$any(shipmentForm.carrierId)"`.
+- `[formField]` auto-binds `invalid`/`touched`/`disabled`/etc. onto co-located Optimus directives straight from field state — Angular refuses to even compile a manual `[invalid]` override on the same element (`NG8022: Binding to '[invalid]' is not allowed on nodes using the '[formField]' directive`). Optimus's `p-invalid` styling isn't touched-gated, so a `required` field shows red immediately on load, before the user has interacted with it — border, box-shadow, *and* placeholder text (a separate CSS custom property for native inputs, or a literal `.p-placeholder` text span for `p-select`, not a `::placeholder` pseudo-element). This isn't a one-off — every `[formField]` usage hits it, so it's handled globally rather than per form: `PendingValidationDirective` (`shared/forms/pending-validation.directive.ts`) shares the `[formField]` selector, so importing it into a form component's `imports` array (no template changes needed) toggles a `pending-validation` class until the field is touched, and `styles.scss` has one global rule neutralizing `.pending-validation.p-invalid` (border-color/box-shadow/placeholder). Any new Signal Forms component should import `PendingValidationDirective` alongside `FormField`.
+
 ### Conventions (from `.qoder/rules/angular-rules.md`)
 
 - Standalone components everywhere; do **not** set `standalone: true` explicitly (it's the default).
@@ -60,6 +67,6 @@ Blog posts are markdown files with frontmatter in `public/blog/*.md` (cover imag
 - `inject()` instead of constructor injection.
 - Native control flow (`@if`/`@for`/`@switch`), not `*ngIf`/`*ngFor`/`*ngSwitch`; `class`/`style` bindings, not `ngClass`/`ngStyle`.
 - No `@HostBinding`/`@HostListener` — use the `host` object in the decorator instead.
-- Reactive forms over template-driven forms.
+- Signal Forms over Reactive Forms (`FormGroup`/`FormControl`) for all new forms — see "Forms (Signal Forms)" below.
 - Component selector prefix is `app-` (kebab-case elements, camelCase attributes) — enforced by eslint.
 - Generated components default to inline templates and SCSS styles (`angular.json` schematics config), but when a component's template/logic grows, split into separate `.ts`/`.html`/`.scss` files (ts = logic, html = template, scss = styles) — see `post-container.component.ts` vs its `.scss` file for the split pattern.

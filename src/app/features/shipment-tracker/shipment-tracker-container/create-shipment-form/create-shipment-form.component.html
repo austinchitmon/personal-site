@@ -1,0 +1,35 @@
+<form class="create-shipment-form"
+      (submit)="onSubmit($event)">
+  <div class="field">
+    <label for="tracking_number">Tracking number</label>
+    <input pInputText
+           id="tracking_number"
+           [formField]="shipmentForm.trackingNumber"
+           placeholder="e.g. 9400111899223197428490"
+           class="tracking-input" />
+  </div>
+
+  <div class="field">
+    <label for="carrier">Carrier</label>
+    <p-select id="carrier"
+              [formField]="$any(shipmentForm.carrierId)"
+              [options]="carriers()"
+              optionLabel="displayName"
+              optionValue="id"
+              placeholder="Select a carrier"
+              class="carrier-select" />
+  </div>
+
+  <button pButton
+          type="submit"
+          [disabled]="shipmentForm().invalid() || submitting()">
+    {{ submitting() ? 'Adding…' : 'Track shipment' }}
+  </button>
+
+  @if (errorMessage(); as error) {
+    <p-message severity="warn"
+               class="form-error">
+      {{ error }}
+    </p-message>
+  }
+</form>

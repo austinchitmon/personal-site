@@ -1,0 +1,73 @@
+<div class="page-container">
+  <h1>
+    <span class="title white">Shipment</span
+    ><span class="title gradient">Tracker</span>
+  </h1>
+  <h3 class="subtitle">Everything you've got in flight, in one place 📦</h3>
+
+  <p-card class="form-card">
+    <app-create-shipment-form
+      [carriers]="facade.carriers()"
+      [submitting]="facade.creating()"
+      [errorMessage]="facade.createError()"
+      (create)="onCreate($event)"
+    />
+  </p-card>
+
+  <div class="list-header">
+    <h3>Your shipments</h3>
+    <button pButton
+            severity="secondary"
+            [text]="true"
+            (click)="facade.refresh()">
+      <i class="pi pi-refresh"></i>
+      Refresh
+    </button>
+  </div>
+
+  <app-loading-spinner class="w-95" [spinWhileUndefined]="facade.shipments()">
+    @if (facade.shipments(); as shipments) {
+      @if (shipments.length) {
+        <div class="card-container">
+          @for (shipment of shipments; track shipment.id) {
+            <p-card class="card shipment-card">
+              <ng-template #title>{{ shipment.carrier.displayName }}</ng-template>
+              <ng-template #subtitle>{{ shipment.trackingNumber }}</ng-template>
+
+              <div class="display-flex flex-col row-gap-2">
+                <p-tag [severity]="statusSeverity(shipment)">
+                  {{ shipment.statusText || "Status unavailable, we'll try again shortly" }}
+                </p-tag>
+
+                @if (shipment.lastLocation) {
+                  <p class="text-sm">📍 {{ shipment.lastLocation }}</p>
+                }
+                @if (shipment.estimatedDelivery && !shipment.delivered) {
+                  <p class="text-sm">Estimated delivery: {{ shipment.estimatedDelivery }}</p>
+                }
+                <p class="text-sm last-checked">
+                  Last checked: {{ shipment.lastCheckedAt | date: 'medium' }}
+                </p>
+              </div>
+
+              <div class="card-actions">
+                <button pButton
+                        severity="danger"
+                        [text]="true"
+                        [disabled]="facade.deletingIds().has(shipment.id)"
+                        (click)="confirmDelete(shipment)">
+                  <i class="pi pi-trash"></i>
+                  {{ facade.deletingIds().has(shipment.id) ? 'Removing…' : 'Stop tracking' }}
+                </button>
+              </div>
+            </p-card>
+          }
+        </div>
+      } @else {
+        <p class="empty-state">No shipments yet — add a tracking number above.</p>
+      }
+    }
+  </app-loading-spinner>
+
+  <p-confirmdialog />
+</div>

@@ -42,4 +42,9 @@ export class ApiService {
   }): Observable<TResult> {
     return this.http.post<TResult>(url, body, options);
   }
+
+  public delete<T>(url: string, options?: HttpOptions): Observable<T> {
+    // @ts-expect-error type issue with responseType
+    return this.http.delete<T>(url, options);
+  }
 }
