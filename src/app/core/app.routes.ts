@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { adminGuard } from '../shared/auth/admin.guard';
+import { authGuard } from '../shared/auth/auth.guard';
 import { HomeComponent } from './home/home.component';
 
 export const routes: Routes = [
@@ -12,6 +13,12 @@ export const routes: Routes = [
     canMatch: [adminGuard],
     loadChildren: () => import('../features/admin/admin.routes').then(mod =>
       mod.ADMIN_ROUTES)
+  },
+  {
+    path: 'shipments',
+    canMatch: [authGuard],
+    loadChildren: () => import('../features/shipment-tracker/shipment-tracker.routes').then(mod =>
+      mod.SHIPMENT_TRACKER_ROUTES)
   },
   {
     path: 'chittyblog',

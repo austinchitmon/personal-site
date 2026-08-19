@@ -1,0 +1,36 @@
+<form class="create-shipment-form"
+      [formGroup]="form"
+      (ngSubmit)="onSubmit()">
+  <div class="field">
+    <label for="tracking_number">Tracking number</label>
+    <input pInputText
+           id="tracking_number"
+           formControlName="trackingNumber"
+           placeholder="e.g. 9400111899223197428490"
+           class="tracking-input" />
+  </div>
+
+  <div class="field">
+    <label for="carrier">Carrier</label>
+    <p-select id="carrier"
+              formControlName="carrierId"
+              [options]="carriers()"
+              optionLabel="displayName"
+              optionValue="id"
+              placeholder="Select a carrier"
+              class="carrier-select" />
+  </div>
+
+  <button pButton
+          type="submit"
+          [disabled]="form.invalid || submitting()">
+    {{ submitting() ? 'Adding…' : 'Track shipment' }}
+  </button>
+
+  @if (errorMessage(); as error) {
+    <p-message severity="warn"
+               class="form-error">
+      {{ error }}
+    </p-message>
+  }
+</form>

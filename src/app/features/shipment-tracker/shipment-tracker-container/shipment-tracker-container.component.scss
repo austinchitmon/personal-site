@@ -1,0 +1,83 @@
+.page-container {
+  flex: 1;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  max-width: 1200px;
+  align-items: center;
+  row-gap: 1rem;
+}
+
+.title {
+  font-weight: 800;
+  font-size: 3rem;
+  text-align: center;
+
+  @media (max-width: 768px) {
+    font-size: 2rem;
+  }
+}
+
+.white {
+  color: #cfcbc6;
+}
+
+.gradient {
+  background: linear-gradient(90deg, #4bb 0%, #b48 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.subtitle {
+  font-weight: 100;
+  font-size: 1rem;
+  color: #cacaca;
+  text-align: center;
+}
+
+.form-card {
+  width: 100%;
+  max-width: 900px;
+  margin-top: 1rem;
+}
+
+.list-header {
+  width: 100%;
+  max-width: 900px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+
+.card-container {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.shipment-card {
+  width: 20rem;
+}
+
+.last-checked {
+  color: #9a9a9a;
+}
+
+.card-actions {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.empty-state {
+  color: #9a9a9a;
+  text-align: center;
+  margin-top: 2rem;
+}
