@@ -14,10 +14,7 @@ import { ToolbarModule } from '@openng/optimus-ui/toolbar';
 import { TooltipModule } from '@openng/optimus-ui/tooltip';
 import { AuthFacade } from '../../shared/auth/auth.facade';
 import { BurgerMenuComponent } from './burger-menu/burger-menu.component';
-import {
-  ADMIN_NAV_ENTRY,
-  DEFAULT_NAV_BAR_ENTRIES
-} from './nav-bar.const';
+import { resolveNavEntries } from './nav-bar.const';
 
 @Component({
   selector: 'app-nav-bar',
@@ -85,6 +82,6 @@ export class NavBarComponent {
   protected readonly authFacade = inject(AuthFacade);
 
   protected readonly navEntries = computed(() =>
-    this.authFacade.isAdmin() ? [...DEFAULT_NAV_BAR_ENTRIES, ADMIN_NAV_ENTRY] : DEFAULT_NAV_BAR_ENTRIES
+    resolveNavEntries(this.authFacade.isAuthenticated(), this.authFacade.isAdmin())
   );
 }

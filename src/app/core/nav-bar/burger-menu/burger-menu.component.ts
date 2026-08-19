@@ -7,10 +7,7 @@ import {
 } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AuthFacade } from '../../../shared/auth/auth.facade';
-import {
-  ADMIN_NAV_ENTRY,
-  DEFAULT_NAV_BAR_ENTRIES
-} from '../nav-bar.const';
+import { resolveNavEntries } from '../nav-bar.const';
 
 @Component({
   selector: 'app-burger-menu',
@@ -48,7 +45,7 @@ export class BurgerMenuComponent {
 
   protected readonly menuOpen = signal(false);
   protected readonly navEntries = computed(() =>
-    this.authFacade.isAdmin() ? [...DEFAULT_NAV_BAR_ENTRIES, ADMIN_NAV_ENTRY] : DEFAULT_NAV_BAR_ENTRIES
+    resolveNavEntries(this.authFacade.isAuthenticated(), this.authFacade.isAdmin())
   );
 
 
