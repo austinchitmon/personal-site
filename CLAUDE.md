@@ -31,7 +31,7 @@ CI (`.github/workflows/ci.yml`) runs install, lint, Vitest unit tests, and `buil
 
 ### Themes
 
-`core/theme/site-themes.ts` owns the Miami daylight/after-dark semantic palettes. `ThemeService` applies `--site-*` CSS variables, persists the selection, and sets generic light/dark attributes; `miami.preset.ts` maps Optimus UI tokens to the same roles. Use semantic variables in components rather than literal colors. See [docs/design-system.md](docs/design-system.md) for adding themes and accessibility checks. The home page has no color timer/store; its facade only handles resume access.
+`core/theme/site-themes.ts` owns the Daylight, After Dark, and Bubble Gum semantic palettes. `ThemeService` applies `--site-*` CSS variables, persists the selection, and sets generic light/dark attributes; `miami.preset.ts` maps Optimus UI tokens to the same roles. Use semantic variables in components rather than literal colors. See [docs/design-system.md](docs/design-system.md) for adding themes and accessibility checks. The home page has no color timer/store; its facade only handles resume access.
 
 ### Module layout
 

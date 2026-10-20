@@ -23,7 +23,7 @@ The public `/supabase/...` routes are an additional routing path: the resume PDF
 
 - Angular 22, TypeScript 6, zoneless change detection, standalone components, and `OnPush`.
 - Optimus UI 2 (`@openng/optimus-ui`) with Aura, SCSS, and Inter. Shared utility styles live in `src/styles.scss`.
-- The Miami theme registry and `ThemeService` in `core/theme` provide semantic CSS variables, a shared Optimus preset, and persistent daylight/after-dark selection. See [design-system.md](design-system.md) for palette roles, contrast checks, and adding themes.
+- The Miami theme registry and `ThemeService` in `core/theme` provide semantic CSS variables, a shared Optimus preset, and persistent appearance selection. See [design-system.md](design-system.md) for palette roles, contrast checks, and adding themes.
 - `src/app/core`: application configuration, routes, navigation, footer, and home page.
 - `src/app/features`: lazy-loaded blog (`/chittyblog`), cat generator (`/cat`), and admin area (`/admin`, including `/admin/pokeplayground`). The Pokémon physics canvas lives within the admin feature.
 - `src/app/shared`: authentication, typed API clients/models, reusable UI, pipes, and services.

@@ -1,7 +1,7 @@
 import { signal } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AuthFacade } from '../../../shared/auth/auth.facade';
-import { THEME_STORAGE_KEY } from '../../theme/site-themes';
+import { SITE_THEMES, THEME_STORAGE_KEY } from '../../theme/site-themes';
 import { AccountMenuComponent } from './account-menu.component';
 
 describe('AccountMenuComponent', () => {
@@ -38,7 +38,7 @@ describe('AccountMenuComponent', () => {
     button('[data-appearance]').click();
     fixture.detectChanges();
     const options = fixture.nativeElement.querySelectorAll('[data-theme-option]');
-    expect(options.length).toBe(2);
+    expect(options.length).toBe(Object.keys(SITE_THEMES).length);
     expect(options[0].getAttribute('aria-pressed')).toBe('true');
     options[1].click();
     fixture.detectChanges();

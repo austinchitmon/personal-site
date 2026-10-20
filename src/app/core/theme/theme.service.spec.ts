@@ -37,6 +37,15 @@ describe('ThemeService', () => {
     expect(TestBed.inject(ThemeService).current()).toBe('miami-day');
   });
 
+  it('restores Bubble Gum as a light theme with its own component palette', () => {
+    localStorage.setItem(THEME_STORAGE_KEY, 'bubble-gum');
+    const service = TestBed.inject(ThemeService);
+    expect(service.name()).toBe('Bubble Gum');
+    expect(service.isDark()).toBe(false);
+    expect(document.documentElement.dataset['colorScheme']).toBe('light');
+    expect(document.documentElement.style.getPropertyValue('--site-primary-600')).toBe(SITE_THEMES['bubble-gum'].primaryPalette[600]);
+  });
+
   it('persists a switch and can return to daylight', () => {
     const service = TestBed.inject(ThemeService);
     service.toggle();

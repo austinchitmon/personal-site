@@ -4,6 +4,8 @@ The default **Daylight** palette takes its warm cream, sea glass, ocean teal, co
 
 ## One source of color values
 
+**Bubble Gum** is an additional light theme inspired by pink Miami Beach Art Deco: pale blush backgrounds, rose surfaces, berry controls, orchid accents, and buttercream details. Deep berry/mauve text keeps pastel surfaces readable. It has a separate pink primary scale, including component-library highlights.
+
 `src/app/core/theme/site-themes.ts` is the palette registry. Each theme defines a name, a light/dark scheme, and the same set of semantic color roles. `ThemeService` applies these colors as `--site-*` CSS custom properties to the document root and sets `data-site-theme`, `data-color-scheme`, the native `color-scheme`, and the browser's theme-color metadata.
 
 Component styles use roles such as `--site-text`, `--site-surface`, `--site-primary`, and `--site-accent`; avoid literal colors in components. Derived shadows and decorative gradients live in `src/styles.scss`. `miami.preset.ts` bridges Optimus UI's Aura tokens to these same CSS variables, so cards, inputs, toolbar, buttons, and app styles change together. The component library's dark-mode selector uses the generic `data-color-scheme="dark"` attribute rather than a particular theme ID.
