@@ -1,0 +1,64 @@
+<button type="button"
+        class="account-trigger"
+        popovertarget="account-menu"
+        aria-label="Account menu"
+        aria-haspopup="dialog"
+        aria-controls="account-menu"
+        [attr.aria-expanded]="isOpen()">
+  <i class="pi pi-user" aria-hidden="true"></i>
+</button>
+
+<div #panel id="account-menu" class="account-panel" popover="auto"
+     role="dialog" aria-label="Account menu" (toggle)="onToggle($event)">
+  @if (appearanceOpen()) {
+    <div class="panel-heading">
+      <button type="button" class="icon-button" aria-label="Back to account menu" (click)="back()">
+        <i class="pi pi-arrow-left" aria-hidden="true"></i>
+      </button>
+      <h2>Appearance</h2>
+      <button type="button" class="icon-button" aria-label="Close account menu"
+              popovertarget="account-menu" popovertargetaction="hide">
+        <i class="pi pi-times" aria-hidden="true"></i>
+      </button>
+    </div>
+    <p class="appearance-note">Choose your Miami mood. Saved for your next visit.</p>
+    <div class="menu-section" role="group" aria-label="Choose appearance">
+      @for (option of facade.themeOptions; track option.id) {
+        <button type="button" class="menu-row" data-theme-option
+                [attr.aria-pressed]="facade.currentTheme() === option.id"
+                (click)="facade.setTheme(option.id)">
+          <i [class]="option.icon" aria-hidden="true"></i>
+          <span>{{option.name}}</span>
+          @if (facade.currentTheme() === option.id) {
+            <i class="pi pi-check trailing" aria-hidden="true"></i>
+          }
+        </button>
+      }
+    </div>
+  } @else {
+    <div class="account-heading">
+      <span class="account-avatar" aria-hidden="true"><i class="pi pi-user"></i></span>
+      <div class="account-copy">
+        <h2>{{facade.isAuthenticated() ? 'Your account' : 'Welcome to chitmon.com'}}</h2>
+        <p>{{facade.isAuthenticated() ? 'You’re signed in' : 'Make yourself at home'}}</p>
+      </div>
+      <button type="button" class="icon-button" aria-label="Close account menu"
+              popovertarget="account-menu" popovertargetaction="hide">
+        <i class="pi pi-times" aria-hidden="true"></i>
+      </button>
+    </div>
+    <div class="menu-section">
+      <button type="button" class="menu-row" (click)="authenticate()">
+        <i [class]="facade.isAuthenticated() ? 'pi pi-sign-out' : 'pi pi-sign-in'" aria-hidden="true"></i>
+        <span>{{facade.isAuthenticated() ? 'Sign out' : 'Sign in with Google'}}</span>
+      </button>
+    </div>
+    <div class="menu-section">
+      <button type="button" class="menu-row" data-appearance (click)="openAppearance()">
+        <i class="pi pi-palette" aria-hidden="true"></i>
+        <span class="appearance-label">Appearance<span class="current-theme">{{facade.themeName()}}</span></span>
+        <i class="pi pi-chevron-right trailing" aria-hidden="true"></i>
+      </button>
+    </div>
+  }
+</div>

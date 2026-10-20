@@ -62,25 +62,6 @@
   text-decoration-thickness: 2px;
 }
 
-.theme-toggle {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.55rem;
-  min-height: 44px;
-  min-width: 44px;
-  padding: 0.5rem 0.8rem;
-  border: 1px solid var(--site-border-strong);
-  border-radius: 2rem;
-  background: var(--site-surface);
-  color: var(--site-primary);
-  font-size: 0.8rem;
-  cursor: pointer;
-
-  &:hover {
-    background: var(--site-surface-alt);
-  }
-}
-
 .spinner:hover {
   animation: spin 0.5s linear infinite; /* Infinite spinning */
 }
