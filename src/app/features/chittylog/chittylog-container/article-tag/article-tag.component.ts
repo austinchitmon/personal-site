@@ -5,7 +5,6 @@ import {
   input,
   output
 } from '@angular/core';
-import { Tag } from '@openng/optimus-ui/tag';
 
 interface TagConfig {
   background: string;
@@ -14,33 +13,38 @@ interface TagConfig {
 
 @Component({
   selector: 'app-article-tag',
-  imports: [
-    Tag
-  ],
   template: `
-    <p-tag severity="info"
-           (click)="tagClick.emit(value())"
-           [style.border-radius]="'20px'"
-           [style.font-weight]="'500'"
-           [style.background-color]="currentConfig().background"
-           [style.color]="currentConfig().textColor"
-           [value]="value()"></p-tag>
+    <button type="button"
+            class="article-tag"
+            [attr.aria-label]="'Filter by ' + value()"
+            [attr.aria-pressed]="selected()"
+            (click)="onClick($event)"
+            [style.background-color]="currentConfig().background"
+            [style.color]="currentConfig().textColor">
+      {{value()}}
+    </button>
   `,
   styleUrl: './article-tag.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ArticleTagComponent {
   readonly TAG_CONFIG: Record<string, TagConfig> = {
-    'angular': { background: '#a51e24', textColor: '#FFFFFF' },
-    'primeng': { background: '#a51e24', textColor: '#FFFFFF' },
-    'typescript': { background: '#007acc', textColor: '#FFFFFF' },
-    'node': { background: '#3e863d', textColor: '#FFFFFF' },
-    'obsidian': { background: '#582bac', textColor: '#FFFFFF' },
-    'markdown': { background: '#196989', textColor: '#FFFFFF' },
+    'angular': { background: 'var(--site-accent-soft)', textColor: 'var(--site-accent-on-soft)' },
+    'primeng': { background: 'var(--site-accent-soft)', textColor: 'var(--site-accent-on-soft)' },
+    'typescript': { background: 'var(--site-surface-alt)', textColor: 'var(--site-primary)' },
+    'node': { background: 'var(--site-surface-alt)', textColor: 'var(--site-primary)' },
+    'obsidian': { background: 'var(--site-sand)', textColor: 'var(--site-on-sand)' },
+    'markdown': { background: 'var(--site-surface-alt)', textColor: 'var(--site-primary)' },
   };
   value = input.required<string>();
+  selected = input(false);
   currentConfig = computed(() =>
-    this.TAG_CONFIG[this.value().toLowerCase()] ?? { background: 'rgba(51,51,51,0.88)', textColor: '#FFFFFF' }
+    this.TAG_CONFIG[this.value().toLowerCase()] ?? { background: 'var(--site-sand)', textColor: 'var(--site-on-sand)' }
   );
   tagClick = output<string>();
+
+  protected onClick(event: MouseEvent): void {
+    event.stopPropagation();
+    this.tagClick.emit(this.value());
+  }
 }

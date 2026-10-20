@@ -15,6 +15,7 @@ import { TooltipModule } from '@openng/optimus-ui/tooltip';
 import { AuthFacade } from '../../shared/auth/auth.facade';
 import { BurgerMenuComponent } from './burger-menu/burger-menu.component';
 import { resolveNavEntries } from './nav-bar.const';
+import { ThemeService } from '../theme/theme.service';
 
 @Component({
   selector: 'app-nav-bar',
@@ -52,12 +53,22 @@ import { resolveNavEntries } from './nav-bar.const';
       </ng-template>
 
       <ng-template pTemplate="end">
+        <button type="button"
+                class="theme-toggle"
+                role="switch"
+                aria-label="Miami after dark"
+                [attr.aria-checked]="theme.isDark()"
+                (click)="theme.toggle()">
+          <i [class]="theme.isDark() ? 'pi pi-moon' : 'pi pi-sun'" aria-hidden="true"></i>
+          <span class="hide-sm">{{theme.name()}}</span>
+        </button>
         @if (authFacade.isAuthenticated()) {
           <p-button
             icon="pi pi-sign-out"
             [text]="true"
             [rounded]="true"
             pTooltip="Sign out"
+            ariaLabel="Sign out"
             tooltipPosition="bottom"
             (click)="authFacade.logout()"
           />
@@ -67,6 +78,7 @@ import { resolveNavEntries } from './nav-bar.const';
             [text]="true"
             [rounded]="true"
             pTooltip="Sign in with Google"
+            ariaLabel="Sign in with Google"
             tooltipPosition="bottom"
             (click)="authFacade.login()"
           />
@@ -79,6 +91,7 @@ import { resolveNavEntries } from './nav-bar.const';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class NavBarComponent {
+  protected readonly theme = inject(ThemeService);
   protected readonly authFacade = inject(AuthFacade);
 
   protected readonly navEntries = computed(() =>

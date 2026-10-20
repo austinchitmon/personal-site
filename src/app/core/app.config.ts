@@ -13,11 +13,11 @@ import {
   provideRouter,
   withInMemoryScrolling
 } from '@angular/router';
-import Aura from '@openng/optimus-ui-themes/aura';
 import { provideMarkdown } from 'ngx-markdown';
 import { provideOptimus } from '@openng/optimus-ui/config';
 import { authInterceptor } from '../shared/auth/auth.interceptor';
 import { routes } from './app.routes';
+import { MiamiPreset } from './theme/miami.preset';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -34,7 +34,8 @@ export const appConfig: ApplicationConfig = {
     provideOptimus({
       ripple: true,
       theme: {
-        preset: Aura
+        preset: MiamiPreset,
+        options: { darkModeSelector: '[data-color-scheme="dark"]' }
       }
     }),
     provideMarkdown({ loader: HttpClient })

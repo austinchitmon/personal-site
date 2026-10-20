@@ -1,0 +1,116 @@
+export const THEME_STORAGE_KEY = 'chitmon-theme';
+
+export const MIAMI_OCEAN = {
+  50: '#edf6f1',
+  100: '#d7e8df',
+  200: '#b5d9cf',
+  300: '#8ed4c6',
+  400: '#59aca4',
+  500: '#2b8584',
+  600: '#176568',
+  700: '#114f52',
+  800: '#0c4144',
+  900: '#173638',
+  950: '#10292b',
+} as const;
+
+// Keep paint values here. Components consume semantic CSS variables, never a palette.
+const miamiDay = {
+  name: 'Miami daylight',
+  scheme: 'light',
+  colors: {
+    background: '#fbf7ed',
+    surface: '#fffdf7',
+    'surface-alt': '#e1eee6',
+    'surface-warm': '#f5e0d5',
+    text: '#244846',
+    'text-muted': '#506b66',
+    primary: MIAMI_OCEAN[600],
+    'primary-hover': MIAMI_OCEAN[700],
+    'primary-active': MIAMI_OCEAN[800],
+    'on-primary': '#fffdf7',
+    accent: '#a3473c',
+    'accent-soft': '#f3d5c8',
+    'accent-on-soft': '#79372e',
+    sand: '#eee0bd',
+    'on-sand': '#65501e',
+    border: '#c6d5c9',
+    'border-strong': '#6c8981',
+    focus: '#176568',
+    'code-background': '#e1eee6',
+    'code-text': '#79372e',
+    'shadow-color': '#2448461c',
+    'shadow-hover-color': '#2448462e',
+    'surface-0': '#fffdf7',
+    'surface-50': '#fbf7ed',
+    'surface-100': '#e1eee6',
+    'surface-200': '#c6d5c9',
+    'surface-300': '#a8bfb4',
+    'surface-400': '#829e94',
+    'surface-500': '#607f76',
+    'surface-600': '#506b66',
+    'surface-700': '#365652',
+    'surface-800': '#244846',
+    'surface-900': '#173638',
+    'surface-950': '#10292b',
+  },
+} as const;
+
+export type ThemeColors = { [Key in keyof typeof miamiDay.colors]: string };
+
+export interface SiteTheme {
+  name: string;
+  scheme: 'light' | 'dark';
+  colors: ThemeColors;
+}
+
+export const SITE_THEMES = {
+  'miami-day': miamiDay,
+  'miami-dusk': {
+    name: 'Miami after dark',
+    scheme: 'dark',
+    colors: {
+      background: '#142f31',
+      surface: '#1c3a3c',
+      'surface-alt': '#29494a',
+      'surface-warm': '#4c3d3b',
+      text: '#f4edda',
+      'text-muted': '#bfd3c9',
+      primary: MIAMI_OCEAN[300],
+      'primary-hover': '#b2e3d8',
+      'primary-active': '#c6eee4',
+      'on-primary': '#142f31',
+      accent: '#f2b09c',
+      'accent-soft': '#563d38',
+      'accent-on-soft': '#ffd1bd',
+      sand: '#4b452f',
+      'on-sand': '#efddaa',
+      border: '#426361',
+      'border-strong': '#8ba99e',
+      focus: '#f2b09c',
+      'code-background': '#29494a',
+      'code-text': '#ffd1bd',
+      'shadow-color': '#071b1d33',
+      'shadow-hover-color': '#071b1d66',
+      'surface-0': '#f4edda',
+      'surface-50': '#e4e7d5',
+      'surface-100': '#ceddce',
+      'surface-200': '#bfd3c9',
+      'surface-300': '#a4beb3',
+      'surface-400': '#8ba99e',
+      'surface-500': '#6f8e85',
+      'surface-600': '#567771',
+      'surface-700': '#426361',
+      'surface-800': '#29494a',
+      'surface-900': '#1c3a3c',
+      'surface-950': '#142f31',
+    },
+  },
+} as const satisfies Record<string, SiteTheme>;
+
+export type SiteThemeId = keyof typeof SITE_THEMES;
+export const DEFAULT_THEME: SiteThemeId = 'miami-day';
+
+export function isSiteThemeId(value: string | null): value is SiteThemeId {
+  return value !== null && Object.hasOwn(SITE_THEMES, value);
+}

@@ -11,9 +11,9 @@
 }
 
 .subtitle {
-  font-weight: 100;
+  font-weight: 400;
   font-size: 1rem;
-  color: #cacaca;
+  color: var(--site-text-muted);
   text-align: center;
 }
 
@@ -27,34 +27,16 @@
 }
 
 .card {
-  width: 22rem;
+  width: min(22rem, 100%);
   position: relative;
   overflow: hidden;
-  transition: all 0.5s ease;
+  border: 1px solid var(--site-border);
+  border-radius: 0.75rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 
   &:hover {
     cursor: pointer;
-    transform: scale(1.05);
-    box-shadow: 0 0 20px rgba(187, 68, 136, 0.5);
-  }
-
-  &::before {
-    content: "";
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: linear-gradient(0deg, transparent, transparent 30%, rgba(187, 68, 136, 0.3));
-    transform: rotate(-45deg);
-    transition: all 0.5s ease;
-    opacity: 0;
-    z-index: 1;
-    pointer-events: none;
-  }
-
-  &:hover::before {
-    opacity: 1;
-    transform: rotate(-45deg) translateY(100%);
+    transform: translateY(-3px);
+    box-shadow: var(--site-shadow-hover);
   }
 }

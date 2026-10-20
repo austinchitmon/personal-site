@@ -4,7 +4,7 @@
 }
 
 .burger-icon {
-  color: white;
+  color: var(--site-primary);
 }
 
 .burger-button {
@@ -12,14 +12,17 @@
   background: none;
   border: none;
   cursor: pointer;
+  min-width: 44px;
+  min-height: 44px;
 }
 
 .menu {
   position: absolute;
   right: 0;
   top: 100%;
-  background: #F082AC;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  background: var(--site-surface);
+  border: 1px solid var(--site-border-strong);
+  box-shadow: var(--site-shadow);
   border-radius: 4px;
   padding: 10px;
   z-index: 1000;
@@ -30,9 +33,11 @@
 .menu a {
   padding: 8px 12px;
   text-decoration: none;
-  color: white;
+  color: var(--site-text);
+  min-height: 44px;
 }
 
 .menu a:hover {
-  background-color: #f0f0f0;
+  background-color: var(--site-surface-alt);
+  color: var(--site-primary);
 }

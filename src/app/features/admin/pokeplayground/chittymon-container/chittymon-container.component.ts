@@ -44,7 +44,7 @@ export class ChittymonContainerComponent implements AfterViewInit, OnDestroy {
     this.render = Render.create({
       canvas,
       engine: this.engine,
-      options: { width, height, wireframes: false, background: 'black' },
+      options: { width, height, wireframes: false, background: 'transparent' },
     });
 
     this.createWalls(width, height);

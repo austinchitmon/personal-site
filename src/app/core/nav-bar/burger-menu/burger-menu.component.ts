@@ -21,12 +21,16 @@ import { resolveNavEntries } from '../nav-bar.const';
   template: `
     <div class="burger-container">
       <button (click)="toggleMenu()"
-              class="burger-button">
+              class="burger-button"
+              type="button"
+              aria-label="Toggle navigation"
+              aria-controls="mobile-navigation"
+              [attr.aria-expanded]="menuOpen()">
         <span class="burger-icon">☰</span>
       </button>
 
       @if (menuOpen()) {
-        <div class="menu">
+        <div class="menu" id="mobile-navigation">
           @for (entry of navEntries(); track $index) {
             <a
               [routerLink]="entry.routerLink"

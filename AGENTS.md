@@ -29,6 +29,10 @@ CI (`.github/workflows/ci.yml`) runs install, lint, Vitest unit tests, and `buil
 
 ## Architecture
 
+### Themes
+
+`core/theme/site-themes.ts` owns the Miami daylight/after-dark semantic palettes. `ThemeService` applies `--site-*` CSS variables, persists the selection, and sets generic light/dark attributes; `miami.preset.ts` maps Optimus UI tokens to the same roles. Use semantic variables in components rather than literal colors. See [docs/design-system.md](docs/design-system.md) for adding themes and accessibility checks. The home page has no color timer/store; its facade only handles resume access.
+
 ### Module layout
 
 - `src/app/core` — app shell: routes, app config, nav bar, footer, home page.
@@ -37,7 +41,7 @@ CI (`.github/workflows/ci.yml`) runs install, lint, Vitest unit tests, and `buil
 
 ### State pattern: Store + Facade
 
-Feature/page-level state follows a consistent split, seen in `core/home` and `features/chittylog/chittylog-container`:
+Feature/page-level state follows a consistent split, seen in `features/admin/pokeplayground` and `features/chittylog/chittylog-container`:
 - **Store** (`*.store.ts`): `@Injectable()` (not `providedIn: 'root'` — scoped to the component tree), holds a private signal-based state object, exposes readonly computed/derived signals and mutation methods. No business logic beyond state transitions.
 - **Facade** (`*.facade.ts`): injects the store (and any API services), exposes computed signals and public methods components call. This is the component's single injected dependency for business logic — components should not inject stores or API services directly when a facade exists (per `.qoder/rules/angular-rules.md`).
 
