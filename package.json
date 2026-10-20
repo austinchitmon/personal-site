@@ -25,7 +25,6 @@
     "@angular/platform-browser": "^22.1.2",
     "@angular/platform-browser-dynamic": "^22.1.2",
     "@angular/router": "^22.1.2",
-    "@fontsource/inter": "^5.2.6",
     "@openng/icons": "^1.0.0",
     "@openng/optimus-ui": "^2.0.0",
     "@openng/optimus-ui-themes": "^2.0.0",

@@ -16,7 +16,9 @@ The home page's former random color timer has been removed. Text and inline high
 
 ## Brand typography
 
-The navigation wordmark is live uppercase text, **CHITMON.COM**, set in Limelight Regular, a freely licensed Art Deco alternative to the Broadway-style reference. It uses `--site-primary` and `--site-primary-hover` so each theme controls its color. The full name remains visible on mobile with responsive sizing; body typography remains Inter.
+The navigation wordmark is live uppercase text, **CHITMON.COM**, set in Limelight Regular, a freely licensed Art Deco alternative to the Broadway-style reference. It uses `--site-primary` and `--site-primary-hover` so each theme controls its color. The full name remains visible on mobile with responsive sizing.
+
+Jost is the default paragraph and interface font, set through `--site-font-body`. Body text and credentials use weight 400, navigation and buttons use 500, and existing headings/emphasis use the appropriate heavier weights. Self-hosted Latin variable WOFF2 files provide weights 100–900 with real upright and italic styles; the upright font is preloaded. Font files, source details, and the SIL Open Font License live in `public/fonts/jost/`. Limelight remains the display face, and code retains its monospace stack.
 
 The home page opens with **¡BIENVENIDOS!** in Limelight and the theme's primary color, followed by "I'm Austin", professional credentials, and an introductory paragraph. UI labels and published blog text use words rather than emojis; markdown emoji conversion and its toolkit dependency have been removed.
 
