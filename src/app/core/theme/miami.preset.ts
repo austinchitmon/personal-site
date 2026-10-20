@@ -1,6 +1,5 @@
 import { definePreset } from '@openng/optimus-ui-themes';
 import Aura from '@openng/optimus-ui-themes/aura';
-import { MIAMI_OCEAN } from './site-themes';
 
 // Bridge Optimus UI and app styles to the same semantic theme tokens.
 const colorScheme = {
@@ -47,7 +46,8 @@ const colorScheme = {
 
 export const MiamiPreset = definePreset(Aura, {
   semantic: {
-    primary: MIAMI_OCEAN,
+    primary: Object.fromEntries([50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950]
+      .map(level => [level, `var(--site-primary-${level})`])),
     focusRing: { width: '3px', style: 'solid', color: 'var(--site-focus)', offset: '3px' },
     colorScheme: { light: colorScheme, dark: colorScheme },
   },

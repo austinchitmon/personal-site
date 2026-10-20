@@ -18,6 +18,7 @@ export const MIAMI_OCEAN = {
 const miamiDay = {
   name: 'Miami daylight',
   scheme: 'light',
+  primaryPalette: MIAMI_OCEAN,
   colors: {
     background: '#fbf7ed',
     surface: '#fffdf7',
@@ -61,6 +62,7 @@ export type ThemeColors = { [Key in keyof typeof miamiDay.colors]: string };
 export interface SiteTheme {
   name: string;
   scheme: 'light' | 'dark';
+  primaryPalette: { [Step in keyof typeof MIAMI_OCEAN]: string };
   colors: ThemeColors;
 }
 
@@ -69,6 +71,7 @@ export const SITE_THEMES = {
   'miami-dusk': {
     name: 'Miami after dark',
     scheme: 'dark',
+    primaryPalette: MIAMI_OCEAN,
     colors: {
       background: '#142f31',
       surface: '#1c3a3c',

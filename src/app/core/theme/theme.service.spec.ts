@@ -20,6 +20,7 @@ describe('ThemeService', () => {
     const service = TestBed.inject(ThemeService);
     expect(service.current()).toBe('miami-day');
     expect(document.documentElement.style.getPropertyValue('--site-background')).toBe(SITE_THEMES['miami-day'].colors.background);
+    expect(document.documentElement.style.getPropertyValue('--site-primary-600')).toBe(SITE_THEMES['miami-day'].primaryPalette[600]);
   });
 
   it('restores a saved theme and applies it to app and component styles', () => {

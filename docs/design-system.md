@@ -12,7 +12,7 @@ The home page's former random color timer has been removed. Text and inline high
 
 ## Adding a theme
 
-1. Add a definition to `SITE_THEMES` with a unique ID, name, scheme, and complete `ThemeColors` map. Type checking requires every role.
+1. Add a definition to `SITE_THEMES` with a unique ID, name, scheme, complete `ThemeColors` map, and a `primaryPalette` scale (50–950). Type checking requires every role and shade. Related themes can share a primary palette; a different palette also updates the component library's subtle highlight shades.
 2. Reuse the existing semantic roles in components. Do not add theme-name branches or page-specific paint values.
 3. Extend the navigation's two-theme switch to a selector if offering more than the current daylight/after-dark pair. `ThemeService.setTheme(id)` already accepts every registered theme ID.
 4. Run `npm test -- --watch=false`. The contrast contract checks every registered palette automatically, including sampled heading-gradient colors and interactive boundaries.

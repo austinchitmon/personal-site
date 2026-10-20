@@ -40,6 +40,9 @@ export class ThemeService {
     root.dataset['siteTheme'] = id;
     root.dataset['colorScheme'] = theme.scheme;
     root.style.colorScheme = theme.scheme;
+    for (const [step, value] of Object.entries(theme.primaryPalette)) {
+      root.style.setProperty(`--site-primary-${step}`, value);
+    }
     for (const [token, value] of Object.entries(theme.colors)) {
       root.style.setProperty(`--site-${token}`, value);
     }
