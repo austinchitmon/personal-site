@@ -2,6 +2,14 @@
 @import "@fontsource/inter/400.css";
 @import "@openng/icons/openng-icons.css";
 
+@font-face {
+  font-family: 'Limelight';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/limelight/limelight-latin-400-normal.woff2') format('woff2');
+}
+
 :root {
   --site-shadow: 0 6px 24px var(--site-shadow-color);
   --site-shadow-hover: 0 12px 32px var(--site-shadow-hover-color);

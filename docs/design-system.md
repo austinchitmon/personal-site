@@ -12,7 +12,13 @@ The default **Daylight** palette takes its warm cream, sea glass, ocean teal, co
 
 Component styles use roles such as `--site-text`, `--site-surface`, `--site-primary`, and `--site-accent`; avoid literal colors in components. Derived shadows and decorative gradients live in `src/styles.scss`. `miami.preset.ts` bridges Optimus UI's Aura tokens to these same CSS variables, so cards, inputs, toolbar, buttons, and app styles change together. The component library's dark-mode selector uses the generic `data-color-scheme="dark"` attribute rather than a particular theme ID.
 
-The home page's former random color timer has been removed. Text and inline highlights now use tested semantic roles. Blog tags use the same palette and expose native keyboard-operable toggle buttons with a visible selected state. Photographs, logos, blog artwork, and Prism's separate syntax-highlighting palette retain their original colors.
+The home page's former random color timer has been removed. Text and inline highlights now use tested semantic roles. Blog tags use the same palette and expose native keyboard-operable toggle buttons with a visible selected state. Photographs, favicons, blog artwork, and Prism's separate syntax-highlighting palette retain their original colors.
+
+## Brand typography
+
+The navigation wordmark is live uppercase text, **CHITMON.COM**, set in Limelight Regular, a freely licensed Art Deco alternative to the Broadway-style reference. It uses `--site-primary` and `--site-primary-hover` so each theme controls its color. The full name remains visible on mobile with responsive sizing; body typography remains Inter.
+
+Limelight's Latin WOFF2 is self-hosted in `public/fonts/limelight/`, preloaded by `src/index.html`, and declared in `src/styles.scss` with `font-display: swap`. Its SIL Open Font License and source details ship alongside the font. No external font request is needed at runtime.
 
 ## Adding a theme
 

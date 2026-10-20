@@ -1,4 +1,3 @@
-import { NgOptimizedImage } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -17,24 +16,14 @@ import { AccountMenuComponent } from './account-menu/account-menu.component';
 
 @Component({
   selector: 'app-nav-bar',
-  imports: [RouterLink, RouterLinkActive, NgOptimizedImage, BurgerMenuComponent, ToolbarModule, AccountMenuComponent],
+  imports: [RouterLink, RouterLinkActive, BurgerMenuComponent, ToolbarModule, AccountMenuComponent],
   template: `
     <p-toolbar class="navbar">
       <ng-template pTemplate="start">
         <div class="display-flex flex-row col-gap-4">
           <a routerLink="/"
              class="navbar-brand">
-            <div class="display-flex flex-row">
-              <div class="logo-container">
-                <img [ngSrc]="'/img/logo/logo-medium.png'"
-                     class="logo spinner"
-                     alt="Website logo"
-                     fill
-                     [style.object-fit]="'contain'"
-                >
-              </div>
-              <span class="site-name hide-sm">itmon.com</span>
-            </div>
+            CHITMON.COM
           </a>
           <ul class="navbar-links hide-sm">
             @for (entry of navEntries(); track $index) {
