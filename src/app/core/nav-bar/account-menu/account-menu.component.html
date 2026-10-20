@@ -21,7 +21,7 @@
         <i class="pi pi-times" aria-hidden="true"></i>
       </button>
     </div>
-    <p class="appearance-note">Choose your Miami mood. Saved for your next visit.</p>
+    <p class="appearance-note">Choose your look. Saved for your next visit.</p>
     <div class="menu-section" role="group" aria-label="Choose appearance">
       @for (option of facade.themeOptions; track option.id) {
         <button type="button" class="menu-row" data-theme-option
@@ -39,8 +39,10 @@
     <div class="account-heading">
       <span class="account-avatar" aria-hidden="true"><i class="pi pi-user"></i></span>
       <div class="account-copy">
-        <h2>{{facade.isAuthenticated() ? 'Your account' : 'Welcome to chitmon.com'}}</h2>
-        <p>{{facade.isAuthenticated() ? 'You’re signed in' : 'Make yourself at home'}}</p>
+        <h2>{{facade.isAuthenticated() ? 'Your account' : 'Guest'}}</h2>
+        @if (facade.isAuthenticated()) {
+          <p>You’re signed in</p>
+        }
       </div>
       <button type="button" class="icon-button" aria-label="Close account menu"
               popovertarget="account-menu" popovertargetaction="hide">

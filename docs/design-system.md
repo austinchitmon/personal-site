@@ -1,6 +1,6 @@
 # Themes and colors
 
-The default **Miami daylight** palette takes its warm cream, sea glass, ocean teal, coral, and sand from the Miami references. **Miami after dark** uses the same visual language with deep ocean surfaces and lighter accents. Open the person icon in the navigation, then **Appearance**, to choose a theme. The visitor's preference is saved locally; daylight is the default when no valid preference exists.
+The default **Daylight** palette takes its warm cream, sea glass, ocean teal, coral, and sand from the Miami references. **After Dark** uses the same visual language with deep ocean surfaces and lighter accents. Open the person icon in the navigation, then **Appearance**, to choose a theme. The visitor's preference is saved locally; Daylight is the default when no valid preference exists.
 
 ## One source of color values
 

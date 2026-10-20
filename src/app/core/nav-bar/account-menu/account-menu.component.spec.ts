@@ -54,7 +54,7 @@ describe('AccountMenuComponent', () => {
     fixture.nativeElement.querySelectorAll('[data-theme-option]')[1].click();
     button('[aria-label="Back to account menu"]').click();
     fixture.detectChanges();
-    expect(button('[data-appearance]').textContent).toContain('Miami after dark');
+    expect(button('[data-appearance]').textContent).toContain('After Dark');
   });
 
   it('signs in from the guest account menu', () => {

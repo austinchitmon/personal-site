@@ -16,7 +16,7 @@ export const MIAMI_OCEAN = {
 
 // Keep paint values here. Components consume semantic CSS variables, never a palette.
 const miamiDay = {
-  name: 'Miami daylight',
+  name: 'Daylight',
   scheme: 'light',
   primaryPalette: MIAMI_OCEAN,
   colors: {
@@ -69,7 +69,7 @@ export interface SiteTheme {
 export const SITE_THEMES = {
   'miami-day': miamiDay,
   'miami-dusk': {
-    name: 'Miami after dark',
+    name: 'After Dark',
     scheme: 'dark',
     primaryPalette: MIAMI_OCEAN,
     colors: {

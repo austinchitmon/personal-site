@@ -16,7 +16,7 @@ describe('ThemeService', () => {
     vi.restoreAllMocks();
   });
 
-  it('starts with Miami daylight', () => {
+  it('starts with Daylight', () => {
     const service = TestBed.inject(ThemeService);
     expect(service.current()).toBe('miami-day');
     expect(document.documentElement.style.getPropertyValue('--site-background')).toBe(SITE_THEMES['miami-day'].colors.background);
