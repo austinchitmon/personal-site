@@ -6,7 +6,7 @@ The default **Daylight** palette takes its warm cream, sea glass, ocean teal, co
 
 **Bubble Gum** is an additional light theme inspired by pink Miami Beach Art Deco: pale blush backgrounds, rose surfaces, berry controls, orchid accents, and buttercream details. Deep berry/mauve text keeps pastel surfaces readable. It has a separate pink primary scale, including component-library highlights.
 
-**Bubble Gum Dark** is the bold neon counterpart, inspired by a Miami sunset skyline: saturated violet surfaces, electric pink controls, cyan accents, amber details, and magenta-tinted shadows. It uses a separate neon primary scale. Its saturated decorative colors are intentionally more intense than the other themes; the existing text and control contrast checks still apply.
+**Bubble Gum Dark** is the bold neon counterpart, inspired by a hot-pink Miami sunset: a near-black rose backdrop, muted deep-pink surfaces for navigation, footer, and account panels, electric pink controls, cyan accents, amber details, and pink glows. Its surface scale stays in the rose family, including component-library overlays and hover states, with a separate neon pink primary scale. Its saturated decorative colors are intentionally more intense than the other themes; the existing text and control contrast checks still apply.
 
 `src/app/core/theme/site-themes.ts` is the palette registry. Each theme defines a name, a light/dark scheme, and the same set of semantic color roles. `ThemeService` applies these colors as `--site-*` CSS custom properties to the document root and sets `data-site-theme`, `data-color-scheme`, the native `color-scheme`, and the browser's theme-color metadata.
 
