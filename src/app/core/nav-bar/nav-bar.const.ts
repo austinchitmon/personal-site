@@ -19,17 +19,9 @@ export const ADMIN_NAV_ENTRY: NavBarEntry = {
   label: 'Admin'
 };
 
-export const SHIPMENTS_NAV_ENTRY: NavBarEntry = {
-  routerLink: '/shipments',
-  label: 'Shipments'
-};
-
-export function resolveNavEntries(isAuthenticated: boolean, isAdmin: boolean): NavBarEntry[] {
+export function resolveNavEntries(isAdmin: boolean): NavBarEntry[] {
   const entries = [...DEFAULT_NAV_BAR_ENTRIES];
 
-  if (isAuthenticated) {
-    entries.push(SHIPMENTS_NAV_ENTRY);
-  }
   if (isAdmin) {
     entries.push(ADMIN_NAV_ENTRY);
   }

@@ -82,6 +82,6 @@ export class NavBarComponent {
   protected readonly authFacade = inject(AuthFacade);
 
   protected readonly navEntries = computed(() =>
-    resolveNavEntries(this.authFacade.isAuthenticated(), this.authFacade.isAdmin())
+    resolveNavEntries(this.authFacade.isAdmin())
   );
 }

@@ -45,7 +45,7 @@ export class BurgerMenuComponent {
 
   protected readonly menuOpen = signal(false);
   protected readonly navEntries = computed(() =>
-    resolveNavEntries(this.authFacade.isAuthenticated(), this.authFacade.isAdmin())
+    resolveNavEntries(this.authFacade.isAdmin())
   );
 
 
