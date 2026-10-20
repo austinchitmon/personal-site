@@ -183,7 +183,7 @@ export const SITE_THEMES = {
     scheme: 'dark',
     primaryPalette: NEON_PINK,
     colors: {
-      background: '#1b1035',
+      background: '#10091c',
       surface: '#28103f',
       'surface-alt': '#431750',
       'surface-warm': '#57213d',
@@ -216,7 +216,7 @@ export const SITE_THEMES = {
       'surface-700': '#692e80',
       'surface-800': '#431750',
       'surface-900': '#28103f',
-      'surface-950': '#1b1035',
+      'surface-950': '#10091c',
     },
   },
 } as const satisfies Record<string, SiteTheme>;
