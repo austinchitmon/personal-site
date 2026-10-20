@@ -54,6 +54,15 @@ describe('ThemeService', () => {
     expect(service.current()).toBe('miami-day');
   });
 
+  it('restores Bubble Gum Dark with its neon palette and dark component scheme', () => {
+    localStorage.setItem(THEME_STORAGE_KEY, 'bubble-gum-dark');
+    const service = TestBed.inject(ThemeService);
+    expect(service.name()).toBe('Bubble Gum Dark');
+    expect(service.isDark()).toBe(true);
+    expect(document.documentElement.dataset['colorScheme']).toBe('dark');
+    expect(document.documentElement.style.getPropertyValue('--site-primary-400')).toBe(SITE_THEMES['bubble-gum-dark'].primaryPalette[400]);
+  });
+
   it('still changes themes when browser storage is blocked', () => {
     vi.spyOn(Storage.prototype, 'getItem').mockImplementation(() => { throw new Error('Blocked'); });
     vi.spyOn(Storage.prototype, 'setItem').mockImplementation(() => { throw new Error('Blocked'); });
