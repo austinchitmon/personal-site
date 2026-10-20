@@ -20,7 +20,7 @@ import { CatInteractionsService } from './services/cat.interactions.service';
         <button
           pButton
           class="button-primary"
-          (click)="catInteractions.updateRandomCatUrl()">Generate Cat 🐈‍⬛
+          (click)="catInteractions.updateRandomCatUrl()">Generate Cat
         </button>
       </div>
       @if (catInteractions.$randomCatUrl()) {

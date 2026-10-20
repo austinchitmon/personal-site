@@ -19,20 +19,20 @@ This list will be constantly updated as I find new best practices and patterns!
 
   - Variables
     ```ts
-    // ❌ DON'T
+    // DON'T
     let a: any = {type: 'chicken' sound: 'cluck'}
-    // ✅ DO
+    // DO
     let a: Animal = {type: 'chicken' sound: 'cluck'}
     ```
   - Class members
 
     ```ts
-    // ❌ DON'T
+    // DON'T
     class UserService {
       currentUser: any;
       isLoading: any;
     }
-    // ✅ DO
+    // DO
     class UserService {
       currentUser: User | null = null;
       isLoading: boolean = false;
@@ -42,11 +42,11 @@ This list will be constantly updated as I find new best practices and patterns!
   - Method parameters
 
     ```ts
-    // ❌ DON'T
+    // DON'T
     updateUser(user, options) {
       // implementation
     }
-    // ✅ DO
+    // DO
     updateUser(user: User, options: UpdateOptions): void {
       // implementation
     }
@@ -54,11 +54,11 @@ This list will be constantly updated as I find new best practices and patterns!
 
   - Method return types
     ```ts
-    // ❌ DON'T
+    // DON'T
     getUsers() {
       return this.http.get('/api/users');
     }
-    // ✅ DO
+    // DO
     getUsers(): Observable<User[]> {
       return this.http.get<User[]>('/api/users');
     }
@@ -67,11 +67,11 @@ This list will be constantly updated as I find new best practices and patterns!
 - For `string` properties, prefer string unions (`|`) when values come from a finite set:
 
   ```ts
-  // ❌ DON'T
+  // DON'T
   interface Status {
     code: string;
   }
-  // ✅ DO
+  // DO
   type StatusCodes = "Active" | "Inactive" | "Pending" | "Errored";
   interface Status {
     loadStatus: StatusCodes;
@@ -81,16 +81,16 @@ This list will be constantly updated as I find new best practices and patterns!
 - Prefer `Type[]` over `Array<Type>`
 
   ```ts
-  // ❌ DON'T
+  // DON'T
   const animals: Array<Animal> = [];
-  // ✅ DO
+  // DO
   const animals: Animal[] = [];
   ```
 
 - Use **helper types** (`Pick`, `Omit`, `Partial`, etc.) to reduce duplication:
 
   ```ts
-  // ❌ DON'T
+  // DON'T
   interface User {
     id: string;
     name: string;
@@ -102,7 +102,7 @@ This list will be constantly updated as I find new best practices and patterns!
     name: string;
     email: string;
   }
-  // ✅ DO
+  // DO
   interface User {
     id: string;
     name: string;
@@ -115,7 +115,7 @@ This list will be constantly updated as I find new best practices and patterns!
 - Selection-driven elements should be typed as `SelectItem<T>`:
 
   ```ts
-  // ❌ DON'T
+  // DON'T
   interface DropdownOption {
     displayText: string;
     id: number;
@@ -124,7 +124,7 @@ This list will be constantly updated as I find new best practices and patterns!
     { displayText: "Active", id: 1 },
     { displayText: "Inactive", id: 0 },
   ];
-  // ✅ DO
+  // DO
   const statusOptions: SelectItem<boolean>[] = [
     { label: "Active", value: true },
     { label: "Inactive", value: false },
@@ -144,33 +144,33 @@ This list will be constantly updated as I find new best practices and patterns!
   - `for…push` → `.map()`
 
     ```ts
-    // ❌ DON'T
+    // DON'T
     const userNames = [];
     for (const user of users) {
       userNames.push(user.name);
     }
-    // ✅ DO
+    // DO
     const userNames = users.map((user) => user.name);
     ```
 
   - `for…if…push` → `.filter()`
 
     ```ts
-    // ❌ DON'T
+    // DON'T
     const activeUsers = [];
     for (const user of users) {
       if (user.isActive) {
         activeUsers.push(user);
       }
     }
-    // ✅ DO
+    // DO
     const activeUsers = users.filter((user) => user.isActive);
     ```
 
   - `for…if…assign` → `.find()`
 
     ```ts
-    // ❌ DON'T
+    // DON'T
     let adminUser;
     for (const user of users) {
       if (user.role === "admin") {
@@ -178,14 +178,14 @@ This list will be constantly updated as I find new best practices and patterns!
         break;
       }
     }
-    // ✅ DO
+    // DO
     const adminUser = users.find((user) => user.role === "admin");
     ```
 
   - `for…if…return true` → `.some()`
 
     ```ts
-    // ❌ DON'T
+    // DON'T
     function hasActiveUsers(users: User[]): boolean {
       for (const user of users) {
         if (user.isActive) {
@@ -194,7 +194,7 @@ This list will be constantly updated as I find new best practices and patterns!
       }
       return false;
     }
-    // ✅ DO
+    // DO
     function hasActiveUsers(users: User[]): boolean {
       return users.some((user) => user.isActive);
     }
@@ -202,7 +202,7 @@ This list will be constantly updated as I find new best practices and patterns!
 
   - `for…if…return false` → `.every()`
     ```ts
-    // ❌ DON'T
+    // DON'T
     function areAllUsersActive(users: User[]): boolean {
       for (const user of users) {
         if (!user.isActive) {
@@ -211,7 +211,7 @@ This list will be constantly updated as I find new best practices and patterns!
       }
       return true;
     }
-    // ✅ DO
+    // DO
     function areAllUsersActive(users: User[]): boolean {
       return users.every((user) => user.isActive);
     }
@@ -224,10 +224,10 @@ This list will be constantly updated as I find new best practices and patterns!
 - Never use direct string indexing:
 
   ```ts
-  // ❌ DON'T
+  // DON'T
   someObj["someProp"];
 
-  // ✅ DO
+  // DO
   someObj.someProp;
   ```
 
@@ -242,14 +242,14 @@ This list will be constantly updated as I find new best practices and patterns!
     - Inputs / Outputs
 
   ```ts
-  // ❌ DON'T
+  // DON'T
   @Component({
     template: `<input [(ngModel)]="userName" />`,
   })
   export class UserFormComponent {
     userName: string = "";
   }
-  // ✅ DO
+  // DO
   @Component({
     template: `<input [value]="userName()" (nameChanged)="onUserNameChange($event)" />`,
   })
@@ -265,13 +265,13 @@ This list will be constantly updated as I find new best practices and patterns!
 - Template bindings should not call methods directly, unless they are quick, simple getters. Use properties or signals:
 
   ```html
-  <!-- ❌ DON'T -->
+  <!-- DON'T -->
   <comp [prop]="someGiantLogicMethod()" />
 
-  <!-- ✅ DO -->
+  <!-- DO -->
   <comp [prop]="store.calculatedValue$ | ngrxPush" />
 
-  <!-- ✅ DO -->
+  <!-- DO -->
   <comp [prop]="mySignal()" />
   ```
 
@@ -284,7 +284,7 @@ This list will be constantly updated as I find new best practices and patterns!
   - Exception: local variables for `toSignal`, `toObservable`, or `effect` (they serve descriptive purposes).
 
   ```ts
-  // ✅ DO
+  // DO
   export class MyComponent {
     // appear unused, but acts as description for the toObservable, toSignal, effect action
     taskListUpdated = toObservable(this.store.taskList()).subscribe(...);
@@ -302,9 +302,9 @@ This list will be constantly updated as I find new best practices and patterns!
   - Never import from the **root of PrimeNG**:
 
     ```ts
-    // ❌ DON'T
+    // DON'T
     import { Button, Dropdown, Calendar } from "primeng";
-    // ✅ DO
+    // DO
     import { Button } from "primeng/button";
     import { Dropdown } from "primeng/dropdown";
     import { Calendar } from "primeng/calendar";
@@ -313,11 +313,11 @@ This list will be constantly updated as I find new best practices and patterns!
   - Never use alias paths for imports **within the same Nx library**.
 
     ```typescript
-    // ❌ DON'T
+    // DON'T
     // current file in shared
     import { OtherServiceInShared } from "@shared";
 
-    // ✅ DO
+    // DO
     // current file in shared
     import { OtherServiceInLoadsShared } from "../other-service-in-shared.service";
     ```
@@ -325,10 +325,10 @@ This list will be constantly updated as I find new best practices and patterns!
   - Always use alias paths for imports **from separate Nx libraries**:
 
     ```ts
-    // ❌ DON'T
+    // DON'T
     import { Something } from "../../../libs/shared/loads-shared/src/lib/something";
     import { UserService } from "../../../../libs/shared/user-shared/src/lib/services/user.service";
-    // ✅ DO
+    // DO
     import { Something } from "@shared";
     import { UserService } from "@shared";
     ```
@@ -336,10 +336,10 @@ This list will be constantly updated as I find new best practices and patterns!
   - No absolute paths:
 
     ```ts
-    // ❌ DON'T
+    // DON'T
     import { UserService } from "/src/app/shared/services/user.service";
     import { Component } from "/node_modules/@angular/core";
-    // ✅ DO
+    // DO
     import { UserService } from "../shared/services/user.service";
     import { Component } from "@angular/core";
     ```
@@ -347,10 +347,10 @@ This list will be constantly updated as I find new best practices and patterns!
   - Never import from `dist`:
 
     ```ts
-    // ❌ DON'T
+    // DON'T
     import { SomeLibrary } from "./dist/libs/some-library";
     import { Component } from "dist/some-package/component";
-    // ✅ DO
+    // DO
     import { SomeLibrary } from "@company/some-library";
     import { Component } from "some-package/component";
     ```
@@ -384,25 +384,25 @@ This list will be constantly updated as I find new best practices and patterns!
 - for simple `if else` assignments, use ternaries:
 
   ```ts
-  // ❌ DON'T
+  // DON'T
   let status;
   if (user.isActive) {
     status = "online";
   } else {
     status = "offline";
   }
-  // ✅ DO
+  // DO
   const status = user.isActive ? "online" : "offline";
   ```
 
 - Keep conditional statements (`&&` / `||` chains) short and readable. Compose into sub-methods:
 
   ```ts
-  // ❌ DON'T
+  // DON'T
   if (user && user.profile && user.profile.settings && user.profile.settings.notifications && user.profile.settings.notifications.email === true && user.isActive && !user.isBlocked) {
     sendEmail(user);
   }
-  // ✅ DO
+  // DO
   const canReceiveEmail = user?.profile?.settings?.notifications?.email === true;
   const isEligibleUser = user?.isActive && !user?.isBlocked;
   if (canReceiveEmail && isEligibleUser) {
@@ -413,10 +413,10 @@ This list will be constantly updated as I find new best practices and patterns!
 - Use optional chaining (`?.`) whenever a value could be undefined or null:
 
   ```ts
-  // ❌ DON'T
+  // DON'T
   const email = user && user.profile && user.profile.contact && user.profile.contact.email;
   const streetName = address && address.street && address.street.name;
-  // ✅ DO
+  // DO
   const email = user?.profile?.contact?.email;
   const streetName = address?.street?.name;
   ```
@@ -424,10 +424,10 @@ This list will be constantly updated as I find new best practices and patterns!
 - Use `||` or `??` to assign a default value instead of a ternary:
 
   ```ts
-  // ❌ DON'T
+  // DON'T
   const displayName = user.name ? user.name : "Guest";
   const count = items.length ? items.length : 0;
-  // ✅ DO
+  // DO
   const displayName = user.name || "Guest";
   const count = items.length ?? 0;
   ```
@@ -435,9 +435,9 @@ This list will be constantly updated as I find new best practices and patterns!
 - Do not nest ternaries. Compose into sub-methods:
 
   ```ts
-  // ❌ DON'T
+  // DON'T
   const userType = user.isAdmin ? "admin" : user.isPremium ? "premium" : user.isActive ? "active" : "inactive";
-  // ✅ DO
+  // DO
   function getUserType(user: User): string {
     if (user.isAdmin) return "admin";
     if (user.isPremium) return "premium";
@@ -450,11 +450,11 @@ This list will be constantly updated as I find new best practices and patterns!
 - Use `array.includes` for group-based conditional checks instead of `=== ||` chains:
 
   ```ts
-  // ❌ DON'T
+  // DON'T
   if (x === y || x === z || x === a) {
     doSomething();
   }
-  // ✅ DO
+  // DO
   if ([y, z, a].includes(x)) {
     doSomething();
   }

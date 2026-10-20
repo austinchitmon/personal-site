@@ -42,8 +42,7 @@
               "node_modules/prismjs/components/prism-javascript.min.js",
               "node_modules/prismjs/components/prism-typescript.min.js",
               "node_modules/prismjs/components/prism-yaml.min.js",
-              "node_modules/prismjs/components/prism-css.min.js",
-              "node_modules/emoji-toolkit/lib/js/joypixels.min.js"
+              "node_modules/prismjs/components/prism-css.min.js"
             ]
           },
           "configurations": {
@@ -94,10 +93,7 @@
           "builder": "@angular/build:unit-test",
           "options": {
             "tsConfig": "tsconfig.spec.json",
-            "buildTarget": "::development",
-            "setupFiles": [
-              "src/test-setup.ts"
-            ]
+            "buildTarget": "::development"
           }
         },
         "lint": {

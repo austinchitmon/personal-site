@@ -31,15 +31,12 @@
 
 .text-content {
   flex: 1;
+  min-width: 0;
 }
 
 .greeting {
   font-size: 1.75rem;
   font-weight: 500;
-}
-
-.greeting-accent {
-  color: var(--site-primary);
 }
 
 .accent-text {
@@ -83,20 +80,17 @@
 }
 
 .title {
-  font-size: 2.5rem;
-  margin-bottom: 1.5rem;
-  background: var(--site-accent-gradient);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  font-family: 'Limelight', sans-serif;
+  font-size: clamp(1.75rem, 4vw, 3rem);
+  font-weight: 400;
+  font-synthesis: none;
+  line-height: 1.2;
+  letter-spacing: 0.025em;
+  margin-bottom: 0.75rem;
+  color: var(--site-primary);
 
   @media (forced-colors: active) {
-    background: none;
     color: CanvasText;
-  }
-
-  @media (max-width: 768px) {
-    font-size: 2rem;
   }
 }
 

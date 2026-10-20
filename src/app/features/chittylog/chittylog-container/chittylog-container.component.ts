@@ -47,7 +47,7 @@ import { ChittylogContainerStore } from './chittylog-container.store';
         ><span class="title gradient">blog</span>
       </h1>
       <h3 class="subtitle">
-        Guides, updates, and random thoughts directly from me 🌌
+        Guides, updates, and random thoughts directly from me
       </h3>
       <div class="w-95">
         <p-card class="card featured"
@@ -60,7 +60,7 @@ import { ChittylogContainerStore } from './chittylog-container.store';
                 [ngSrc]="'blog/' + this.facade.featured().cover"
                 fill
               />
-              <p-tag class="featured-tag-overlay">✨ Featured</p-tag>
+              <p-tag class="featured-tag-overlay">Featured</p-tag>
             </div>
           </ng-template>
           <ng-template #title>

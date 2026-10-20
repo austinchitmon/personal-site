@@ -135,9 +135,9 @@ describe('JoinPipe', () => {
     });
 
     it('should handle Unicode characters', () => {
-      const input = ['🌟', '✨', '🎉'];
+      const input = ['café', '你好', '¡BIENVENIDOS!'];
       const result = pipe.transform(input);
-      expect(result).toBe('🌟, ✨, 🎉');
+      expect(result).toBe('café, 你好, ¡BIENVENIDOS!');
     });
 
     it('should preserve whitespace in string values', () => {

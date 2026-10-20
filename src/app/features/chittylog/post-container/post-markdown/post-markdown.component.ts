@@ -12,7 +12,6 @@ import { MarkdownComponent } from 'ngx-markdown';
   ],
   template: `
     <markdown
-      emoji
       class="markdown"
       [data]="articleContent()">
     </markdown>

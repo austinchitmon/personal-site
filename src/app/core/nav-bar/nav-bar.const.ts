@@ -10,7 +10,7 @@ export const DEFAULT_NAV_BAR_ENTRIES: NavBarEntry[] = [
   },
   {
     routerLink: '/cat',
-    label: 'Cat 🐈'
+    label: 'Cat'
   }
 ];
 

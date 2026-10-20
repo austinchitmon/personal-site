@@ -18,6 +18,8 @@ The home page's former random color timer has been removed. Text and inline high
 
 The navigation wordmark is live uppercase text, **CHITMON.COM**, set in Limelight Regular, a freely licensed Art Deco alternative to the Broadway-style reference. It uses `--site-primary` and `--site-primary-hover` so each theme controls its color. The full name remains visible on mobile with responsive sizing; body typography remains Inter.
 
+The home page opens with **¡BIENVENIDOS!** in Limelight and the theme's primary color, followed by "I'm Austin", professional credentials, and an introductory paragraph. UI labels and published blog text use words rather than emojis; markdown emoji conversion and its toolkit dependency have been removed.
+
 Limelight's Latin WOFF2 is self-hosted in `public/fonts/limelight/`, preloaded by `src/index.html`, and declared in `src/styles.scss` with `font-display: swap`. Its SIL Open Font License and source details ship alongside the font. No external font request is needed at runtime.
 
 ## Adding a theme

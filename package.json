@@ -30,7 +30,6 @@
     "@openng/optimus-ui": "^2.0.0",
     "@openng/optimus-ui-themes": "^2.0.0",
     "@supabase/supabase-js": "^2.110.8",
-    "emoji-toolkit": "^9.0.0",
     "gray-matter": "^4.0.3",
     "katex": "^0.16.47",
     "marked": "^18.0.7",
