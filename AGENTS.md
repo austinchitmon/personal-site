@@ -39,6 +39,10 @@ CI (`.github/workflows/ci.yml`) runs install, lint, Vitest unit tests, and `buil
 - `src/app/features` — lazy-loaded feature areas: `chittylog` (`/chittyblog`), `random-cat` (`/cat`), `admin` (`/admin`, requires admin app metadata). Pokémon API playground and the physics canvas live under `admin/pokeplayground`.
 - `src/app/shared` — cross-feature API clients/models, Supabase auth store/facade/admin guard/interceptor, services, pipes, and small shared components.
 
+### Admin monitoring
+
+`/admin/homelab` is the lazy-loaded homelab dashboard. Its scoped facade/store poll the protected backend every 15 seconds, with manual refresh, timeout handling, private-state cleanup on sign-out/denial, clearly marked stale data, and session-only trends. Both initial and child admin navigation are guarded. Spring independently verifies the JWT and requires server-managed `app_metadata.role == 'admin'` for `/admin/**`; Google login alone is insufficient. The backend reads an allowlisted host/Docker snapshot from a read-only directory, never a Docker socket. The root-owned host collector runs every 15 seconds. Monitoring skips database user-sync writes so it can diagnose database outages. See `docs/architecture.md` and the backend's `docs/homelab-monitoring.md`; install the collector and deploy the backend before the UI.
+
 ### State pattern: Store + Facade
 
 Feature/page-level state follows a consistent split, seen in `features/admin/pokeplayground` and `features/chittylog/chittylog-container`:

@@ -1,0 +1,214 @@
+<div class="dashboard">
+  <header class="page-header">
+    <h1 class="sr-only">Homelab dashboard</h1>
+    <a routerLink="/admin">Admin</a>
+    @if (facade.authorized() && !facade.accessDenied()) {
+      <div class="controls">
+        <label><input type="checkbox" [checked]="facade.autoRefresh()"
+                      (change)="facade.toggleAutoRefresh()"> Auto refresh · 15s</label>
+        <button pButton type="button" [disabled]="facade.loading()" (click)="facade.refresh()">
+          {{ facade.loading() ? 'Refreshing…' : 'Refresh' }}
+        </button>
+      </div>
+    }
+  </header>
+
+  @if (!facade.authorized() || facade.accessDenied()) {
+    <section class="notice" role="alert">
+      <h2>Admin access required</h2>
+      <p>Sign in with your admin Google account to view homelab information.</p>
+      <button pButton type="button" (click)="facade.login()">Sign in with Google</button>
+    </section>
+  } @else {
+    @if (facade.error(); as error) {
+      <div class="notice" role="alert">
+        <strong>{{ facade.lastSuccess() ? 'Connection interrupted' : 'Unable to connect' }}</strong>
+        <p>{{ error }}</p>
+        @if (facade.lastSuccess(); as lastSuccess) {
+          <p>Values below are from {{ lastSuccess | date:'mediumTime' }} and are not current.</p>
+        }
+      </div>
+    }
+
+    <div class="connection-grid" aria-label="Connection checks">
+      <article class="panel connection">
+        <span class="eyebrow">Browser → API</span>
+        <h2><span class="status-dot" aria-hidden="true"
+                  [class.up]="facade.connectionCurrent()" [class.down]="!!facade.error()"></span>{{ facade.connectionLabel() }}</h2>
+        <p class="mono endpoint">{{ facade.apiUrl }}</p>
+        @if (facade.data() && !facade.error()) {
+          <p>Round trip {{ facade.latency() }} ms · API uptime {{ facade.duration(facade.data()!.api.uptimeSeconds) }}</p>
+        }
+      </article>
+      <article class="panel connection">
+        <span class="eyebrow">API → PostgreSQL</span>
+        <h2>
+          <span class="status-dot" aria-hidden="true"
+                [class.up]="facade.connectionCurrent() && facade.data()?.database?.state === 'up'"
+                [class.down]="facade.connectionCurrent() && facade.data()?.database?.state === 'down'"></span>
+          @if (!facade.connectionCurrent() && facade.data()) { Last known: }
+          {{ facade.data()?.database?.state === 'up' ? 'Connected' : facade.data()?.database?.state === 'down' ? 'Unavailable' : 'Unknown' }}
+        </h2>
+        <p>{{ facade.data()?.database?.detail || 'Waiting for a database connection check.' }}</p>
+        @if (facade.data() && facade.data()!.database.latencyMs !== null) {
+          <p>{{ facade.data()!.database.latencyMs }} ms · connection validation</p>
+        }
+      </article>
+      <article class="panel connection">
+        <span class="eyebrow">Host → Collector</span>
+        <h2><span class="status-dot" aria-hidden="true" [class.up]="facade.connectionCurrent() && !facade.isStale()"
+                  [class.down]="facade.connectionCurrent() && facade.data()?.collector?.state === 'unavailable'"></span>{{ facade.collectorLabel() }}</h2>
+        <p>{{ facade.collectorDetail() }}</p>
+        @if (facade.data()?.collector?.collectedAt; as collectedAt) {
+          <p>Collected {{ collectedAt | date:'mediumTime' }} · {{ facade.collectorAge() }}s old</p>
+        }
+      </article>
+    </div>
+
+    @if (facade.data(); as data) {
+      @if (facade.isStale() && !facade.error()) {
+        <div class="notice" role="status">{{ facade.collectorDetail() }} Host and container values are last-known observations.</div>
+      }
+      @if (facade.snapshot(); as snapshot) {
+        @for (warning of snapshot.warnings; track $index) {
+          <p class="notice" role="status">{{ warning }}</p>
+        }
+
+        <section [class.stale-content]="facade.isStale()" aria-labelledby="applications-heading">
+          <div class="section-header">
+            <div>
+              <p class="eyebrow">Workloads</p>
+              <h2 id="applications-heading">Applications &amp; containers</h2>
+            </div>
+            @if (facade.inventoryAvailable()) {
+              <p>@if (facade.isStale()) { Last observed: }<strong>{{ facade.running() }}</strong> running / {{ facade.containers().length }} total
+                <span class="attention"> · {{ facade.attention() }} need attention</span></p>
+            }
+          </div>
+          @if (!facade.inventoryAvailable()) {
+            <div class="panel empty">Docker inventory is unavailable. Host measurements can still be collected.</div>
+          } @else if (!facade.containers().length) {
+            <div class="panel empty">Docker is reachable, but no containers were found.</div>
+          } @else {
+            <div class="table-scroll panel" role="region" tabindex="0" aria-label="Container inventory, scroll horizontally for details">
+              <table>
+                <thead><tr><th scope="col">Application</th><th scope="col">State</th>
+                  <th scope="col">CPU</th><th scope="col">Memory</th><th scope="col">Uptime</th>
+                  <th scope="col">Restarts</th><th scope="col">Network I/O</th></tr></thead>
+                <tbody>
+                  @for (container of facade.containers(); track container.id) {
+                    <tr>
+                      <td class="application-cell">
+                        <strong>{{ facade.containerName(container) }}</strong>
+                        <span class="secondary mono">{{ container.name }}</span>
+                        <details>
+                          <summary>Details</summary>
+                          <dl>
+                            <dt>Image</dt><dd class="mono">{{ container.image }}</dd>
+                            <dt>Image ID</dt><dd class="mono">{{ container.imageId || 'Not reported' }}</dd>
+                            <dt>Project</dt><dd>{{ container.project || 'Standalone' }}</dd>
+                            <dt>Container ID</dt><dd class="mono">{{ container.id }}</dd>
+                            <dt>Started</dt><dd>{{ container.startedAt ? (container.startedAt | date:'medium') : 'Never started' }}</dd>
+                            @if (container.state !== 'running') {
+                              <dt>Last exit code</dt><dd>{{ container.exitCode }}</dd>
+                            }
+                            <dt>Ports</dt>
+                            <dd>
+                              @for (port of container.ports; track $index) {
+                                <span class="port mono">{{ facade.portLabel(port) }}</span>
+                              } @empty { No ports reported }
+                            </dd>
+                          </dl>
+                        </details>
+                      </td>
+                      <td><span class="status-pill" [class.good]="facade.containerHealthy(container)">{{ facade.containerStatus(container) }}</span>
+                        @if (!container.health && container.state === 'running') { <span class="secondary">No health check</span> }
+                      </td>
+                      <td>{{ container.cpuPercent === null ? '—' : (container.cpuPercent | number:'1.0-2') + '%' }}</td>
+                      <td>{{ facade.bytes(container.memoryUsedBytes) }}<span class="secondary">of {{ facade.bytes(container.memoryLimitBytes) }}</span></td>
+                      <td>{{ container.state === 'running' ? facade.uptime(container.startedAt) : '—' }}</td>
+                      <td>{{ container.restartCount }}</td>
+                      <td><span class="secondary">In {{ facade.bytes(container.networkReceivedBytes) }}</span>
+                        <span class="secondary">Out {{ facade.bytes(container.networkSentBytes) }}</span></td>
+                    </tr>
+                  }
+                </tbody>
+              </table>
+            </div>
+            <p class="caption">CPU is per logical core and can exceed 100%. Network values are cumulative. {{ snapshot.docker.statsAvailable ? '' : 'Resource samples are unavailable.' }}</p>
+          }
+        </section>
+
+        <section [class.stale-content]="facade.isStale()" aria-labelledby="host-heading">
+          <div class="section-header">
+            <div><p class="eyebrow">Host resources</p><h2 id="host-heading">{{ snapshot.host.hostname }}</h2></div>
+            <p>Uptime {{ facade.duration(snapshot.host.uptimeSeconds) }}</p>
+          </div>
+          <div class="resource-grid">
+            <article class="panel metric">
+              <h3>CPU</h3>
+              <p class="metric-value">{{ snapshot.host.cpuPercent === null ? '—' : (snapshot.host.cpuPercent | number:'1.0-1') + '%' }}</p>
+              @if (snapshot.host.cpuPercent !== null) {
+                <div class="meter" role="meter" aria-label="Host CPU usage" aria-valuemin="0" aria-valuemax="100" [attr.aria-valuenow]="snapshot.host.cpuPercent"><span [style.width.%]="snapshot.host.cpuPercent"></span></div>
+              }
+              <p>{{ snapshot.host.cpuCores }} logical cores · load {{ snapshot.host.loadAverage.join(' / ') }}</p>
+              <span class="caption">1 / 5 / 15 minute load averages</span>
+            </article>
+            <article class="panel metric">
+              <h3>Memory</h3>
+              <p class="metric-value">{{ facade.memoryPercent() === null ? '—' : (facade.memoryPercent() | number:'1.0-1') + '%' }}</p>
+              @if (facade.memoryPercent() !== null) {
+                <div class="meter" role="meter" aria-label="Host memory usage" aria-valuemin="0" aria-valuemax="100" [attr.aria-valuenow]="facade.memoryPercent()"><span [style.width.%]="facade.memoryPercent()"></span></div>
+              }
+              <p>{{ facade.bytes(snapshot.host.memoryTotalBytes - snapshot.host.memoryAvailableBytes) }} of {{ facade.bytes(snapshot.host.memoryTotalBytes) }}</p>
+              <span class="caption">Available RAM excludes reclaimable cache from usage.</span>
+            </article>
+            <article class="panel metric">
+              <h3>Root disk</h3>
+              <p class="metric-value">{{ facade.diskPercent() === null ? '—' : (facade.diskPercent() | number:'1.0-1') + '%' }}</p>
+              @if (facade.diskPercent() !== null) {
+                <div class="meter" role="meter" aria-label="Root disk usage" aria-valuemin="0" aria-valuemax="100" [attr.aria-valuenow]="facade.diskPercent()"><span [style.width.%]="facade.diskPercent()"></span></div>
+              }
+              <p>{{ facade.bytes(snapshot.host.diskUsedBytes) }} of {{ facade.bytes(snapshot.host.diskTotalBytes) }}</p>
+              <span class="caption">{{ facade.bytes(snapshot.host.diskFreeBytes) }} free</span>
+            </article>
+          </div>
+          <div class="trend-grid">
+            <article class="panel trend">
+              <h3>Recent CPU</h3>
+              @if (facade.cpuTrend()) {
+                <svg viewBox="0 0 300 64" preserveAspectRatio="none" role="img" aria-label="Recent host CPU usage, scale zero to one hundred percent">
+                  <polyline [attr.points]="facade.cpuTrend()" />
+                </svg>
+              } @else { <p class="empty-trend">Trend appears after the next host sample.</p> }
+            </article>
+            <article class="panel trend">
+              <h3>Recent memory</h3>
+              @if (facade.memoryTrend()) {
+                <svg viewBox="0 0 300 64" preserveAspectRatio="none" role="img" aria-label="Recent host memory usage, scale zero to one hundred percent">
+                  <polyline [attr.points]="facade.memoryTrend()" />
+                </svg>
+              } @else { <p class="empty-trend">Trend appears after the next host sample.</p> }
+            </article>
+          </div>
+          <p class="caption">Up to 20 host samples kept in this tab. Swap {{ facade.bytes(snapshot.host.swapTotalBytes - snapshot.host.swapFreeBytes) }} used of {{ facade.bytes(snapshot.host.swapTotalBytes) }}.</p>
+        </section>
+
+        <section aria-labelledby="services-heading" [class.stale-content]="facade.isStale()">
+          <div class="section-header"><h2 id="services-heading">Supporting services</h2></div>
+          <div class="service-grid">
+            @for (service of snapshot.services; track service.name) {
+              <article class="panel service"><div><h3>{{ service.label }}</h3><span class="caption mono">{{ service.name }}</span></div>
+                <span class="status-pill" [class.good]="!facade.isStale() && service.state === 'active'">{{ facade.isStale() ? 'Last observed: ' : '' }}{{ service.state }}</span></article>
+            }
+          </div>
+          <p class="caption">{{ snapshot.host.operatingSystem }} · Kernel {{ snapshot.host.kernel }} · Docker {{ snapshot.docker.version || 'unknown' }}</p>
+        </section>
+      }
+    }
+    <footer class="dashboard-footer">
+      @if (facade.lastSuccess(); as lastSuccess) { <span>Last API response {{ lastSuccess | date:'mediumTime' }}</span> }
+      <span>Automatic updates pause while this tab is hidden. Monitoring is read-only.</span>
+    </footer>
+  }
+</div>

@@ -12,12 +12,9 @@ import { ADMIN_FEATURE_ENTRIES } from '../admin.const';
       <p class="subtitle">Internal tools</p>
       <div class="card-container">
         @for (entry of entries; track entry.routerLink) {
-          <p-card
-            class="card"
-            [routerLink]="entry.routerLink"
-            [header]="entry.title"
-            [subheader]="entry.subtitle"
-          />
+          <a class="card" [routerLink]="entry.routerLink">
+            <p-card [header]="entry.title" [subheader]="entry.subtitle" />
+          </a>
         }
       </div>
     </div>
