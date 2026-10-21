@@ -1,6 +1,6 @@
 # Personal site architecture
 
-Updated 2026-10-21 for homelab resume downloads. Runtime observations are dated snapshots; recheck before changing infrastructure. Deploy the new backend endpoint before merging/deploying its frontend consumer.
+Updated 2026-10-21 for protected homelab monitoring. Runtime observations are dated snapshots; recheck before changing infrastructure. Deploy the new monitoring backend before merging/deploying its frontend consumer.
 
 ## System overview
 
@@ -14,6 +14,8 @@ flowchart LR
     Backend --> Database[PostgreSQL 17 / homelab]
     Backend --> PokeAPI[PokeAPI]
     Backend --> Resume[Read-only homelab resume PDF]
+    Collector[Host systemd collector] --> Snapshot[Sanitized host / Docker snapshot]
+    Backend --> Snapshot
 ```
 
 The frontend lives in `personal-site`; the Java backend lives in the sibling `personal-site-service` repository. Supabase provides hosted authentication and the existing storage/edge-function integration. Application tables live in the separate homelab PostgreSQL database.
@@ -47,7 +49,21 @@ New forms should use `@angular/forms/signals`. Blog search still uses an older `
 
 `shared/auth/supabase-client.ts` creates the Supabase client. `AuthStore` initializes the session, listens for changes, starts Google OAuth with a redirect to the current origin, and calls `/me` once per distinct signed-in user. `AuthFacade` exposes sign-in state and checks `app_metadata.role === 'admin'` for admin UI access.
 
-`adminGuard` waits for initial session lookup and protects admin routes. This is a UI control: backend authorization must be enforced independently for any sensitive API. The unused general auth guard was removed with shipment tracking.
+`adminGuard` waits for initial session lookup and protects admin routes. `adminChildGuard` checks again on navigation within the loaded admin area. Failed session initialization denies access. The monitoring facade also reacts to sign-out/role loss, clears private state, and cancels requests. These are UI controls: backend authorization is enforced independently for sensitive APIs. The unused general auth guard was removed with shipment tracking.
+
+### Admin homelab dashboard
+
+The Admin landing page links to lazy-loaded `/admin/homelab`. `HomelabComponent` uses a component-scoped `HomelabFacade` and `HomelabStore`; `HomelabApiService` calls the authenticated `GET /admin/homelab` endpoint through `environment.apiBase`. The page separates browser/API reachability, API/PostgreSQL connection validation, and host-collector freshness. It shows all running/stopped containers, healthchecks, CPU/memory, image IDs, restarts, exit codes, ports and cumulative network traffic, plus host CPU/load, memory/swap, root disk, uptime, Cloudflare Tunnel and deployment-runner service states.
+
+Requests refresh every 15 seconds with an 8-second timeout, prevent overlap, pause in hidden tabs, and refresh on return. Manual refresh and auto-refresh pause controls are available. Up to 20 distinct fresh host samples form in-memory CPU/memory trends. A client clock keeps paused values aging: old snapshots and failed requests cannot remain styled as current. Last-known observations are retained on connectivity failure; authorization failures clear private data and stop polling. Metrics are not stored in browser storage or a time-series database.
+
+Spring protects the entire `/admin` namespace using the existing Supabase JWT verification plus an authority derived only from server-managed `app_metadata.role == 'admin'`. Google sign-in without that role is insufficient. User-editable metadata and top-level JWT role do not grant admin access. Existing JWT expiry/refresh behavior applies to role changes. Responses are not cached.
+
+A root-owned Python collector runs as `chitmon-monitor.service` from a 15-second systemd timer. It reads fixed Docker/proc/filesystem/service observations and atomically writes `/var/lib/chitmon-monitor/status.json`. The application mounts that directory read-only at `/app/homelab-monitor`; it receives no Docker socket or container-control capability. The snapshot excludes environment variables, credentials, logs, mounts and arbitrary labels. A missing/invalid snapshot is reported explicitly; snapshots older than 60 seconds or with excessive future clock skew are stale. Docker failure is distinct from a legitimate empty inventory.
+
+The API's pooled database validation runs on one bounded worker, with a 2.5-second per-request wait and at most one attempt per 10 seconds. `/admin/homelab` skips `UserSyncFilter` writes while retaining JWT authorization, allowing database outages to be diagnosed. All other authenticated routes retain user sync. See the backend's `docs/homelab-monitoring.md` for installation, authorization, failure behavior, tests and operational commands.
+
+The collector was installed and verified on 2026-10-21 without restarting existing services. Its snapshot showed the API and PostgreSQL containers healthy, and the tunnel and deployment runner active. The UI was verified with the real admin JWT and a temporary SSH-tunneled database connection. PostgreSQL stayed bound to homelab loopback only. Collector installation does not deploy the new backend or frontend; deploy the backend before the dashboard consumer.
 
 ### Blog and external assets
 
@@ -63,7 +79,7 @@ The cat client still calls `/supabase/functions/v1/random-cat-img`; its Deno sou
 
 ## Backend and database
 
-Java 21 / Spring Boot 4, Maven wrapper, Spring MVC, JPA, PostgreSQL 17, and Flyway. WebClient is used for external HTTP calls. Packages are organized by domain (`users`, `pokemon`), with shared configuration and security packages.
+Java 21 / Spring Boot 4, Maven wrapper, Spring MVC, JPA, PostgreSQL 17, and Flyway. WebClient is used for external HTTP calls. Packages are organized by domain (`users`, `pokemon`, `files`, `homelab`), with shared configuration and security packages.
 
 Spring runs as a stateless OAuth2 resource server. `JwtDecoderConfig` validates Supabase ES256 signatures through JWKS and checks issuer, expiry, and audience. `UserSyncFilter` runs after bearer authentication and upserts profile claims into `core.users` for authenticated requests. User metadata is used for profile fields; the frontend's admin decision uses app metadata.
 
@@ -83,7 +99,7 @@ The retired `shipment_tracker` schema is no longer in `MANAGED_SCHEMAS`, so new 
 - Frontend: `npm start`, `npm run lint`, `npm test -- --watch=false`, and `npm run build:prod`. Unit tests use Vitest through Angular's test builder; there is no configured end-to-end suite.
 - Backend: `docker compose up --build` starts the app and PostgreSQL. For IDE development, run PostgreSQL in Docker and the app with `SPRING_PROFILES_ACTIVE=local`; that profile enables CORS for `http://localhost:4200` and `http://127.0.0.1:4200`. Production CORS allows `https://chitmon.com`.
 - The backend's local Compose override publishes PostgreSQL for development tools. Its production deployment copies only the base Compose file; the homelab has a separate loopback-only override.
-- Backend resume tests cover download headers/body, live file replacement, missing/unreadable/invalid/oversized files, HEAD metadata, fixed-path access, and correlated response-delivery logging. A PR workflow runs these in isolation without a database. The older Spring context-load test requires PostgreSQL. The container build skips tests.
+- Backend PR checks cover resume downloads, monitoring snapshots and bounded database probes, plus real JWT validation/authorization using test ES256 keys and a local JWKS server. Python tests cover collector sanitization, missing samples, Docker failures and atomic writes. These need no live database or Supabase account. The older Spring context-load test requires PostgreSQL. The container build skips tests.
 
 ## Production and homelab
 

@@ -12,6 +12,8 @@ The default **Daylight** palette takes its warm cream, sea glass, ocean teal, co
 
 Component styles use roles such as `--site-text`, `--site-surface`, `--site-primary`, and `--site-accent`; avoid literal colors in components. Derived shadows and decorative gradients live in `src/styles.scss`. `miami.preset.ts` bridges Optimus UI's Aura tokens to these same CSS variables, so cards, inputs, toolbar, buttons, and app styles change together. The component library's dark-mode selector uses the generic `data-color-scheme="dark"` attribute rather than a particular theme ID.
 
+Monitoring indicators use `--site-status-up` (green), `--site-status-down` (red), and `--site-status-unknown` (amber) in every theme. Adjacent labels explain the state, and older observations never retain a green connection indicator.
+
 The home page's former random color timer has been removed. Text and inline highlights now use tested semantic roles. Blog tags use the same palette and expose native keyboard-operable toggle buttons with a visible selected state. Photographs, favicons, blog artwork, and Prism's separate syntax-highlighting palette retain their original colors.
 
 ## Brand typography

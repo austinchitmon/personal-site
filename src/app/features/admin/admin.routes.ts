@@ -4,5 +4,10 @@ import { PokeplaygroundComponent } from './pokeplayground/pokeplayground.compone
 
 export const ADMIN_ROUTES: Routes = [
   { path: '', component: AdminContainerComponent },
+  {
+    path: 'homelab',
+    title: 'Homelab · Admin',
+    loadComponent: () => import('./homelab/homelab.component').then(mod => mod.HomelabComponent),
+  },
   { path: 'pokeplayground', component: PokeplaygroundComponent },
 ];
