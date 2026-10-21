@@ -1,0 +1,23 @@
+<section aria-labelledby="resume-heading">
+  <h1 id="resume-heading" aria-label="Thank You!">
+    @for (letter of letters; track $index) {
+      <span class="letter"
+            [class.word-space]="letter === ' '"
+            [style.--letter-index]="$index"
+            aria-hidden="true">{{ letter }}</span>
+    }
+  </h1>
+
+  <button type="button"
+          class="download-button"
+          aria-label="Download Austin Chitmon's resume"
+          [disabled]="facade.downloadingResume()"
+          [attr.aria-busy]="facade.downloadingResume()"
+          (click)="facade.downloadResume()">
+    (If nothing downloads, click here)
+  </button>
+
+  @if (facade.resumeError(); as error) {
+    <p class="visually-hidden" role="alert">{{ error }}</p>
+  }
+</section>

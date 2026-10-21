@@ -8,6 +8,18 @@ export const routes: Routes = [
     component: HomeComponent,
   },
   {
+    // GitHub Pages redirects directory entry files to a trailing-slash URL.
+    path: 'resume/',
+    pathMatch: 'full',
+    redirectTo: 'resume',
+  },
+  {
+    path: 'resume',
+    title: 'Austin Chitmon — Resume',
+    loadComponent: () => import('./home/resume-download/resume-download.component').then(mod =>
+      mod.ResumeDownloadComponent),
+  },
+  {
     path: 'admin',
     canMatch: [adminGuard],
     loadChildren: () => import('../features/admin/admin.routes').then(mod =>
