@@ -7,7 +7,7 @@
     "prebuild": "npm run blog:update-manifest",
     "build": "ng build",
     "prebuild:prod": "npm run blog:update-manifest",
-    "build:prod": "ng build --configuration production --base-href / && cp dist/personal-site/browser/index.html dist/personal-site/browser/404.html",
+    "build:prod": "ng build --configuration production --base-href / && cp dist/personal-site/browser/index.html dist/personal-site/browser/404.html && node npm-functions/generate-resume-entry.js",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint",

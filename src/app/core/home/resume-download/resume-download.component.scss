@@ -1,0 +1,58 @@
+:host {
+  display: block;
+  padding: clamp(2rem, 8vw, 6rem) 1.5rem;
+  color: var(--site-text);
+}
+
+section {
+  max-width: 40rem;
+  margin: 0 auto;
+}
+
+h1 {
+  font-family: 'Limelight', sans-serif;
+  font-size: clamp(2rem, 6vw, 3rem);
+  font-weight: 400;
+  line-height: 1.2;
+  color: var(--site-primary);
+}
+
+.name {
+  margin: 0.75rem 0 1.5rem;
+  font-size: 1.4rem;
+}
+
+.download-button {
+  margin-top: 1.5rem;
+  padding: 0.8rem 1.5rem;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  background: var(--site-primary);
+  color: var(--site-on-primary);
+  box-shadow: var(--site-shadow);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+
+  &:enabled:hover {
+    transform: translateY(-3px);
+    background: var(--site-primary-hover);
+    box-shadow: var(--site-shadow-hover);
+  }
+
+  &:enabled:active {
+    transform: translateY(1px);
+  }
+
+  &:disabled {
+    cursor: progress;
+  }
+}
+
+.error {
+  margin-top: 1rem;
+}
+
+a {
+  display: block;
+  width: fit-content;
+  margin-top: 2rem;
+}

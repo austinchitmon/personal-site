@@ -13,7 +13,7 @@ See [docs/architecture.md](docs/architecture.md) for the full system overview, a
 ```bash
 npm start                    # ng serve, http://localhost:4200
 npm run build                # default production-config build; also regenerates blog manifest
-npm run build:prod           # production build; copies index.html to 404.html for GH Pages SPA routing
+npm run build:prod           # production build; creates 404.html fallback and resume/index.html entry for GH Pages
 npm test                     # ng test (Vitest)
 npm run lint                 # ng lint (angular-eslint)
 npm run blog:update-manifest # regenerate src/app/shared/data/blog-manifest.ts from public/blog/*.md
