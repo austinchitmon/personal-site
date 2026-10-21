@@ -10,13 +10,6 @@ import {
 } from '../api.service';
 
 const BASE_FUNCTIONS = '/functions/v1';
-const BASE_STORAGE = '/storage/v1/object/public';
-const BUCKETS = {
-  PUBLIC_PERSONAL: '/public-personal-site'
-};
-const FILES = {
-  RESUME: '/resume.pdf'
-};
 const FUNCTIONS = {
   RANDOM_CAT: '/random-cat-img'
 };
@@ -27,12 +20,6 @@ export const SUPABASE_API_CONFIG = {
     base: BASE_FUNCTIONS,
     routes: {
       cats: FUNCTIONS.RANDOM_CAT
-    }
-  },
-  storage: {
-    base: `${BASE_STORAGE}${BUCKETS.PUBLIC_PERSONAL}`,
-    files: {
-      resume: FILES.RESUME
     }
   }
 };
@@ -51,9 +38,4 @@ export class SupabaseApiService {
     return this.api.get<T>(url, options);
   }
 
-  openFile(subroute: string): void {
-    window.open(
-      `${this.base}${subroute}`
-    );
-  }
 }

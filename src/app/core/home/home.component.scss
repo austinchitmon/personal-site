@@ -275,8 +275,18 @@
     box-shadow: var(--site-shadow);
   }
 
+  &:disabled {
+    cursor: progress;
+    transform: none;
+  }
+
   @media (max-width: 768px) {
     font-size: 1rem;
     padding: 0.7rem 1.3rem;
   }
+}
+
+.resume-error {
+  margin-top: 1rem;
+  color: var(--site-text);
 }

@@ -80,9 +80,15 @@
     <h3 class="resume-title">Want the details?</h3>
     <div class="divider"></div>
     <button pButton
+            type="button"
             (click)="facade.downloadResume()"
+            [disabled]="facade.downloadingResume()"
+            [attr.aria-busy]="facade.downloadingResume()"
             class="resume-button">
-      Download My Resume
+      {{ facade.downloadingResume() ? 'Downloading…' : 'Download My Resume' }}
     </button>
+    @if (facade.resumeError(); as error) {
+      <p class="resume-error" role="alert">{{ error }}</p>
+    }
   </div>
 </div>

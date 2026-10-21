@@ -1,6 +1,6 @@
 # Personal site architecture
 
-Updated for the removal of shipment tracking on 2026-10-20. Runtime observations below were collected before the removal was deployed and are a dated snapshot; recheck before changing infrastructure.
+Updated 2026-10-21 for homelab resume downloads. Runtime observations are dated snapshots; recheck before changing infrastructure. Deploy the new backend endpoint before merging/deploying its frontend consumer.
 
 ## System overview
 
@@ -13,6 +13,7 @@ flowchart LR
     Tunnel --> Backend[Spring Boot / homelab port 8080]
     Backend --> Database[PostgreSQL 17 / homelab]
     Backend --> PokeAPI[PokeAPI]
+    Backend --> Resume[Read-only homelab resume PDF]
 ```
 
 The frontend lives in `personal-site`; the Java backend lives in the sibling `personal-site-service` repository. Supabase provides hosted authentication and the existing storage/edge-function integration. Application tables live in the separate homelab PostgreSQL database.
@@ -22,13 +23,13 @@ The public `/supabase/...` routes are an additional routing path: the resume PDF
 ## Frontend
 
 - Angular 22, TypeScript 6, zoneless change detection, standalone components, and `OnPush`.
-- Optimus UI 2 (`@openng/optimus-ui`) with Aura, SCSS, and Inter. Shared utility styles live in `src/styles.scss`.
+- Optimus UI 2 (`@openng/optimus-ui`) with Aura, SCSS, and self-hosted Jost, Limelight, and Yellowtail fonts. Shared utility styles live in `src/styles.scss`.
 - The Miami theme registry and `ThemeService` in `core/theme` provide semantic CSS variables, a shared Optimus preset, and persistent appearance selection. See [design-system.md](design-system.md) for palette roles, contrast checks, and adding themes.
 - `src/app/core`: application configuration, routes, navigation, footer, and home page.
 - `src/app/features`: lazy-loaded blog (`/chittyblog`), cat generator (`/cat`), and admin area (`/admin`, including `/admin/pokeplayground`). The Pokémon physics canvas lives within the admin feature.
 - `src/app/shared`: authentication, typed API clients/models, reusable UI, pipes, and services.
 
-Stateful features follow **component → facade → store/API service**. Stores own signals and state transitions; facades coordinate requests and business behavior. Prefer component-scoped stores/facades for feature state, with root services for shared authentication and API access. The Pokémon playground and blog demonstrate this pattern. The home facade handles resume access without a store; its previous random-color timer was removed with the theme update. Existing code has some older patterns; follow the current repository conventions for new work.
+Stateful features follow **component → facade → store/API service**. Stores own signals and state transitions; facades coordinate requests and business behavior. Prefer component-scoped stores/facades for feature state, with root services for shared authentication and API access. The Pokémon playground and blog demonstrate this pattern. The home facade/store coordinate resume download progress and failure feedback; its previous random-color timer remains removed. Existing code has some older patterns; follow the current repository conventions for new work.
 
 New forms should use `@angular/forms/signals`. Blog search still uses an older `FormControl` implementation. The retired shipment form and its unused validation directive/styles have been removed; there is currently no Signal Forms reference implementation in the repository.
 
@@ -37,9 +38,10 @@ New forms should use `@angular/forms/signals`. Blog search still uses an older `
 `ApiService` wraps `HttpClient` GET and POST and accepts complete URLs or relative asset paths; it does not prepend an API host.
 
 - Pokémon and user sync use `environment.apiBase`: `http://localhost:8080` in development and `https://api.chitmon.com` in production. Angular's production configuration replaces the environment file.
-- The older `SupabaseApiService` uses the separate `API_URL` constant, currently `https://api.chitmon.com`, followed by `/supabase`. Cat and resume requests therefore still use the public API host during local development.
+- `ResumeApiService` uses `environment.apiBase` and `/files/resume.pdf`. It fetches the PDF as a Blob with a 15-second timeout and marks the request public, bypassing Supabase token/session lookup. The home facade saves valid PDF responses through `FileDownloadService`, prevents duplicate requests, and logs failures with HTTP status and the server reference when available. A page alert offers retrying; it also restores the button after errors.
+- The older `SupabaseApiService` uses the separate `API_URL` constant, currently `https://api.chitmon.com`, followed by `/supabase`. Cat requests therefore still use the public API host during local development.
 - Blog Markdown uses relative `blog/<post>.md` asset URLs.
-- `authInterceptor` reads the Supabase session and attaches its access token only when a request URL starts with `environment.apiBase`.
+- `authInterceptor` reads the Supabase session and attaches its access token only when a request URL starts with `environment.apiBase` and is not marked with `PUBLIC_HTTP_REQUEST`.
 
 ### Authentication and authorization
 
@@ -49,9 +51,13 @@ New forms should use `@angular/forms/signals`. Blog search still uses an older `
 
 ### Blog and external assets
 
-Posts and cover images live in `public/blog`. Build hooks run `npm-functions/generate-blog-manifest-ts.js`, which reads frontmatter, sorts posts newest first, and generates `src/app/shared/data/blog-manifest.ts`. Never edit the manifest manually. Posts are loaded at runtime and rendered with ngx-markdown/marked, Prism, and emoji support.
+Posts and cover images live in `public/blog`. Build hooks run `npm-functions/generate-blog-manifest-ts.js`, which reads frontmatter, sorts posts newest first, and generates `src/app/shared/data/blog-manifest.ts`. Never edit the manifest manually. Posts are loaded at runtime and rendered with ngx-markdown/marked and Prism. Emoji conversion has been removed.
 
-The resume client opens `/supabase/storage/v1/object/public/public-personal-site/resume.pdf`. The cat client calls `/supabase/functions/v1/random-cat-img`; its Deno source is in this repository's `supabase/functions` and calls TheCatAPI using a server-side key. Edge functions deploy separately from the Angular app.
+The resume client downloads `/files/resume.pdf` from the backend. Its fixed host file is `/srv/chitmon/public/resume.pdf`, mounted as a read-only directory into the application container; replacing the PDF atomically needs no rebuild/restart. The backend reads a bounded document on each request, checks its PDF header, and sends an attachment response with `Cache-Control: no-store`. Errors receive a generic 503 and an `X-Request-Id`; server logs retain the filesystem exception and matching reference. A filter also logs response-delivery exceptions. CORS exposes the reference header to the frontend. See the sibling backend's `docs/resume-download.md` for update and debugging commands.
+
+The initial public Supabase PDF was copied to the homelab on 2026-10-21 and read-only container access verified. The old Supabase object is preserved for rollback. The new backend endpoint must be deployed before the frontend switches URLs; staging the file does not deploy that endpoint.
+
+The cat client still calls `/supabase/functions/v1/random-cat-img`; its Deno source is in this repository's `supabase/functions` and calls TheCatAPI using a server-side key. Edge functions deploy separately from the Angular app.
 
 ## Backend and database
 
@@ -73,9 +79,9 @@ The retired `shipment_tracker` schema is no longer in `MANAGED_SCHEMAS`, so new 
 ## Development and verification
 
 - Frontend: `npm start`, `npm run lint`, `npm test -- --watch=false`, and `npm run build:prod`. Unit tests use Vitest through Angular's test builder; there is no configured end-to-end suite.
-- Backend: `docker compose up --build` starts the app and PostgreSQL. For IDE development, run PostgreSQL in Docker and the app with `SPRING_PROFILES_ACTIVE=local`; that profile enables CORS for `http://localhost:4200`. Production CORS allows `https://chitmon.com`.
+- Backend: `docker compose up --build` starts the app and PostgreSQL. For IDE development, run PostgreSQL in Docker and the app with `SPRING_PROFILES_ACTIVE=local`; that profile enables CORS for `http://localhost:4200` and `http://127.0.0.1:4200`. Production CORS allows `https://chitmon.com`.
 - The backend's local Compose override publishes PostgreSQL for development tools. Its production deployment copies only the base Compose file; the homelab has a separate loopback-only override.
-- Backend automated test coverage is currently a Spring context-load test. The container build skips tests.
+- Backend resume tests cover download headers/body, live file replacement, missing/unreadable/invalid/oversized files, HEAD metadata, fixed-path access, and correlated response-delivery logging. A PR workflow runs these in isolation without a database. The older Spring context-load test requires PostgreSQL. The container build skips tests.
 
 ## Production and homelab
 
