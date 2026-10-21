@@ -1,0 +1,1 @@
+import{qn as oe,sn as ce,u as De}from"./chunk-PmhLAMxL.js";var a=class e{getReadingTimeInMinutes(t){return De(import(`./chunk-ipMdBBfI.js`)).pipe(ce(r=>r.readingTime(t).minutes))}static ɵfac=function(r){return new(r||e)};static ɵprov=oe({token:e,factory:e.ɵfac,providedIn:`root`})};export{a as ReadingTimeService};
