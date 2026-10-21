@@ -7,7 +7,7 @@ tags:
   - networking
 ---
 
-# Breaking the Network :satellite:
+# Breaking the Network
 
 ---
 
@@ -17,13 +17,13 @@ Since the gateway gives you little control over configuration, I purchased my ow
 
 Once the device arrived, I began troubleshooting the network to enable **IP Passthrough**. At this point, I realized I was going to have to revisit the fundamental concepts of networking (Good thing I kept all my College networking course notes!).
 
-I spent a day reviewing fundamental concepts: **LAN, WAN, DHCP, DNS, Public/Private IPs, Subnets, default gateways** (Oh my! 😮)
+I spent a day reviewing fundamental concepts: **LAN, WAN, DHCP, DNS, Public/Private IPs, Subnets, default gateways** (Oh my!)
 
 After refreshing the basics, I began the configuration changes. Everything was going well until I started changing the LAN IP and DHCP assignment range on the AT&T Gateway. For security purposes, I assigned the DHCP range on the AT&T gateway to only two possible IPs. This would prevent anyone from connecting to the internet if they accidentally connected to the gateway, since my intent with all this was to turn the device into a dummy passthrough.
 
-I was unable to reach the gateway's configuration screen from a browser on my laptop connected through Ethernet (typically by hitting `182.168.1.1` in the browser). I figured there was some issue with IP assignment since I restricted the assignable DHCP range to only two values 😓. Something must have grabbed the two IPs before my laptop could get registered on the same subnet.
+I was unable to reach the gateway's configuration screen from a browser on my laptop connected through Ethernet (typically by hitting `182.168.1.1` in the browser). I figured there was some issue with IP assignment since I restricted the assignable DHCP range to only two values. Something must have grabbed the two IPs before my laptop could get registered on the same subnet.
 
-After some more troubleshooting, research, and banging my head against the wall, I was able to figure out what was going on. Here are the details and what I learned from this experience ⬇️⬇️⬇️
+After some more troubleshooting, research, and banging my head against the wall, I was able to figure out what was going on. Here are the details and what I learned from this experience.
 
 ## Problem Setup
 
@@ -50,6 +50,6 @@ After some more troubleshooting, research, and banging my head against the wall,
 
 - Assign laptop a **static IP** for within gateway's network IP range (`192.168.10.x`) **BUT NOT** in the DHCP range.
 - Because these static IPs have the same network IP, they are able to access the gateway, even if they weren't assigned out by DHCP.
-- This allowed me to connect to the gateway appropriately 👏
+- This allowed me to connect to the gateway appropriately.
 
-Overall, this was an excellent exercise in testing my network fundamentals. I had to revisit concepts I hadn't thought about in years, and it was a great refresher. There will be more networking articles to come as I expand the homelab further! 🚀
+Overall, this was an excellent exercise in testing my network fundamentals. I had to revisit concepts I hadn't thought about in years, and it was a great refresher. There will be more networking articles to come as I expand the homelab further!

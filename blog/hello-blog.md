@@ -10,10 +10,10 @@ tags:
   - node
 ---
 
-# Hello Blog :wave:
+# Hello Blog
 
 ***
-:robot: Testing blog please ignore.
+Testing blog please ignore.
 
 Verifying integration with an Obsidian vault inside the `public` folder of this website's repo.
 
@@ -32,7 +32,7 @@ Fixed several loading issues to make page feel more responsive.
 
 Instructions will be updated with this new flow!
 
-## How it works :page_facing_up:
+## How it works
 
 ***
 
@@ -81,4 +81,4 @@ Instructions will be updated with this new flow!
 1. Navigate to `/chittyblog`
 2. A service in the `ChittylogContainerComponent` will import the `BLOG-MANIFEST` and generate `p-card` elements for each of the Markdown files. It will display the title, subtitle, date posted, and other content all in the card!
 1. Click one of the links in the list to open the full article.
-1. :white_check_mark: Success!
+1. Success!
