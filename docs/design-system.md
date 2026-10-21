@@ -16,13 +16,13 @@ The home page's former random color timer has been removed. Text and inline high
 
 ## Brand typography
 
-The navigation wordmark is live uppercase text, **CHITMON.COM**, set in Limelight Regular, a freely licensed Art Deco alternative to the Broadway-style reference. It uses `--site-primary` and `--site-primary-hover` so each theme controls its color. The full name remains visible on mobile with responsive sizing.
+The navigation wordmark is live text, **Chitmon.com**, set in the self-hosted Yellowtail brush script. A slight upward angle echoes the Miami script reference, while generous sizing, a contrasting `--site-on-primary` outline, and a soft glow keep the letters distinct. Its fill uses `--site-primary` and `--site-primary-hover`, both tested at 4.5:1 against the header's `--site-surface-alt` in every theme. The glow follows the fill color; forced-colors mode removes the decoration. The full name remains visible on mobile with responsive sizing. The Latin WOFF2, Apache 2.0 license, and attribution/source details live in `public/fonts/yellowtail/`; the font is preloaded and needs no external request at runtime.
 
 Jost is the default paragraph and interface font, set through `--site-font-body`. Body text and credentials use weight 400, navigation and buttons use 500, and existing headings/emphasis use the appropriate heavier weights. Self-hosted Latin variable WOFF2 files provide weights 100–900 with real upright and italic styles; the upright font is preloaded. Font files, source details, and the SIL Open Font License live in `public/fonts/jost/`. Limelight remains the display face, and code retains its monospace stack.
 
 The home page opens with **¡BIENVENIDOS!** in Limelight and the theme's primary color, followed by "I'm Austin", professional credentials, and an introductory paragraph. UI labels and published blog text use words rather than emojis; markdown emoji conversion and its toolkit dependency have been removed.
 
-Limelight's Latin WOFF2 is self-hosted in `public/fonts/limelight/`, preloaded by `src/index.html`, and declared in `src/styles.scss` with `font-display: swap`. Its SIL Open Font License and source details ship alongside the font. No external font request is needed at runtime.
+Limelight's Latin WOFF2 remains self-hosted in `public/fonts/limelight/` for the welcome heading, preloaded by `src/index.html`, and declared in `src/styles.scss` with `font-display: swap`. Its SIL Open Font License and source details ship alongside the font. No external font request is needed at runtime.
 
 ## Adding a theme
 

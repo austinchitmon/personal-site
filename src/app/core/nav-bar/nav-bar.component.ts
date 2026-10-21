@@ -23,7 +23,7 @@ import { AccountMenuComponent } from './account-menu/account-menu.component';
         <div class="display-flex flex-row col-gap-4">
           <a routerLink="/"
              class="navbar-brand">
-            CHITMON.COM
+            <span class="brand-wordmark">Chitmon.com</span>
           </a>
           <ul class="navbar-links hide-sm">
             @for (entry of navEntries(); track $index) {
