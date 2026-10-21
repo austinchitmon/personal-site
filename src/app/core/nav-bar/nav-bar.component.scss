@@ -18,18 +18,35 @@
   display: inline-flex;
   align-items: center;
   min-height: 44px;
-  font-family: 'Limelight', sans-serif;
-  font-size: clamp(1.1rem, 3vw, 1.75rem);
+  font-family: 'Yellowtail', cursive;
+  font-size: clamp(1.9rem, 4.2vw, 2.65rem);
   font-weight: 400;
   font-synthesis: none;
-  line-height: 1.2;
-  letter-spacing: 0.035em;
+  line-height: 1.1;
+  letter-spacing: 0.012em;
   white-space: nowrap;
   color: var(--site-primary);
   text-decoration: none;
 
   &:hover {
     color: var(--site-primary-hover);
+  }
+}
+
+.brand-wordmark {
+  display: inline-block;
+  padding: 0.05em 0.15em 0.1em 0;
+  transform: rotate(-2deg);
+  -webkit-text-stroke: 3px var(--site-on-primary);
+  paint-order: stroke fill;
+  text-shadow:
+    0 0 0.2em color-mix(in srgb, currentColor 28%, transparent),
+    0 0 0.45em color-mix(in srgb, currentColor 14%, transparent);
+
+  @media (forced-colors: active) {
+    -webkit-text-stroke: 0;
+    text-shadow: none;
+    color: LinkText;
   }
 }
 

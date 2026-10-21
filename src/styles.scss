@@ -2,6 +2,14 @@
 @import "@openng/icons/openng-icons.css";
 
 @font-face {
+  font-family: 'Yellowtail';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/yellowtail/yellowtail-latin-400-normal.woff2') format('woff2');
+}
+
+@font-face {
   font-family: 'Jost';
   font-style: normal;
   font-weight: 100 900;
