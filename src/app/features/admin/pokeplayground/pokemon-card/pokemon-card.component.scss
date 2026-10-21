@@ -8,7 +8,7 @@
   align-items: center;
   justify-content: center;
   height: 12rem;
-  background: #1c1b1b;
+  background: var(--site-surface-alt);
 }
 
 .sprite {
@@ -35,7 +35,7 @@
 }
 
 .stat-label {
-  color: #cacaca;
+  color: var(--site-text-muted);
 }
 
 .stat-value {

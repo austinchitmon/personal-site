@@ -14,15 +14,15 @@
   height: 24rem;
   max-width: 100%;
   overflow: hidden;
-  border: 2px solid #444;
+  border: 2px solid var(--site-border-strong);
   border-radius: 0.5rem;
-  box-shadow: 0 0 0.75rem rgba(0, 0, 0, 0.4);
+  box-shadow: var(--site-shadow);
 }
 
 .debug-panel {
   width: 32rem;
   max-width: 100%;
   min-height: 6rem;
-  border: 1px dashed #444;
+  border: 1px dashed var(--site-border-strong);
   border-radius: 0.5rem;
 }

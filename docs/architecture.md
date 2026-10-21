@@ -23,11 +23,12 @@ The public `/supabase/...` routes are an additional routing path: the resume PDF
 
 - Angular 22, TypeScript 6, zoneless change detection, standalone components, and `OnPush`.
 - Optimus UI 2 (`@openng/optimus-ui`) with Aura, SCSS, and Inter. Shared utility styles live in `src/styles.scss`.
+- The Miami theme registry and `ThemeService` in `core/theme` provide semantic CSS variables, a shared Optimus preset, and persistent appearance selection. See [design-system.md](design-system.md) for palette roles, contrast checks, and adding themes.
 - `src/app/core`: application configuration, routes, navigation, footer, and home page.
 - `src/app/features`: lazy-loaded blog (`/chittyblog`), cat generator (`/cat`), and admin area (`/admin`, including `/admin/pokeplayground`). The Pokémon physics canvas lives within the admin feature.
 - `src/app/shared`: authentication, typed API clients/models, reusable UI, pipes, and services.
 
-Stateful features follow **component → facade → store/API service**. Stores own signals and state transitions; facades coordinate requests and business behavior. Prefer component-scoped stores/facades for feature state, with root services for shared authentication and API access. The Pokémon playground and home page demonstrate this pattern. Existing code has some older patterns; follow the current repository conventions for new work.
+Stateful features follow **component → facade → store/API service**. Stores own signals and state transitions; facades coordinate requests and business behavior. Prefer component-scoped stores/facades for feature state, with root services for shared authentication and API access. The Pokémon playground and blog demonstrate this pattern. The home facade handles resume access without a store; its previous random-color timer was removed with the theme update. Existing code has some older patterns; follow the current repository conventions for new work.
 
 New forms should use `@angular/forms/signals`. Blog search still uses an older `FormControl` implementation. The retired shipment form and its unused validation directive/styles have been removed; there is currently no Signal Forms reference implementation in the repository.
 

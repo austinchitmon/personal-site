@@ -1,0 +1,19 @@
+.article-tag {
+  border: 1px solid transparent;
+  border-radius: 1.5rem;
+  padding: 0.4rem 0.75rem;
+  min-height: 44px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+
+  &:hover {
+    border-color: currentColor;
+  }
+
+  &[aria-pressed="true"] {
+    border-color: currentColor;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+}

@@ -19,10 +19,15 @@
 }
 
 .gradient {
-  background: linear-gradient(90deg, #4bb 0%, #b48 100%);
+  background: var(--site-accent-gradient);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+
+  @media (forced-colors: active) {
+    background: none;
+    color: CanvasText;
+  }
 }
 
 .box {
@@ -40,14 +45,14 @@
   top: 1rem;
   left: 1rem;
   z-index: 10;
-  background: linear-gradient(135deg, #8e44ad 0%, #3498db 100%);
-  color: white;
+  background: var(--site-primary);
+  color: var(--site-on-primary);
   border-radius: 20px;
   padding: 0.5rem 1rem;
   font-weight: 700;
   font-size: 1.05em; // 5% larger than base font size
   border: none;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  box-shadow: var(--site-shadow);
 
   // Responsive adjustments
   @media (max-width: 768px) {
@@ -72,14 +77,14 @@
   }
 }
 
-.white {
-  color: #cfcbc6;
+.heading-text {
+  color: var(--site-text);
 }
 
 .subtitle {
-  font-weight: 100;
+  font-weight: 400;
   font-size: 1rem;
-  color: #cacaca;
+  color: var(--site-text-muted);
   text-align: center;
 }
 
@@ -134,56 +139,20 @@
 }
 
 .card {
-  &.featured {
-    &:hover {
-      box-shadow: 0 0 20px rgba(44, 234, 221, 0.7);
-    }
-
-    &::before {
-      background: linear-gradient(
-          0deg,
-          transparent,
-          transparent 30%,
-          rgba(44, 234, 221, 0.3)
-      );
-    }
-
-    width: unset;
-  }
-
-  width: 22rem;
+  width: min(22rem, 100%);
   position: relative;
   overflow: hidden;
-  transition: all 0.5s ease;
+  border: 1px solid var(--site-border);
+  border-radius: 0.75rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 
   &:hover {
     cursor: pointer;
-    transform: scale(1.05);
-    box-shadow: 0 0 20px rgba(187, 68, 136, 0.5);
+    transform: translateY(-3px);
+    box-shadow: var(--site-shadow-hover);
   }
 
-  &::before {
-    content: "";
-    position: absolute;
-    top: -50%;
-    left: -50%;
-    width: 200%;
-    height: 200%;
-    background: linear-gradient(
-        0deg,
-        transparent,
-        transparent 30%,
-        rgba(187, 68, 136, 0.3)
-    );
-    transform: rotate(-45deg);
-    transition: all 0.5s ease;
-    opacity: 0;
-    z-index: 1;
-    pointer-events: none;
-  }
-
-  &:hover::before {
-    opacity: 1;
-    transform: rotate(-45deg) translateY(100%);
+  &.featured {
+    width: unset;
   }
 }

@@ -43,11 +43,11 @@ import { ChittylogContainerStore } from './chittylog-container.store';
   template: `
     <div class="page-container">
       <h1>
-        <span class="title white">Chitty</span
+        <span class="title heading-text">Chitty</span
         ><span class="title gradient">blog</span>
       </h1>
       <h3 class="subtitle">
-        Guides, updates, and random thoughts directly from me 🌌
+        Guides, updates, and random thoughts directly from me
       </h3>
       <div class="w-95">
         <p-card class="card featured"
@@ -60,7 +60,7 @@ import { ChittylogContainerStore } from './chittylog-container.store';
                 [ngSrc]="'blog/' + this.facade.featured().cover"
                 fill
               />
-              <p-tag class="featured-tag-overlay">✨ Featured</p-tag>
+              <p-tag class="featured-tag-overlay">Featured</p-tag>
             </div>
           </ng-template>
           <ng-template #title>
@@ -74,6 +74,7 @@ import { ChittylogContainerStore } from './chittylog-container.store';
                     (tagClick)="facade.toggleTagSelection($event)"
                     class="clickable"
                     [value]="tag"
+                      [selected]="facade.selectedTags().includes(tag)"
                   />
                 }
               </div>
@@ -105,6 +106,7 @@ import { ChittylogContainerStore } from './chittylog-container.store';
           @for (tag of facade.allTags(); track $index) {
             <app-article-tag
               [value]="tag"
+                      [selected]="facade.selectedTags().includes(tag)"
               (tagClick)="facade.toggleTagSelection($event)"
               class="clickable"
             />
@@ -140,6 +142,7 @@ import { ChittylogContainerStore } from './chittylog-container.store';
                       (tagClick)="facade.toggleTagSelection($event)"
                       class="clickable"
                       [value]="tag"
+                      [selected]="facade.selectedTags().includes(tag)"
                     />
                   }
                 </div>

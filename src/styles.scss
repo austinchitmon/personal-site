@@ -1,13 +1,57 @@
 /* You can add global styles to this file, and also import other style files */
-@import "@fontsource/inter/400.css";
 @import "@openng/icons/openng-icons.css";
+
+@font-face {
+  font-family: 'Jost';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('/fonts/jost/jost-latin-wght-normal.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Jost';
+  font-style: italic;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('/fonts/jost/jost-latin-wght-italic.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Limelight';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/limelight/limelight-latin-400-normal.woff2') format('woff2');
+}
+
+:root {
+  --site-font-body: 'Jost', sans-serif;
+  --site-shadow: 0 6px 24px var(--site-shadow-color);
+  --site-shadow-hover: 0 12px 32px var(--site-shadow-hover-color);
+  --site-accent-gradient: linear-gradient(100deg, var(--site-primary), var(--site-accent));
+  --site-divider: linear-gradient(90deg, transparent, var(--site-border-strong), transparent);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  background: var(--site-background, #fbf7ed);
+}
 
 body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
-  background-color: black;
-  font-family: "Inter", sans-serif;
+  background-color: var(--site-background);
+  color: var(--site-text);
+  font-family: var(--site-font-body);
+  font-weight: 400;
+  line-height: 1.6;
 }
 
 h1,
@@ -19,7 +63,46 @@ h6,
 p,
 li {
   margin: 0;
-  color: #cfcbc6;
+  color: inherit;
+}
+
+a {
+  color: var(--site-primary);
+  text-underline-offset: 0.2em;
+}
+
+a:hover {
+  color: var(--site-primary-hover);
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  font-weight: 500;
+}
+
+:where(a, button, input, [tabindex]):focus-visible {
+  outline: 3px solid var(--site-focus);
+  outline-offset: 4px;
+}
+
+::selection {
+  background: var(--site-primary);
+  color: var(--site-on-primary);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 .text-sm {

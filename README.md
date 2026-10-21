@@ -4,6 +4,8 @@ Angular 22 frontend for [chitmon.com](https://chitmon.com), deployed to GitHub P
 
 See [Architecture](docs/architecture.md) for feature structure, state patterns, authentication, API routing, database schemas, development setup, and the verified homelab deployment. [AGENTS.md](AGENTS.md) and [CLAUDE.md](CLAUDE.md) contain repository-specific development conventions.
 
+See [Themes and colors](docs/design-system.md) for the Miami palettes, accessibility checks, and adding another theme.
+
 ## Development server
 
 To start a local development server, run:

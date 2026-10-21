@@ -1,0 +1,142 @@
+:host {
+  display: inline-flex;
+}
+
+.account-trigger,
+.icon-button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--site-primary);
+  cursor: pointer;
+
+  &:hover {
+    background: var(--site-surface-alt);
+  }
+}
+
+.account-trigger {
+  border: 1px solid var(--site-border-strong);
+  background: var(--site-surface);
+  font-size: 1.1rem;
+
+  &[aria-expanded="true"] {
+    outline: 2px solid var(--site-primary);
+    outline-offset: 3px;
+  }
+}
+
+.account-panel {
+  position: fixed;
+  inset: 76px 1rem auto auto;
+  width: 340px;
+  max-width: calc(100vw - 2rem);
+  max-height: calc(100dvh - 92px);
+  margin: 0;
+  padding: 0;
+  overflow: auto;
+  border: 1px solid var(--site-border);
+  border-radius: 1rem;
+  background: var(--site-surface);
+  color: var(--site-text);
+  box-shadow: var(--site-shadow-hover);
+}
+
+.account-heading,
+.panel-heading {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem;
+
+  h2 {
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  > .icon-button:last-child {
+    margin-left: auto;
+  }
+}
+
+.account-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--site-surface-alt);
+  color: var(--site-primary);
+  font-size: 1.2rem;
+}
+
+.account-copy {
+  min-width: 0;
+
+  p {
+    color: var(--site-text-muted);
+    font-size: 0.8rem;
+  }
+}
+
+.menu-section {
+  border-top: 1px solid var(--site-border);
+  padding: 0.4rem 0;
+}
+
+.menu-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  min-height: 52px;
+  border: 0;
+  padding: 0.75rem 1.25rem;
+  background: transparent;
+  color: var(--site-text);
+  text-align: left;
+  cursor: pointer;
+
+  > i {
+    width: 1.25rem;
+    color: var(--site-primary);
+  }
+
+  &:hover,
+  &[aria-pressed="true"] {
+    background: var(--site-surface-alt);
+  }
+
+  &:focus-visible {
+    outline-offset: -4px;
+  }
+
+  .trailing {
+    margin-left: auto;
+  }
+}
+
+.appearance-label {
+  display: flex;
+  flex-direction: column;
+}
+
+.current-theme,
+.appearance-note {
+  font-size: 0.8rem;
+  color: var(--site-text-muted);
+}
+
+.appearance-note {
+  padding: 0 1.25rem 1rem;
+}

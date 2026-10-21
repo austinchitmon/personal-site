@@ -42,5 +42,5 @@
 
 .reading-time-icon {
   font-size: 0.875rem; // Match text-sm size
-  color: #cfcbc6; // Match existing text color
+  color: var(--site-text-muted);
 }
