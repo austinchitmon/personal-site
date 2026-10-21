@@ -2,6 +2,7 @@ import { HttpInterceptorFn } from '@angular/common/http';
 import { from, switchMap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { supabase } from './supabase-client';
+import { PUBLIC_HTTP_REQUEST } from '../api/public-http-request';
 
 /**
  * Attaches the current Supabase session's access token to requests against
@@ -11,7 +12,7 @@ import { supabase } from './supabase-client';
  * token gets auto-refreshed by supabase-js before the request goes out.
  */
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
-  if (!req.url.startsWith(environment.apiBase)) {
+  if (req.context.get(PUBLIC_HTTP_REQUEST) || !req.url.startsWith(environment.apiBase)) {
     return next(req);
   }
 

@@ -7,11 +7,13 @@ import {
 import { ButtonDirective } from '@openng/optimus-ui/button';
 import { SectionBreakComponent } from '../../shared/section-break/section-break.component';
 import { HomeFacade } from './home-facade';
+import { HomeStore } from './home.store';
 
 @Component({
   selector: 'app-home',
   imports: [NgOptimizedImage, ButtonDirective, SectionBreakComponent],
   providers: [
+    HomeStore,
     HomeFacade
   ],
   templateUrl: './home.component.html',
