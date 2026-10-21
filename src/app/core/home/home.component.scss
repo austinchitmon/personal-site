@@ -257,7 +257,8 @@
   font-weight: 500;
   background: var(--site-primary);
   color: var(--site-on-primary);
-  border: none;
+  // Reserve the border Optimus adds on hover so the footer stays in place.
+  border: 1px solid transparent;
   border-radius: 8px;
   cursor: pointer;
   text-decoration: none;
