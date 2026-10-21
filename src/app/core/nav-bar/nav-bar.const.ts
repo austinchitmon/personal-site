@@ -7,10 +7,6 @@ export const DEFAULT_NAV_BAR_ENTRIES: NavBarEntry[] = [
   {
     routerLink: '/chittyblog',
     label: 'Chittyblog'
-  },
-  {
-    routerLink: '/cat',
-    label: 'Cat'
   }
 ];
 

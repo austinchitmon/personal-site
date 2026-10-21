@@ -1,6 +1,6 @@
 # Personal site architecture
 
-Updated 2026-10-21 for protected homelab monitoring. Runtime observations are dated snapshots; recheck before changing infrastructure. Deploy the new monitoring backend before merging/deploying its frontend consumer.
+Updated 2026-10-21 for protected homelab monitoring and retirement of the Cat integration demo. Runtime observations are dated snapshots; recheck before changing infrastructure. Deploy the new monitoring backend before merging/deploying its frontend consumer.
 
 ## System overview
 
@@ -18,9 +18,9 @@ flowchart LR
     Backend --> Snapshot
 ```
 
-The frontend lives in `personal-site`; the Java backend lives in the sibling `personal-site-service` repository. Supabase provides hosted authentication and the existing storage/edge-function integration. Application tables live in the separate homelab PostgreSQL database.
+The frontend lives in `personal-site`; the Java backend lives in the sibling `personal-site-service` repository. Supabase provides hosted authentication. The frontend no longer calls Supabase storage or edge-function proxy routes. Application tables live in the separate homelab PostgreSQL database.
 
-The public `/supabase/...` routes are an additional routing path: the resume PDF and random-cat JSON both returned HTTP 200 publicly, while the same paths returned 404 directly from Spring Boot. This confirms public routing outside the Spring application. Its exact implementation/configuration was not inspected; do not assume these routes are broken or add duplicate Spring proxy endpoints without investigating that routing first.
+Legacy public `/supabase/...` routes were observed outside Spring during the 2026-10-20 review. Their routing configuration was not inspected. The resume now uses the homelab file endpoint; the Cat demo has been retired.
 
 ## Frontend
 
@@ -28,7 +28,7 @@ The public `/supabase/...` routes are an additional routing path: the resume PDF
 - Optimus UI 2 (`@openng/optimus-ui`) with Aura, SCSS, and self-hosted Jost, Limelight, and Yellowtail fonts. Shared utility styles live in `src/styles.scss`.
 - The Miami theme registry and `ThemeService` in `core/theme` provide semantic CSS variables, a shared Optimus preset, and persistent appearance selection. See [design-system.md](design-system.md) for palette roles, contrast checks, and adding themes.
 - `src/app/core`: application configuration, routes, navigation, footer, and home page.
-- `src/app/features`: lazy-loaded blog (`/chittyblog`), cat generator (`/cat`), and admin area (`/admin`, including `/admin/pokeplayground`). The Pokémon physics canvas lives within the admin feature.
+- `src/app/features`: lazy-loaded blog (`/chittyblog`) and admin area (`/admin`, including `/admin/pokeplayground`). The Pokémon physics canvas lives within the admin feature.
 - `src/app/shared`: authentication, typed API clients/models, reusable UI, pipes, and services.
 
 Stateful features follow **component → facade → store/API service**. Stores own signals and state transitions; facades coordinate requests and business behavior. Prefer component-scoped stores/facades for feature state, with root services for shared authentication and API access. The Pokémon playground and blog demonstrate this pattern. The home facade/store coordinate resume download progress and failure feedback; its previous random-color timer remains removed. Existing code has some older patterns; follow the current repository conventions for new work.
@@ -41,7 +41,6 @@ New forms should use `@angular/forms/signals`. Blog search still uses an older `
 
 - Pokémon and user sync use `environment.apiBase`: `http://localhost:8080` in development and `https://api.chitmon.com` in production. Angular's production configuration replaces the environment file.
 - `ResumeApiService` uses `environment.apiBase` and `/files/resume.pdf`. It fetches the PDF as a Blob with a 15-second timeout and marks the request public, bypassing Supabase token/session lookup. The home facade saves valid PDF responses through `FileDownloadService`, prevents duplicate requests, and logs failures with HTTP status and the server reference when available. A page alert offers retrying; it also restores the button after errors.
-- The older `SupabaseApiService` uses the separate `API_URL` constant, currently `https://api.chitmon.com`, followed by `/supabase`. Cat requests therefore still use the public API host during local development.
 - Blog Markdown uses relative `blog/<post>.md` asset URLs.
 - `authInterceptor` reads the Supabase session and attaches its access token only when a request URL starts with `environment.apiBase` and is not marked with `PUBLIC_HTTP_REQUEST`.
 
@@ -75,7 +74,7 @@ The resume client downloads `/files/resume.pdf` from the backend. Its fixed host
 
 The initial public Supabase PDF was copied to the homelab on 2026-10-21 and read-only container access verified. The old Supabase object is preserved for rollback. The deployed `/files/resume.pdf` endpoint was verified publicly on 2026-10-21: HTTP 200, `application/pdf`, 83,629 bytes, attachment disposition, and `Cache-Control: no-store`.
 
-The cat client still calls `/supabase/functions/v1/random-cat-img`; its Deno source is in this repository's `supabase/functions` and calls TheCatAPI using a server-side key. Edge functions deploy separately from the Angular app.
+The Cat API-integration demo is retired. Its navigation entry, `/cat` route, components/store/services, unused Supabase proxy client and fixed API URL, edge-function source/configuration, and function-specific npm scripts/helper have been removed. The deployed `random-cat-img` function and its dedicated `THE_CAT_API_KEY` secret were deleted on 2026-10-21; the direct function URL was verified to return HTTP 404. Supabase authentication and its local development configuration remain available.
 
 ## Backend and database
 

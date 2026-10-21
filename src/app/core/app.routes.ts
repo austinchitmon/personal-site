@@ -30,9 +30,4 @@ export const routes: Routes = [
     path: 'chittyblog',
     loadChildren: () => import('../features/chittylog/chittylog.routes').then(mod => mod.CHITTYLOG_ROUTES),
   },
-  {
-    path: 'cat',
-    loadComponent: () => import('../features/random-cat/random-cat.component').then(mod =>
-      mod.RandomCatComponent)
-  },
 ];

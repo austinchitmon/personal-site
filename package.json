@@ -11,9 +11,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint",
-    "blog:update-manifest": "node npm-functions/generate-blog-manifest-ts.js",
-    "supabase:deploy:fn": "node npm-functions/deploy-supabase-fn.js",
-    "supabase:serve:fn": "supabase functions serve --env-file .env.local --no-verify-jwt"
+    "blog:update-manifest": "node npm-functions/generate-blog-manifest-ts.js"
   },
   "private": true,
   "dependencies": {

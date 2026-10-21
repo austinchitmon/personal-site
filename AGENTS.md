@@ -17,8 +17,6 @@ npm run build:prod           # production build; creates 404.html fallback and r
 npm test                     # ng test (Vitest)
 npm run lint                 # ng lint (angular-eslint)
 npm run blog:update-manifest # regenerate src/app/shared/data/blog-manifest.ts from public/blog/*.md
-npm run supabase:serve:fn    # serve supabase edge functions locally (--env-file .env.local)
-npm run supabase:deploy:fn -- <function-name>  # deploy a single supabase edge function
 ```
 
 Run a single test file: `ng test --include='**/some.component.spec.ts'`
@@ -36,7 +34,7 @@ CI (`.github/workflows/ci.yml`) runs install, lint, Vitest unit tests, and `buil
 ### Module layout
 
 - `src/app/core` — app shell: routes, app config, nav bar, footer, home page.
-- `src/app/features` — lazy-loaded feature areas: `chittylog` (`/chittyblog`), `random-cat` (`/cat`), `admin` (`/admin`, requires admin app metadata). Pokémon API playground and the physics canvas live under `admin/pokeplayground`.
+- `src/app/features` — lazy-loaded feature areas: `chittylog` (`/chittyblog`), `admin` (`/admin`, requires admin app metadata). Pokémon API playground and the physics canvas live under `admin/pokeplayground`.
 - `src/app/shared` — cross-feature API clients/models, Supabase auth store/facade/admin guard/interceptor, services, pipes, and small shared components.
 
 ### Admin monitoring
@@ -58,9 +56,8 @@ Blog posts are markdown files with frontmatter in `public/blog/*.md` (cover imag
 ### API layer, backend, and authentication
 
 - `ApiService` (`shared/api/api.service.ts`) is a thin generic HTTP wrapper (`get`/`post`) over `HttpClient`; it does not prepend a base URL.
-- Pokémon and user-sync clients use `environment.apiBase`: `http://localhost:8080` in development and `https://api.chitmon.com` in production. The separate `API_URL` constant is fixed at `https://api.chitmon.com` and is used by the older Supabase proxy client, including during local development.
+- Pokémon and user-sync clients use `environment.apiBase`: `http://localhost:8080` in development and `https://api.chitmon.com` in production.
 - `ResumeApiService` downloads `/files/resume.pdf` from `environment.apiBase` with a public HTTP context, bypassing auth/session lookup. The home facade/store manage progress, retry feedback, and error logging with server request IDs. The backend reads `/srv/chitmon/public/resume.pdf` through a read-only directory mount; deploy the backend before the frontend consumer. See the backend's `docs/resume-download.md` for file updates and debugging.
-- `SupabaseApiService` still adds `/supabase` for the random-cat edge function via `SUPABASE_API_CONFIG`. The cat route and former resume storage route worked publicly during the 2026-10-20 review but returned 404 directly from Spring: their additional public routing is outside Spring and was not inspected. Deno edge-function source lives in `supabase/functions/` and deploys independently via `supabase:deploy:fn`.
 - Supabase handles Google OAuth and sessions. `AuthStore` initializes/listens to the session and calls `/me` once per distinct signed-in user. The admin guard waits for initial session resolution; `AuthFacade.isAdmin` checks `app_metadata.role`. `authInterceptor` attaches the current session token only to URLs starting with `environment.apiBase`, except requests marked with `PUBLIC_HTTP_REQUEST`.
 - The Spring backend validates Supabase ES256 JWTs, then mirrors users into homelab `core.users` via `UserSyncFilter`. Frontend admin guards do not enforce backend permissions; new sensitive endpoints need explicit Spring security rules.
 - Homelab PostgreSQL actively manages `core` and `pokemon` with independent Flyway histories. `pokemon` currently has only a bootstrap migration. Shipment tracking has been retired: its application code and managed-schema entry are removed, while its already-applied V1 migration and existing database data are preserved.
