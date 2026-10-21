@@ -32,6 +32,8 @@ describe('Shared resume route', () => {
     const pdf = new Blob(['%PDF-1.7'], { type: 'application/pdf' });
     const button = harness.routeNativeElement!.querySelector('button')!;
     expect(button.disabled).toBe(true);
+    expect(harness.routeNativeElement!.querySelector('h1')?.getAttribute('aria-label')).toBe('Thank You!');
+    expect(button.getAttribute('aria-label')).toBe("Download Austin Chitmon's resume");
     expect(TestBed.inject(Title).getTitle()).toBe('Austin Chitmon — Resume');
 
     requests.expectOne(url).flush(pdf);
@@ -61,6 +63,6 @@ describe('Shared resume route', () => {
     harness.detectChanges();
     expect(save).toHaveBeenCalledOnce();
     expect(button.disabled).toBe(false);
-    expect(page.querySelector('a')?.getAttribute('href')).toBe('/');
+    expect(button.textContent).toContain('(If nothing downloads, click here)');
   });
 });

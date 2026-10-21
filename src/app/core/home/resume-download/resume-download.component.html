@@ -1,20 +1,23 @@
 <section aria-labelledby="resume-heading">
-  <h1 id="resume-heading">Resume</h1>
-  <p class="name">Austin Chitmon</p>
-  <p>Your download starts automatically. If it doesn’t appear, use the button below.</p>
+  <h1 id="resume-heading" aria-label="Thank You!">
+    @for (letter of letters; track $index) {
+      <span class="letter"
+            [class.word-space]="letter === ' '"
+            [style.--letter-index]="$index"
+            aria-hidden="true">{{ letter }}</span>
+    }
+  </h1>
 
-  <button pButton
-          type="button"
+  <button type="button"
           class="download-button"
+          aria-label="Download Austin Chitmon's resume"
           [disabled]="facade.downloadingResume()"
           [attr.aria-busy]="facade.downloadingResume()"
           (click)="facade.downloadResume()">
-    {{ facade.downloadingResume() ? 'Downloading…' : 'Download Resume' }}
+    (If nothing downloads, click here)
   </button>
 
   @if (facade.resumeError(); as error) {
-    <p class="error" role="alert">{{ error }}</p>
+    <p class="visually-hidden" role="alert">{{ error }}</p>
   }
-
-  <a routerLink="/">Back to the site</a>
 </section>
